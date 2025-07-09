@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.ui.theme.BaseColors
+import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
@@ -24,7 +25,7 @@ fun PrimaryButton(
     ElevatedButton(
         modifier = modifier,
         onClick = onClick,
-        elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp),
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = Dimens.elevationSmall),
         colors = ButtonDefaults.elevatedButtonColors(
             containerColor = buttonColor,
             contentColor = textColor,

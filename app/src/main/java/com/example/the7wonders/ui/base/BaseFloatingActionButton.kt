@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.ui.theme.BaseColors
+import com.example.the7wonders.ui.theme.Dimens
 
 @Composable
 fun BaseFloatingActionButton(
@@ -29,7 +30,7 @@ fun BaseFloatingActionButton(
         containerColor = color,
         contentColor = iconColor,
         elevation = FloatingActionButtonDefaults.elevation(
-            defaultElevation = 12.dp
+            defaultElevation = Dimens.elevationLarge
         ),
         shape = CircleShape
     ) {
