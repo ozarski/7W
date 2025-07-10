@@ -3,6 +3,7 @@ package com.example.the7wonders.ui.theme
 import androidx.compose.ui.unit.dp
 
 object Dimens {
+    val paddingZero = 0.dp
     val paddingSmall = 4.dp
     val paddingMedium = 8.dp
     val paddingLarge = 16.dp
@@ -12,6 +13,7 @@ object Dimens {
     val cornerRadiusMedium = 12.dp
     val cornerRadiusLarge = 16.dp
     val cornerRadiusExtraLarge = 24.dp
+    val cornerRadiusMax = 9999.dp
 
     val elevationSmall = 4.dp
     val elevationMedium = 8.dp
@@ -19,6 +21,8 @@ object Dimens {
     val elevationExtraLarge = 16.dp
 
     val iconSizeSmall = 24.dp
+    val textFieldIconSize = 20.dp
+
     val defaultElevation = 2.dp
 
     const val TRANSPARENCY_30_PERCENT = 0.3f
