@@ -9,6 +9,12 @@ object Dimens {
     val paddingLarge = 16.dp
     val paddingExtraLarge = 24.dp
 
+    val spacerSizeExtraSmall = 4.dp
+    val spacerSizeSmall = 8.dp
+    val spacerSizeMedium = 16.dp
+    val spacerSizeLarge = 24.dp
+    val spacerSizeExtraLarge = 32.dp
+
     val cornerRadiusSmall = 8.dp
     val cornerRadiusMedium = 12.dp
     val cornerRadiusLarge = 16.dp
