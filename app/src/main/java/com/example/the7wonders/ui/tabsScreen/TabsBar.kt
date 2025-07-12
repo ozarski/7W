@@ -1,4 +1,4 @@
-package com.example.the7wonders.ui.MainScreen
+package com.example.the7wonders.ui.tabsScreen
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -18,9 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -34,9 +31,11 @@ import com.example.the7wonders.ui.theme.Typography
 
 @Composable
 fun TabsBar(
-    selected: MutableState<Screens>,
+    modifier: Modifier = Modifier,
+    selected: MainTabs,
+    onTabSelected: (tab: MainTabs) -> Unit
 ) {
-    Box {
+    Box(modifier = modifier) {
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
@@ -50,16 +49,16 @@ fun TabsBar(
                 )
                 .align(alignment = Alignment.BottomCenter)
         ) {
-            TabItem(selected, Screens.Games)
+            TabItem(selected, MainTabs.Games, onTabSelected)
             Spacer(modifier = Modifier.width(Dimens.tabBarSpacing))
-            TabItem(selected, Screens.Players)
+            TabItem(selected, MainTabs.Players, onTabSelected)
         }
         AddButton(selected, modifier = Modifier.align(alignment = Alignment.Center))
     }
 }
 
 @Composable
-fun AddButton(selected: MutableState<Screens>, modifier: Modifier) {
+fun AddButton(selected: MainTabs, modifier: Modifier) {
     BaseFloatingActionButton(
         modifier = modifier.padding(bottom = Dimens.paddingExtraLarge),
         color = BaseColors.secondary,
@@ -67,7 +66,7 @@ fun AddButton(selected: MutableState<Screens>, modifier: Modifier) {
         icon = Icons.Filled.Add
     ) {
         //TODO("add game/player depending on the active tab")
-        if (selected.value == Screens.Games) {
+        if (selected == MainTabs.Games) {
             println("Add game")
         } else {
             println("Add player")
@@ -76,8 +75,8 @@ fun AddButton(selected: MutableState<Screens>, modifier: Modifier) {
 }
 
 @Composable
-fun TabItem(selected: MutableState<Screens>, screen: Screens) {
-    val isSelected = screen == selected.value
+fun TabItem(selected: MainTabs, screen: MainTabs, onTabSelected: (MainTabs) -> Unit) {
+    val isSelected = screen == selected
     val animatedColor = animateColorAsState(
         targetValue = if (isSelected) BaseColors.primary else BaseColors.onSecondary,
         animationSpec = tween(Dimens.ANIMATION_DURATION_MEDIUM)
@@ -91,7 +90,7 @@ fun TabItem(selected: MutableState<Screens>, screen: Screens) {
             .clickable(
                 interactionSource = null,
                 onClick = {
-                    selected.value = screen
+                    onTabSelected(screen)
                 },
                 indication = null
             )
@@ -118,12 +117,14 @@ fun TabItem(selected: MutableState<Screens>, screen: Screens) {
 @Composable
 @Preview
 fun TabsBarPreview() {
-    val screen = remember { mutableStateOf(Screens.Games) }
+    val screen = MainTabs.Games
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier.fillMaxSize()
     ) {
-        TabsBar(screen)
+        TabsBar(selected = screen) { tab ->
+            println("selected tab ${tab.name} ")
+        }
     }
 }
