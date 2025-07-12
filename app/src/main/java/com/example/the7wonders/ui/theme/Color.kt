@@ -10,6 +10,8 @@ object BaseColors {
     val backgroundPrimary = Color(0xFFD6D3D1)
     val backgroundSecondary = Color(0xFF8D995E)
 
+    val backgroundGradientSecondary = Color(0xFF858D68)
+
     val textPrimary = Color.Black
     val textSecondary = Color(0xFF7C7C7C)
 

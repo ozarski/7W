@@ -18,7 +18,12 @@ import com.example.the7wonders.ui.theme.Typography
 fun BaseBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
 
     val brush =
-        Brush.linearGradient(listOf(BaseColors.backgroundPrimary, BaseColors.backgroundSecondary))
+        Brush.linearGradient(
+            listOf(
+                BaseColors.backgroundPrimary,
+                BaseColors.backgroundGradientSecondary
+            )
+        )
 
     Box(
         modifier = modifier.background(brush),

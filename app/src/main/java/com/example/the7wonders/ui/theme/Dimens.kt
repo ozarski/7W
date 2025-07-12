@@ -3,6 +3,8 @@ package com.example.the7wonders.ui.theme
 import androidx.compose.ui.unit.dp
 
 object Dimens {
+    val tabItemMinWidth = 125.dp
+    const val ANIMATION_DURATION_MEDIUM = 250
     val paddingZero = 0.dp
     val paddingSmall = 4.dp
     val paddingMedium = 8.dp
@@ -27,6 +29,10 @@ object Dimens {
     val elevationExtraLarge = 16.dp
 
     val iconSizeSmall = 24.dp
+    val iconSizeMedium = 32.dp
+    val iconSizeLarge = 48.dp
+    val iconSizeExtraLarge = 48.dp
+
     val textFieldIconSize = 20.dp
 
     val defaultElevation = 2.dp
@@ -36,4 +42,8 @@ object Dimens {
     val strokeWidthSmall = 1.dp
     val strokeWidthMedium = 2.dp
     val strokeWidthLarge = 4.dp
+
+
+    // TabBar
+    val tabBarSpacing = 60.dp
 }
