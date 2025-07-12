@@ -1,6 +1,6 @@
 package com.example.the7wonders.ui.base
 
-import androidx.compose.foundation.border
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -32,20 +32,13 @@ fun BaseCard(modifier: Modifier = Modifier, onClick: () -> Unit, content: @Compo
         LocalRippleConfiguration provides RippleConfiguration(color = BaseColors.onSecondary)
     ) {
         Card(
-            modifier = modifier
-                .border(
-                    width = Dimens.strokeWidthMedium,
-                    color = BaseColors.onSecondary.copy(alpha = Dimens.TRANSPARENCY_30_PERCENT),
-                    shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge)
-                ),
             onClick = onClick,
             elevation = CardDefaults.cardElevation(defaultElevation = Dimens.elevationSmall),
             shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
-            colors = CardDefaults.cardColors(containerColor = BaseColors.primary)
+            colors = CardDefaults.cardColors(containerColor = BaseColors.primary),
+            border = BorderStroke(Dimens.strokeWidthMedium, BaseColors.secondary),
         ) {
-            Box(
-                contentAlignment = Alignment.Center
-            ) {
+            Box(modifier = Modifier.padding(Dimens.paddingLarge)) {
                 content()
             }
         }

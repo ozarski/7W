@@ -4,9 +4,7 @@
     <option name="actions">
       <set>
         <option value="activate" />
-        <option value="organizeImports" />
         <option value="reformat" />
-        <option value="reload" />
       </set>
     </option>
     <option name="configurationPath" value="" />

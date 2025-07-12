@@ -28,7 +28,7 @@ object Dimens {
     val elevationLarge = 12.dp
     val elevationExtraLarge = 16.dp
 
-    val iconSizeSmall = 24.dp
+    val iconSizeSmall = 26.dp
     val iconSizeMedium = 32.dp
     val iconSizeLarge = 48.dp
     val iconSizeExtraLarge = 48.dp

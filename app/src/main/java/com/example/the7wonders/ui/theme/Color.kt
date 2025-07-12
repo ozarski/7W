@@ -17,5 +17,7 @@ object BaseColors {
 
     val error = Color(0xFF984447)
     val success = Color(0xFF436852)
+
+    val winIconColor = Color(0xFFDBD56E)
 }
 
