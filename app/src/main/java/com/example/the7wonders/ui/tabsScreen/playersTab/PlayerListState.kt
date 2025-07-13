@@ -1,0 +1,10 @@
+package com.example.the7wonders.ui.tabsScreen.playersTab
+
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import com.example.the7wonders.domain.model.PlayerItem
+
+data class PlayerListState(
+    val playerList: List<PlayerItem>,
+    val isLoading: Boolean = false,
+    val gridState: LazyGridState = LazyGridState()
+)

@@ -41,7 +41,7 @@ fun PlayerListItem(player: PlayerItem) {
             //TODO("navigate to player details")
         }
     ) {
-        Column(modifier = Modifier.width(intrinsicSize = IntrinsicSize.Max)) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             IconInfoRow(
                 imageVector = Icons.Outlined.Person,
                 text = player.name,
@@ -92,7 +92,7 @@ fun PlayerListItem(player: PlayerItem) {
                 Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
                 Text(
                     DecimalFormat("#.#").format(player.avgPlacement).toString(),
-                    style = Typography.labelLarge
+                    style = Typography.labelLarge,
                 )
             }
         }

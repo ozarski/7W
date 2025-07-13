@@ -1,6 +1,8 @@
 package com.example.the7wonders.ui.tabsScreen
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.tabsScreen.gamesTab.GameListScreen
+import com.example.the7wonders.ui.tabsScreen.playersTab.PlayerListScreen
+import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
@@ -27,14 +31,17 @@ fun MainTabsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Crossfade(targetState = state.selectedTab) { tab ->
+                Crossfade(
+                    targetState = state.selectedTab,
+                    animationSpec = tween(Dimens.ANIMATION_DURATION_SHORT)
+                ) { tab ->
                     when (tab) {
                         MainTabs.Games -> {
                             GameListScreen()
                         }
 
                         MainTabs.Players -> {
-                            Text(MainTabs.Players.name, style = Typography.titleLarge)
+                            PlayerListScreen()
                         }
                     }
                 }
