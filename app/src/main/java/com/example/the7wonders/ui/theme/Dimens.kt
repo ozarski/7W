@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.dp
 object Dimens {
     val tabItemMinWidth = 125.dp
     const val ANIMATION_DURATION_MEDIUM = 250
+    const val ANIMATION_DURATION_SHORT = 150
     val paddingZero = 0.dp
     val paddingSmall = 4.dp
     val paddingMedium = 8.dp
