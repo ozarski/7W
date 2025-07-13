@@ -1,7 +1,6 @@
 package com.example.the7wonders.ui.tabsScreen.gamesTab
 
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,9 +30,8 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun GameListItem(game: GameItem) {
+fun GameListItem(modifier: Modifier = Modifier, game: GameItem) {
 
     val leaderboard = game.playerScores.sortedByDescending { it.second }
         .filterIndexed { index, pair -> index < 5 }
@@ -45,7 +43,8 @@ fun GameListItem(game: GameItem) {
     BaseCard(
         onClick = {
             //TODO("open game details")
-        }
+        },
+        modifier = modifier
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -59,7 +58,7 @@ fun GameListItem(game: GameItem) {
 }
 
 @Composable
-fun PlayerList(leaderboard: List<Pair<PlayerItem, Int>>) {
+fun PlayerList(leaderboard: List<Pair<String, Int>>) {
     leaderboard.subList(1, leaderboard.size).forEachIndexed { index, playerScore ->
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -72,7 +71,7 @@ fun PlayerList(leaderboard: List<Pair<PlayerItem, Int>>) {
                     color = BaseColors.textSecondary
                 )
                 Spacer(modifier = Modifier.size(Dimens.paddingSmall))
-                Text(playerScore.first.name, style = Typography.labelLarge)
+                Text(playerScore.first, style = Typography.labelLarge)
             }
             Text("${playerScore.second} pts", style = Typography.labelLarge)
         }
@@ -81,7 +80,7 @@ fun PlayerList(leaderboard: List<Pair<PlayerItem, Int>>) {
 }
 
 @Composable
-fun TopBar(leaderboard: List<Pair<PlayerItem, Int>>, dateFormatted: String) {
+fun TopBar(leaderboard: List<Pair<String, Int>>, dateFormatted: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -98,7 +97,7 @@ fun TopBar(leaderboard: List<Pair<PlayerItem, Int>>, dateFormatted: String) {
             )
             Spacer(modifier = Modifier.size(Dimens.paddingMedium))
             Column {
-                Text(leaderboard.first().first.name, style = Typography.titleSmall)
+                Text(leaderboard.first().first, style = Typography.titleSmall)
                 Text(
                     "${leaderboard.first().second} points",
                     style = Typography.bodyLarge
@@ -125,16 +124,16 @@ fun TopBar(leaderboard: List<Pair<PlayerItem, Int>>, dateFormatted: String) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @Preview
 fun GameListItemPreview() {
     val playerScores = listOf(
-        Pair(PlayerItem(1, "Player one"), 12),
-        Pair(PlayerItem(2, "Player two"), 23),
-        Pair(PlayerItem(3, "Player three"), 34),
-        Pair(PlayerItem(4, "Player four"), 45),
-        Pair(PlayerItem(5, "Player five"), 56),
+        Pair("Player one", 12),
+        Pair("Player two", 23),
+        Pair("Player three", 34),
+        Pair("Player four", 45),
+        Pair("Player five", 56),
+        Pair("Player six", 67),
     )
     val gameItem = GameItem(
         id = 1,

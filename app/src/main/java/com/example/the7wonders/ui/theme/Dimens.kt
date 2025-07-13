@@ -46,4 +46,7 @@ object Dimens {
 
     // TabBar
     val tabBarSpacing = 60.dp
+
+    // Games screen
+    val lazyColumnBottomSpacing = 64.dp
 }

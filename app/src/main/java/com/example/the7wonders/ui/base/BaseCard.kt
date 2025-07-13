@@ -32,6 +32,7 @@ fun BaseCard(modifier: Modifier = Modifier, onClick: () -> Unit, content: @Compo
         LocalRippleConfiguration provides RippleConfiguration(color = BaseColors.onSecondary)
     ) {
         Card(
+            modifier = modifier,
             onClick = onClick,
             elevation = CardDefaults.cardElevation(defaultElevation = Dimens.elevationSmall),
             shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
