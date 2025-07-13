@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">The7Wonders</string>
+    <string name="empty_games_list">No games found!</string>
 </resources>

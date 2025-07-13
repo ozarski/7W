@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.ui.base.BaseBackground
+import com.example.the7wonders.ui.tabsScreen.gamesTab.GameListScreen
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
@@ -29,7 +30,7 @@ fun MainTabsScreen(
                 Crossfade(targetState = state.selectedTab) { tab ->
                     when (tab) {
                         MainTabs.Games -> {
-                            Text(MainTabs.Games.name, style = Typography.titleLarge)
+                            GameListScreen()
                         }
 
                         MainTabs.Players -> {
