@@ -1,13 +1,11 @@
 package com.example.the7wonders.ui.tabsScreen
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,14 +13,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.tabsScreen.gamesTab.GameListScreen
 import com.example.the7wonders.ui.tabsScreen.playersTab.PlayerListScreen
+import com.example.the7wonders.ui.tabsScreen.playersTab.addPlayer.AddPlayerPopup
 import com.example.the7wonders.ui.theme.Dimens
-import com.example.the7wonders.ui.theme.Typography
 
 @Composable
 fun MainTabsScreen(
     viewModel: MainTabsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+
+
+    if (state.addPlayerPopupVisible) {
+        AddPlayerPopup(
+            onDismiss = { viewModel.hideAddPlayerPopup() },
+            onAdd = { viewModel.addPlayer(it) }
+        )
+    }
 
     BaseBackground(modifier = Modifier.fillMaxSize()) {
         Box {
@@ -48,7 +54,13 @@ fun MainTabsScreen(
             }
             TabsBar(
                 selected = state.selectedTab,
-                modifier = Modifier.align(alignment = Alignment.BottomCenter)
+                modifier = Modifier.align(alignment = Alignment.BottomCenter),
+                onPlayerAdd = {
+                    viewModel.showAddPlayerPopup()
+                },
+                onGameAdd = {
+                    //TODO("Navigate to add game screen")
+                }
             ) { tab ->
                 viewModel.selectTab(tab)
             }
