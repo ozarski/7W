@@ -20,7 +20,7 @@ fun BaseBackground(modifier: Modifier = Modifier, content: @Composable () -> Uni
     val brush =
         Brush.linearGradient(
             listOf(
-                BaseColors.backgroundPrimary,
+                BaseColors.primary,
                 BaseColors.backgroundGradientSecondary
             )
         )

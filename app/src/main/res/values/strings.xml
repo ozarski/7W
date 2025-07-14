@@ -3,4 +3,5 @@
     <string name="empty_games_list">No games found!</string>
     <string name="top_score">top score</string>
     <string name="avg_place">avg place</string>
+    <string name="continue_button_label">Continue</string>
 </resources>

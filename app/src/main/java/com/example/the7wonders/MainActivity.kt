@@ -3,12 +3,14 @@ package com.example.the7wonders
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.the7wonders.ui.Screens
+import com.example.the7wonders.ui.addGameScreen.AddGameScreen
 import com.example.the7wonders.ui.tabsScreen.MainTabsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,14 +33,21 @@ fun AppNavigation() {
         navController = navController,
         startDestination = Screens.MainTabs.route,
         enterTransition = {
-            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Up)
+            slideInVertically(
+                initialOffsetY = { it },
+            )
         },
         exitTransition = {
-            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Down)
+            slideOutVertically(
+                targetOffsetY = { it },
+            )
         }
     ) {
         composable(Screens.MainTabs.route) {
-            MainTabsScreen()
+            MainTabsScreen(navController = navController)
+        }
+        composable(Screens.AddGame.route) {
+            AddGameScreen(navController = navController)
         }
     }
 }
