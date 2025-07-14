@@ -1,6 +1,5 @@
 package com.example.the7wonders.ui.tabsScreen.gamesTab
 
-import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.the7wonders.R
 import com.example.the7wonders.domain.model.GameItem
-import com.example.the7wonders.domain.model.PlayerItem
 import com.example.the7wonders.ui.base.BaseCard
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens

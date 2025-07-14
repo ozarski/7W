@@ -33,6 +33,8 @@ import com.example.the7wonders.ui.theme.Typography
 fun TabsBar(
     modifier: Modifier = Modifier,
     selected: MainTabs,
+    onGameAdd: () -> Unit,
+    onPlayerAdd: () -> Unit,
     onTabSelected: (tab: MainTabs) -> Unit
 ) {
     Box(modifier = modifier) {
@@ -53,23 +55,32 @@ fun TabsBar(
             Spacer(modifier = Modifier.width(Dimens.tabBarSpacing))
             TabItem(selected, MainTabs.Players, onTabSelected)
         }
-        AddButton(selected, modifier = Modifier.align(alignment = Alignment.Center))
+        AddButton(
+            selected,
+            modifier = Modifier.align(alignment = Alignment.Center),
+            onPlayerAdd,
+            onGameAdd
+        )
     }
 }
 
 @Composable
-fun AddButton(selected: MainTabs, modifier: Modifier) {
+fun AddButton(
+    selected: MainTabs,
+    modifier: Modifier,
+    onPlayerAdd: () -> Unit,
+    onGameAdd: () -> Unit
+) {
     BaseFloatingActionButton(
         modifier = modifier.padding(bottom = Dimens.paddingExtraLarge),
         color = BaseColors.secondary,
         iconColor = BaseColors.onSecondary,
         icon = Icons.Filled.Add
     ) {
-        //TODO("add game/player depending on the active tab")
         if (selected == MainTabs.Games) {
-            println("Add game")
+            onGameAdd()
         } else {
-            println("Add player")
+            onPlayerAdd()
         }
     }
 }
@@ -123,7 +134,7 @@ fun TabsBarPreview() {
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier.fillMaxSize()
     ) {
-        TabsBar(selected = screen) { tab ->
+        TabsBar(selected = screen, onGameAdd = {}, onPlayerAdd = {}) { tab ->
             println("selected tab ${tab.name} ")
         }
     }

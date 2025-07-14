@@ -13,6 +13,20 @@ class MainTabsViewModel @Inject constructor() : ViewModel() {
     fun selectTab(tab: MainTabs) {
         _state.value = _state.value.copy(selectedTab = tab)
     }
+
+    fun showAddPlayerPopup() {
+        _state.value = _state.value.copy(addPlayerPopupVisible = true)
+    }
+
+    fun hideAddPlayerPopup() {
+        _state.value = _state.value.copy(addPlayerPopupVisible = false)
+    }
+
+    fun addPlayer(name: String) {
+        //TODO("Not yet implemented")
+        println("Added player $name")
+        hideAddPlayerPopup()
+    }
 }
 
 
