@@ -2,7 +2,6 @@ package com.example.the7wonders
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically

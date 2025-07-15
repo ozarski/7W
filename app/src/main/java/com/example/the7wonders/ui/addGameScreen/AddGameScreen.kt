@@ -5,6 +5,8 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.the7wonders.ui.addGameScreen.inputPoints.PointInputScreen
+import com.example.the7wonders.ui.addGameScreen.playerSelection.AddPlayersScreen
 
 @Composable
 fun AddGameScreen(viewModel: AddGameViewModel = hiltViewModel(), navController: NavHostController) {

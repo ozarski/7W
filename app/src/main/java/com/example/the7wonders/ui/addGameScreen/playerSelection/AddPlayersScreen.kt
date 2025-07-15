@@ -1,4 +1,4 @@
-package com.example.the7wonders.ui.addGameScreen
+package com.example.the7wonders.ui.addGameScreen.playerSelection
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
+import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.PrimaryButton
 import com.example.the7wonders.ui.theme.BaseColors

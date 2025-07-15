@@ -1,4 +1,4 @@
-package com.example.the7wonders.ui.addGameScreen
+package com.example.the7wonders.ui.addGameScreen.playerSelection
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
+import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
 import com.example.the7wonders.ui.base.BaseCheckbox
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens

@@ -1,4 +1,4 @@
-package com.example.the7wonders.ui.addGameScreen
+package com.example.the7wonders.ui.addGameScreen.inputPoints
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
+import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.BaseInputField
 import com.example.the7wonders.ui.base.PrimaryButton
