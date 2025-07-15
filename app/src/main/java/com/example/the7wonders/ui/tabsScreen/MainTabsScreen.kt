@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.the7wonders.ui.Screens
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.tabsScreen.gamesTab.GameListScreen
 import com.example.the7wonders.ui.tabsScreen.playersTab.PlayerListScreen
@@ -18,7 +20,8 @@ import com.example.the7wonders.ui.theme.Dimens
 
 @Composable
 fun MainTabsScreen(
-    viewModel: MainTabsViewModel = hiltViewModel()
+    viewModel: MainTabsViewModel = hiltViewModel(),
+    navController: NavHostController
 ) {
     val state = viewModel.state.value
 
@@ -59,7 +62,7 @@ fun MainTabsScreen(
                     viewModel.showAddPlayerPopup()
                 },
                 onGameAdd = {
-                    //TODO("Navigate to add game screen")
+                    navController.navigate(Screens.AddGame.route)
                 }
             ) { tab ->
                 viewModel.selectTab(tab)

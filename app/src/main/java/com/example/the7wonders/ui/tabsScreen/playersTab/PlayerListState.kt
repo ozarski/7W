@@ -6,5 +6,7 @@ import com.example.the7wonders.domain.model.PlayerItem
 data class PlayerListState(
     val playerList: List<PlayerItem>,
     val isLoading: Boolean = false,
-    val gridState: LazyGridState = LazyGridState()
+    val gridState: LazyGridState = LazyGridState(),
+    val deletePopupVisible: Boolean = false,
+    val popupPlayerID: Long? = null
 )

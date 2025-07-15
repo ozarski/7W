@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Create
@@ -20,8 +21,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.ui.theme.BaseColors
@@ -36,14 +39,20 @@ fun BaseInputField(
     keyboardType: KeyboardType = KeyboardType.Text,
     action: ImeAction = ImeAction.Done,
     icon: ImageVector? = null,
-    onValueChange: (String) -> Unit
+    keyboardAction: () -> Unit = {},
+    onValueChange: (TextFieldValue) -> Unit
 ) {
     val fieldFocused = remember { mutableStateOf(false) }
     OutlinedTextField(
         modifier = modifier.onFocusChanged {
             fieldFocused.value = it.hasFocus
         },
-        value = value,
+        value = TextFieldValue(
+            value, TextRange(value.length)
+        ),
+        keyboardActions = KeyboardActions {
+            keyboardAction()
+        },
         onValueChange = onValueChange,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = action),
@@ -86,8 +95,8 @@ fun BaseInputField(
 @Composable
 fun BaseInputFieldPreview() {
     val textFieldValue = remember { mutableStateOf("") }
-    val onValueChange = fun(value: String) {
-        textFieldValue.value = value
+    val onValueChange = fun(value: TextFieldValue) {
+        textFieldValue.value = value.text
     }
     Row(
         modifier = Modifier

@@ -51,7 +51,7 @@ fun AddPlayerPopup(
                 value = playerName.value,
                 hint = "player name",
             ) { newName ->
-                playerName.value = newName
+                playerName.value = newName.text
             }
             Spacer(modifier = Modifier.size(Dimens.paddingLarge))
             Row(

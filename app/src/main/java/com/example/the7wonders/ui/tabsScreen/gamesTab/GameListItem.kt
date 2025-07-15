@@ -29,7 +29,12 @@ import java.util.Calendar
 import java.util.Locale
 
 @Composable
-fun GameListItem(modifier: Modifier = Modifier, game: GameItem) {
+fun GameListItem(
+    modifier: Modifier = Modifier,
+    game: GameItem,
+    onClick: (Long) -> Unit,
+    onHold: (Long) -> Unit
+) {
 
     val leaderboard = game.playerScores.sortedByDescending { it.second }
         .filterIndexed { index, pair -> index < 5 }
@@ -40,7 +45,10 @@ fun GameListItem(modifier: Modifier = Modifier, game: GameItem) {
             .atZone(ZoneId.systemDefault()).format(format)
     BaseCard(
         onClick = {
-            //TODO("open game details")
+            onClick(game.id)
+        },
+        onHold = {
+            onHold(game.id)
         },
         modifier = modifier
     ) {
@@ -140,6 +148,6 @@ fun GameListItemPreview() {
     )
 
     Column(modifier = Modifier.padding(Dimens.paddingMedium)) {
-        GameListItem(game = gameItem)
+        GameListItem(game = gameItem, onClick = {}, onHold = {})
     }
 }

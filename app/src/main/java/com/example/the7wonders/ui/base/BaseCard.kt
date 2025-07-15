@@ -1,6 +1,9 @@
 package com.example.the7wonders.ui.base
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -14,8 +17,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalRippleConfiguration
 import androidx.compose.material3.RippleConfiguration
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -26,14 +31,31 @@ import com.example.the7wonders.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseCard(modifier: Modifier = Modifier, onClick: () -> Unit, content: @Composable () -> Unit) {
+fun BaseCard(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    onHold: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    val interactionSource = remember { MutableInteractionSource() }
 
     CompositionLocalProvider(
         LocalRippleConfiguration provides RippleConfiguration(color = BaseColors.onSecondary)
     ) {
         Card(
-            modifier = modifier,
-            onClick = onClick,
+            modifier = modifier
+                .combinedClickable(
+                    interactionSource = interactionSource,
+                    onLongClick = {
+                        onHold()
+                    },
+                    onClick = onClick,
+                    indication = null
+                )
+                .indication(
+                    interactionSource = interactionSource,
+                    indication = remember { ripple() }
+                ),
             elevation = CardDefaults.cardElevation(defaultElevation = Dimens.elevationSmall),
             shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
             colors = CardDefaults.cardColors(containerColor = BaseColors.primary),

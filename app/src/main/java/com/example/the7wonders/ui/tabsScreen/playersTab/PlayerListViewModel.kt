@@ -57,4 +57,12 @@ class PlayerListViewModel @Inject constructor() : ViewModel() {
         }
         return players
     }
+
+    fun toggleDeletePopup(id: Long?) {
+        _state.value = _state.value.copy(deletePopupVisible = !_state.value.deletePopupVisible)
+    }
+
+    fun deletePlayer() {
+        //TODO("Delete player")
+    }
 }

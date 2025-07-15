@@ -6,16 +6,23 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import com.example.the7wonders.ui.theme.BaseColors
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import com.example.the7wonders.ui.theme.Dimens
 
 @Composable
-fun DefaultCheckboxIcon(checked: MutableState<Boolean>) {
+fun DefaultCheckboxIcon(
+    checked: Boolean,
+    colorChecked: Color,
+    colorUnchecked: Color,
+    iconChecked: Painter = rememberVectorPainter(Icons.Filled.Done),
+    iconUnchecked: Painter = rememberVectorPainter(Icons.Filled.Clear),
+) {
     Icon(
-        imageVector = if (checked.value) Icons.Filled.Done else Icons.Filled.Clear,
-        tint = if (checked.value) BaseColors.textPrimary else BaseColors.textSecondary,
+        painter = if (checked) iconChecked else iconUnchecked,
+        tint = if (checked) colorChecked else colorUnchecked,
         contentDescription = "checkbox icon",
         modifier = Modifier.padding(
             horizontal = Dimens.paddingMedium,
