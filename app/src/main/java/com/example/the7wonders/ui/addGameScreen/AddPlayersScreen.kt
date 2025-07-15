@@ -47,7 +47,7 @@ fun AddPlayersScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                 textColor = BaseColors.primary,
                 modifier = Modifier.width(Dimens.addPlayerListWidth)
             ) {
-                //TODO("Confirm player list, navigate to points input screen")
+                viewModel.confirmPlayers()
             }
         }
     }

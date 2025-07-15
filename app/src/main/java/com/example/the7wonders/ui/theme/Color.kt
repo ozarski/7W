@@ -21,3 +21,12 @@ object BaseColors {
     val winIconColor = Color(0xFFDBD56E)
 }
 
+object PointTypeColors {
+    val green = Color(0xFFA4AF69)
+    val military = Color(0xFFBA1B1D)
+    val wonder = Color(0xFF100B00)
+    val gold = Color(0xFFBFAE48)
+    val blue = Color(0xFF044B7F)
+    val yellow = Color(0xFFF7B538)
+    val purple = Color(0xFF3A2449)
+}
