@@ -84,8 +84,7 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                                     currentPoint.pointType.pointName,
                                     name,
                                 ),
-                                fontFamily = FontFamily.Monospace,
-                                style = Typography.labelLarge,
+                                style = Typography.labelLarge.copy(fontFamily = FontFamily.Monospace),
                                 textAlign = TextAlign.Center,
                                 maxLines = 1
                             )

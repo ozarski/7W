@@ -31,11 +31,14 @@ import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
-fun PlayerListItem(player: PlayerItem) {
+fun PlayerListItem(player: PlayerItem, onClick: (Long) -> Unit, onHold: (Long) -> Unit) {
     BaseCard(
         modifier = Modifier.padding(Dimens.paddingMedium),
         onClick = {
-            //TODO("navigate to player details")
+            onClick(player.id)
+        },
+        onHold = {
+            onHold(player.id)
         }
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -142,6 +145,6 @@ fun PlayerListItemPreview() {
         avgPlacement = 3.77
     )
     Column {
-        PlayerListItem(player)
+        PlayerListItem(player, onHold = {}, onClick = {})
     }
 }

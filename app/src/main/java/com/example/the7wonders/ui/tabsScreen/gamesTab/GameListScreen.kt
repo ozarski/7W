@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
+import com.example.the7wonders.ui.base.ConfirmationPopup
 import com.example.the7wonders.ui.base.LoadingScreen
 import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Typography
@@ -22,11 +23,21 @@ import com.example.the7wonders.ui.theme.Typography
 fun GameListScreen(
     viewModel: GameListViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state
+    val state = viewModel.state.value
+    if (state.deletePopupVisible) {
+        ConfirmationPopup(
+            title = stringResource(R.string.are_you_sure),
+            message = stringResource(R.string.game_delete_confirmation_message),
+            onNegativeClick = { viewModel.toggleDeletePopup(null) },
+            onPositiveClick = { viewModel.deleteGame() },
+            positiveButtonText = stringResource(R.string.yes_button_label),
+            negativeButtonText = stringResource(R.string.no_button_label)
+        )
+    }
 
-    if (state.value.isLoading) {
+    if (state.isLoading) {
         LoadingScreen()
-    } else if (!state.value.isLoading && state.value.gameList.isEmpty()) {
+    } else if (state.gameList.isEmpty()) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -36,11 +47,17 @@ fun GameListScreen(
         }
     } else {
         Column(modifier = Modifier.fillMaxSize()) {
-            LazyColumn(state = state.value.lazyListState) {
-                items(state.value.gameList.size) { index ->
+            LazyColumn(state = state.lazyListState) {
+                items(state.gameList.size) { index ->
                     GameListItem(
-                        game = state.value.gameList[index],
-                        modifier = Modifier.padding(Dimens.paddingMedium)
+                        game = state.gameList[index],
+                        modifier = Modifier.padding(Dimens.paddingMedium),
+                        onClick = {
+                            //TODO("Navigate to game details screen")
+                        },
+                        onHold = { id ->
+                            viewModel.toggleDeletePopup(id)
+                        }
                     )
                 }
                 item {

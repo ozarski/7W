@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.the7wonders.ui.theme.BaseColors
@@ -31,32 +33,35 @@ fun ConfirmationPopup(
             Spacer(modifier = Modifier.size(Dimens.spacerSizeLarge))
             Text(
                 text = title,
-                style = Typography.titleLarge,
+                style = Typography.titleMedium.copy(fontWeight = FontWeight.ExtraBold),
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.size(Dimens.spacerSizeExtraLarge))
             Text(
                 text = message,
-                style = Typography.bodyLarge,
+                style = Typography.labelLarge,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.size(Dimens.spacerSizeExtraLarge))
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.paddingMedium),
+                horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 PrimaryButton(
                     label = positiveButtonText,
                     buttonColor = BaseColors.success,
-                    onClick = onPositiveClick
+                    onClick = onPositiveClick,
+                    modifier = Modifier.weight(1f)
                 )
+                Spacer(modifier = Modifier.size(Dimens.paddingMedium))
                 PrimaryButton(
                     label = negativeButtonText,
                     buttonColor = BaseColors.error,
-                    onClick = onNegativeClick
+                    onClick = onNegativeClick,
+                    modifier = Modifier.weight(1f)
                 )
             }
-            Spacer(modifier = Modifier.size(Dimens.spacerSizeLarge))
+            Spacer(modifier = Modifier.size(Dimens.paddingMedium))
         }
     }
 }
