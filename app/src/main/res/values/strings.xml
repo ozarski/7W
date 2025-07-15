@@ -4,4 +4,8 @@
     <string name="top_score">top score</string>
     <string name="avg_place">avg place</string>
     <string name="continue_button_label">Continue</string>
+    <string name="point_type_for_player">%1$s points for %2$s</string>
+    <string name="points_input_hint">points</string>
+    <string name="previous_button_label">Previous</string>
+    <string name="next_button_label">Next</string>
 </resources>

@@ -52,13 +52,11 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
     }
 
     fun togglePlayer(playerIndex: Int) {
-        println(_state.value.availablePlayers[playerIndex].isPlaying)
         if (_state.value.availablePlayers[playerIndex].isPlaying) {
             removePlayer(playerIndex)
         } else {
             addPlayer(playerIndex)
         }
-        println(_state.value.availablePlayers[playerIndex].isPlaying)
     }
 
     fun getNextPlayerNumber(): Int {
@@ -87,37 +85,56 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
                     value = 0
                 )
             }
-        }
-        _state.value = _state.value.copy(pointQueue = points)
+        }.toMutableList()
+        val currentInputPoint = points.popOrNull()
+        _state.value = _state.value.copy(pointQueue = points, currentInputPoint = currentInputPoint)
     }
 
-    fun insertPointValue(value: Int) {
+    fun updateCurrentPointValue(value: String) {
+        if (value.isEmpty()) {
+            return
+        } else {
+            try {
+                _state.value = _state.value.copy(
+                    currentInputPoint = _state.value.currentInputPoint?.copy(
+                        value = value.toInt()
+                    )
+                )
+            } catch (e: Exception) {
+                println(e.message)
+            }
+        }
+    }
+
+    fun insertPointValue() {
         val pointQueueMutable = _state.value.pointQueue.toMutableList()
-        val pointValueItem = pointQueueMutable.popOrNull()
-        if (pointValueItem == null) return
-        pointValueItem.copy(value = value)
+        val inputValue = _state.value.currentInputPoint
+        if (inputValue == null) return
         val confirmedPointsMutable = _state.value.confirmedPoints.toMutableList()
-        confirmedPointsMutable.push(pointValueItem)
+        confirmedPointsMutable.push(inputValue)
+        val newCurrentPoint = pointQueueMutable.popOrNull()
         _state.value = _state.value.copy(
             pointQueue = pointQueueMutable,
             confirmedPoints = confirmedPointsMutable,
-            currentInputPoint = pointQueueMutable.first()
+            currentInputPoint = newCurrentPoint
         )
-        if (_state.value.pointQueue.isEmpty()) {
+        if (_state.value.currentInputPoint == null) {
             finishGame()
         }
     }
 
     fun rollBackPointValue() {
+        if (_state.value.confirmedPoints.isEmpty()) return
         val confirmedPointsMutable = _state.value.confirmedPoints.toMutableList()
-        val pointValueItem = confirmedPointsMutable.popOrNull()
-        if (pointValueItem == null) return
+        val currentInputPoint = _state.value.currentInputPoint
+        if (currentInputPoint == null) return
+        val newCurrentInputPoint = confirmedPointsMutable.popOrNull()
         val pointQueueMutable = _state.value.pointQueue.toMutableList()
-        pointQueueMutable.push(pointValueItem)
+        pointQueueMutable.push(currentInputPoint)
         _state.value = _state.value.copy(
             pointQueue = pointQueueMutable,
             confirmedPoints = confirmedPointsMutable,
-            currentInputPoint = pointQueueMutable.first()
+            currentInputPoint = newCurrentInputPoint
         )
     }
 

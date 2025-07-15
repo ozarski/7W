@@ -16,7 +16,7 @@ fun AddGameScreen(viewModel: AddGameViewModel = hiltViewModel(), navController: 
             }
 
             GamePhase.PointInput -> {
-                //TODO("Display game input screen")
+                PointInputScreen()
             }
 
             else -> {
@@ -26,5 +26,6 @@ fun AddGameScreen(viewModel: AddGameViewModel = hiltViewModel(), navController: 
     }
     BackHandler {
         //TODO("Implement confirmation popup")
+        navController.popBackStack()
     }
 }
