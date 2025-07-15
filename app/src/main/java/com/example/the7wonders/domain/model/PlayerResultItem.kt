@@ -2,9 +2,10 @@ package com.example.the7wonders.domain.model
 
 import com.example.the7wonders.ui.addGameScreen.PointType
 
-data class PlayersPointTypeItem(
+data class PlayerResultItem(
     val playerID: Long,
     val playerName: String,
-    val pointType: PointType,
-    val value: Int
+    val totalScore: Int,
+    val placement: Int,
+    val scores: List<Pair<PointType, Int>>
 )

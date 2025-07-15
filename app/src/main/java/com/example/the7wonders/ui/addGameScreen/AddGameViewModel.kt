@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.the7wonders.domain.model.AddPlayerItem
+import com.example.the7wonders.domain.model.PlayerResultItem
 import com.example.the7wonders.domain.model.PlayersPointTypeItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -76,7 +77,7 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
     }
 
     fun initializePoints() {
-        val points = PointTypes.entries.flatMap { pointType ->
+        val points = PointType.entries.flatMap { pointType ->
             _state.value.selectedPlayers.map { player ->
                 PlayersPointTypeItem(
                     playerID = player.id,
@@ -139,9 +140,27 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
     }
 
     fun finishGame() {
+        calculateResults()
         _state.value = _state.value.copy(
             gamePhase = GamePhase.Results
         )
+    }
+
+    fun calculateResults() {
+        val scoreList = _state.value.selectedPlayers
+            .map { player ->
+                val playerScores = _state.value.confirmedPoints
+                    .filter { score -> score.playerID == player.id }
+                    .map { score -> Pair(score.pointType, score.value) }
+                val playerTotalScore = playerScores.sumOf { it.second }
+                PlayerResultItem(player.id, player.name, playerTotalScore, 0, playerScores)
+            }.sortedByDescending {
+                it.totalScore
+            }.mapIndexed { index, result ->
+                result.copy(placement = index + 1)
+            }
+
+        _state.value = _state.value.copy(results = scoreList)
     }
 
     fun insertMockData(n: Int) {
