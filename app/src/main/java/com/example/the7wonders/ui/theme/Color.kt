@@ -30,5 +30,5 @@ object PointTypeColors {
     val gold = Color(0xFFBFAE48)
     val blue = Color(0xFF044B7F)
     val yellow = Color(0xFFF7B538)
-    val purple = Color(0xFF3A2449)
+    val purple = Color(0xFF5B3972)
 }

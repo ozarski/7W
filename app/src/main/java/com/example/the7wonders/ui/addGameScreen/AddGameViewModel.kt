@@ -93,7 +93,11 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
 
     fun updateCurrentPointValue(value: String) {
         if (value.isEmpty()) {
-            return
+            _state.value = _state.value.copy(
+                currentInputPoint = _state.value.currentInputPoint?.copy(
+                    value = 0
+                )
+            )
         } else {
             try {
                 _state.value = _state.value.copy(
@@ -102,8 +106,21 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             } catch (e: Exception) {
-                println(e.message)
+                _state.value = _state.value.copy(
+                    currentInputPoint = _state.value.currentInputPoint?.copy(
+                        value = 0
+                    )
+                )
             }
+        }
+    }
+
+    fun getCurrentPointValueString(): String {
+        val currentPoint = _state.value.currentInputPoint
+        if (currentPoint == null || currentPoint.value == 0) {
+            return ""
+        } else {
+            return currentPoint.value.toString()
         }
     }
 

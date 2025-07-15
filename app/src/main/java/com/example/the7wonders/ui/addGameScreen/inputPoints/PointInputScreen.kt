@@ -93,7 +93,7 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                     }
                     Spacer(modifier = Modifier.size(Dimens.paddingLarge))
                     BaseInputField(
-                        value = if (currentPoint.value == 0) "" else currentPoint.value.toString(),
+                        value = viewModel.getCurrentPointValueString(),
                         hint = stringResource(R.string.points_input_hint),
                         onValueChange = {
                             viewModel.updateCurrentPointValue(it.text)
@@ -101,7 +101,10 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                         keyboardType = KeyboardType.Number,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = Dimens.paddingSmall)
+                            .padding(horizontal = Dimens.paddingSmall),
+                        keyboardAction = {
+                            viewModel.insertPointValue()
+                        }
                     )
                     Spacer(modifier = Modifier.size(Dimens.paddingLarge))
                     Row(

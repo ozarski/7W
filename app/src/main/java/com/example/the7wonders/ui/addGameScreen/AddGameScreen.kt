@@ -7,6 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.the7wonders.ui.addGameScreen.inputPoints.PointInputScreen
 import com.example.the7wonders.ui.addGameScreen.playerSelection.AddPlayersScreen
+import com.example.the7wonders.ui.addGameScreen.results.GameResultsScreen
 
 @Composable
 fun AddGameScreen(viewModel: AddGameViewModel = hiltViewModel(), navController: NavHostController) {
@@ -22,7 +23,7 @@ fun AddGameScreen(viewModel: AddGameViewModel = hiltViewModel(), navController: 
             }
 
             else -> {
-                //TODO("Display game results screen")
+                GameResultsScreen(navController = navController)
             }
         }
     }

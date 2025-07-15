@@ -28,9 +28,14 @@ import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
-fun PlayerResultsBubble(results: PlayerResultItem, iconID: Int, color: Color) {
+fun PlayerResultsBubble(
+    modifier: Modifier = Modifier,
+    results: PlayerResultItem,
+    iconID: Int,
+    color: Color
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .shadow(elevation = Dimens.elevationSmall, shape = CircleShape)
             .background(shape = CircleShape, color = BaseColors.primary)
             .border(width = Dimens.strokeWidthLarge, color = color, shape = CircleShape)
@@ -67,6 +72,57 @@ fun PlayerResultsBubble(results: PlayerResultItem, iconID: Int, color: Color) {
             )
             Text(
                 "${results.totalScore} pts",
+                style = Typography.bodyLarge,
+                color = color
+            )
+        }
+    }
+}
+
+@Composable
+fun EmptyBubble(
+    modifier: Modifier = Modifier,
+    iconID: Int,
+    color: Color
+) {
+    Box(
+        modifier = modifier
+            .shadow(elevation = Dimens.elevationSmall, shape = CircleShape)
+            .background(shape = CircleShape, color = BaseColors.primary)
+            .border(width = Dimens.strokeWidthLarge, color = color, shape = CircleShape)
+            .layout { measurable, constraints ->
+                val placeable = measurable.measure(constraints)
+                layout(placeable.width, placeable.width) {
+                    placeable.placeRelative(0, 0)
+                }
+            }
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(
+                    start = Dimens.paddingExtraLarge,
+                    end = Dimens.paddingExtraLarge,
+                    top = Dimens.paddingLarge
+                )
+                .width(Dimens.resultBubbleWidth)
+        ) {
+            Icon(
+                painterResource(iconID),
+                "player result icon",
+                modifier = Modifier.size(Dimens.resultBubbleIconSize),
+                tint = color
+            )
+            Text(
+                "-",
+                style = Typography.labelLarge,
+                color = BaseColors.textSecondary,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                "- pts",
                 style = Typography.bodyLarge,
                 color = color
             )
