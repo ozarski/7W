@@ -1,8 +1,12 @@
 package com.example.the7wonders.data.model
 
 import androidx.room.Entity
+import com.example.the7wonders.data.datasource.DatabaseConstants
 
-@Entity(primaryKeys = ["playerID", "gameID"], tableName = "PlayerResults")
+@Entity(
+    primaryKeys = ["playerID", "gameID"],
+    tableName = DatabaseConstants.PLAYER_RESULTS_TABLE_NAME
+)
 data class PlayerResultsEntity(
     val playerID: Long,
     val gameID: Long,
