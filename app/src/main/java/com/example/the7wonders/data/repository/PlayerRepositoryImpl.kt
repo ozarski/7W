@@ -1,0 +1,31 @@
+package com.example.the7wonders.data.repository
+
+import com.example.the7wonders.data.datasource.PlayerDao
+import com.example.the7wonders.data.model.toDomainModel
+import com.example.the7wonders.domain.model.PlayerModel
+import com.example.the7wonders.domain.model.toPlayerEntity
+import com.example.the7wonders.domain.repository.PlayerRepository
+import jakarta.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+class PlayerRepositoryImpl @Inject constructor(private val playerDao: PlayerDao) :
+    PlayerRepository {
+    override suspend fun getPlayers(): Flow<List<PlayerModel>> {
+        return playerDao.getPlayersWithStats().map {
+            it.map { dto -> dto.toDomainModel() }
+        }
+    }
+
+    override suspend fun addPlayer(player: PlayerModel): Long {
+        return playerDao.addPlayer(player.toPlayerEntity())
+    }
+
+    override suspend fun deletePlayer(player: PlayerModel) {
+        playerDao.deletePlayer(player.id)
+    }
+
+    override suspend fun updatePlayer(player: PlayerModel) {
+        playerDao.updatePlayer(player.toPlayerEntity())
+    }
+}

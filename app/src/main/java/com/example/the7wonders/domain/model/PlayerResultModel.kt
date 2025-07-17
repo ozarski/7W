@@ -22,7 +22,7 @@ fun PlayerResultModel.toPlayerResultEntity(gameID: Long): PlayerResultEntity {
         yellowCardPoints = scores.firstOrNull { it.first == PointType.Yellow }?.second ?: 0,
         greenCardPoints = scores.firstOrNull { it.first == PointType.Green }?.second ?: 0,
         purpleCardPoints = scores.firstOrNull { it.first == PointType.Purple }?.second ?: 0,
-        totalPoints = totalScore,
+        totalScore = totalScore,
         placement = placement
     )
 }

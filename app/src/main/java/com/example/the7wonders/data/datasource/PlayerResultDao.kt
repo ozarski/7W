@@ -6,9 +6,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.the7wonders.data.model.PlayerResultEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface PlayerResultsDao {
+interface PlayerResultDao {
 
     @Query(
         "SELECT * FROM ${
@@ -17,7 +18,10 @@ interface PlayerResultsDao {
             DatabaseConstants.PLAYER_RESULTS_GAME_ID_COLUMN_NAME
         } = :gameID AND ${DatabaseConstants.PLAYER_RESULTS_PLAYER_ID_COLUMN_NAME} = :playerID"
     )
-    suspend fun getPlayerResultsForGame(gameID: Long, playerID: Long)
+    fun getPlayerResultsForGame(
+        gameID: Long,
+        playerID: Long
+    ): Flow<List<PlayerResultEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addPlayerResults(playerResults: PlayerResultEntity)

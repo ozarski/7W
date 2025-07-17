@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.the7wonders.data.model.PlayerEntity
+import com.example.the7wonders.data.model.PlayerWithStatsDto
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,9 +15,13 @@ interface PlayerDao {
     @Query(
         "SELECT * FROM ${
             DatabaseConstants.PLAYER_TABLE_NAME
+        } WHERE ${
+            DatabaseConstants.PLAYER_DELETED_FLAG_COLUMN_NAME
+        } = ${
+            DatabaseConstants.DELETED_FLAG_FALSE
         }"
     )
-    suspend fun getAllPlayers(): Flow<List<PlayerEntity>>
+    fun getAllPlayers(): Flow<List<PlayerEntity>>
 
     @Query(
         "SELECT * FROM ${
@@ -26,6 +31,9 @@ interface PlayerDao {
         } = :id"
     )
     suspend fun getPlayerById(id: Long): PlayerEntity?
+
+    @Query(DatabaseQueries.PLAYERS_WITH_RESULTS_QUERY)
+    fun getPlayersWithStats(): Flow<List<PlayerWithStatsDto>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addPlayer(player: PlayerEntity): Long

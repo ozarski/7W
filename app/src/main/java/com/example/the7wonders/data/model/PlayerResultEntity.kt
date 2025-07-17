@@ -17,6 +17,6 @@ data class PlayerResultEntity(
     val yellowCardPoints: Int,
     val greenCardPoints: Int,
     val purpleCardPoints: Int,
-    val totalPoints: Int,
+    val totalScore: Int,
     val placement: Int
 )
