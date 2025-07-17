@@ -8,5 +8,5 @@ data class PlayerListState(
     val isLoading: Boolean = false,
     val gridState: LazyGridState = LazyGridState(),
     val deletePopupVisible: Boolean = false,
-    val popupPlayerID: Long? = null
+    val popupPlayerModel: PlayerModel? = null
 )

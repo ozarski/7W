@@ -5,32 +5,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.the7wonders.domain.model.PlayerModel
+import com.example.the7wonders.domain.repository.PlayerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
 
 @HiltViewModel
-class PlayerListViewModel @Inject constructor() : ViewModel() {
+class PlayerListViewModel @Inject constructor(private val playerRepository: PlayerRepository) :
+    ViewModel() {
 
     private val _state = mutableStateOf(PlayerListState(emptyList()))
     val state: State<PlayerListState> = _state
 
     init {
-        viewModelScope.launch {
-            loadPlayers()
-        }
+        loadPlayers()
     }
 
-    suspend fun loadPlayers() {
+    fun loadPlayers() {
         _state.value = _state.value.copy(isLoading = true)
-        delay(500)
-        val alotofdata = mutableListOf<PlayerModel>()
-        for (i in 0..20) {
-            alotofdata.addAll(generateMockData())
+        viewModelScope.launch {
+            playerRepository.getPlayers().catch {
+                _state.value = _state.value.copy(isLoading = false)
+            }.collect { players ->
+                _state.value =
+                    _state.value.copy(
+                        isLoading = false,
+                        playerList = players.sortedBy { it.name }.sortedByDescending { it.wins })
+            }
         }
-        _state.value = _state.value.copy(playerList = alotofdata, isLoading = false)
     }
 
     fun generateMockData(): List<PlayerModel> {
@@ -58,11 +62,18 @@ class PlayerListViewModel @Inject constructor() : ViewModel() {
         return players
     }
 
-    fun toggleDeletePopup(id: Long?) {
-        _state.value = _state.value.copy(deletePopupVisible = !_state.value.deletePopupVisible)
+    fun toggleDeletePopup(playerModel: PlayerModel?) {
+        _state.value = _state.value.copy(
+            deletePopupVisible = !_state.value.deletePopupVisible,
+            popupPlayerModel = playerModel
+        )
     }
 
     fun deletePlayer() {
-        //TODO("Delete player")
+        val playerModel = _state.value.popupPlayerModel ?: return
+        viewModelScope.launch {
+            playerRepository.deletePlayer(playerModel)
+            toggleDeletePopup(null)
+        }
     }
 }

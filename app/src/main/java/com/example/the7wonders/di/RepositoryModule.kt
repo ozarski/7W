@@ -1,7 +1,11 @@
 package com.example.the7wonders.di
 
 import com.example.the7wonders.data.repository.GameRepositoryImpl
+import com.example.the7wonders.data.repository.PlayerRepositoryImpl
+import com.example.the7wonders.data.repository.PlayerResultRepositoryImpl
 import com.example.the7wonders.domain.repository.GameRepository
+import com.example.the7wonders.domain.repository.PlayerRepository
+import com.example.the7wonders.domain.repository.PlayerResultRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,13 +18,13 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun provideGamesRepository(gameRepositoryImpl: GameRepositoryImpl): GameRepository
+    abstract fun provideGameRepository(gameRepositoryImpl: GameRepositoryImpl): GameRepository
 
     @Binds
     @Singleton
-    abstract fun providePlayerRepository(playerRepositoryImpl: GameRepositoryImpl): GameRepository
+    abstract fun providePlayerRepository(playerRepositoryImpl: PlayerRepositoryImpl): PlayerRepository
 
     @Binds
     @Singleton
-    abstract fun providePlayerResultRepository(playerResultRepositoryImpl: GameRepositoryImpl): GameRepository
+    abstract fun providePlayerResultRepository(playerResultRepositoryImpl: PlayerResultRepositoryImpl): PlayerResultRepository
 }

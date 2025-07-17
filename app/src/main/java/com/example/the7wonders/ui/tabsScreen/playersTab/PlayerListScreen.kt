@@ -44,7 +44,7 @@ fun PlayerListScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(stringResource(R.string.empty_games_list), style = Typography.labelMedium)
+            Text(stringResource(R.string.no_players_found), style = Typography.labelMedium)
         }
     } else {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -54,8 +54,8 @@ fun PlayerListScreen(
                         state.playerList[index],
                         onClick = { id -> //TODO("Navigate to player details screen")
                         },
-                        onHold = { id ->
-                            viewModel.toggleDeletePopup(id)
+                        onHold = { playerModel ->
+                            viewModel.toggleDeletePopup(playerModel)
                         }
                     )
                 }

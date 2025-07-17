@@ -27,7 +27,7 @@ object DatabaseConstants {
 object DatabaseQueries {
     const val PLAYERS_WITH_RESULTS_QUERY =
         "SELECT ${DatabaseConstants.DEFAULT_ID_COLUMN_NAME}, ${DatabaseConstants.PLAYER_NAME_COLUMN_NAME}, topScore, avgPlacement, wins, games " +
-                "FROM ${DatabaseConstants.PLAYER_TABLE_NAME} INNER JOIN (" +
+                "FROM ${DatabaseConstants.PLAYER_TABLE_NAME} LEFT JOIN (" +
                 "SELECT ${DatabaseConstants.PLAYER_RESULTS_PLAYER_ID_COLUMN_NAME}, " +
                 "MAX(${DatabaseConstants.TOTAL_SCORE_COLUMN_NAME}) as topScore, " +
                 "COUNT(${DatabaseConstants.GAME_ID_COLUMN_NAME}) as games, " +

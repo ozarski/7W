@@ -22,6 +22,8 @@ class PlayerRepositoryImpl @Inject constructor(private val playerDao: PlayerDao)
     }
 
     override suspend fun deletePlayer(player: PlayerModel) {
+        //TODO("Add actual error handling")
+        if (player.id == null) return
         playerDao.deletePlayer(player.id)
     }
 

@@ -5,14 +5,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.the7wonders.domain.model.GameModel
+import com.example.the7wonders.domain.repository.GameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
-class GameListViewModel @Inject constructor() : ViewModel() {
+class GameListViewModel @Inject constructor(private val gameRepository: GameRepository) :
+    ViewModel() {
 
     private val _state = mutableStateOf(GameListState(emptyList()))
     val state: State<GameListState> = _state
@@ -23,12 +25,16 @@ class GameListViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    suspend fun loadGames() {
+    fun loadGames() {
         _state.value = _state.value.copy(isLoading = true)
-        //TODO("Replace with loading data from the database")
-        delay(500)
-        _state.value = _state.value.copy(gameList = generateMockData(50), isLoading = false)
-        //_state.value = _state.value.copy(gameList = emptyList(), isLoading = false)
+
+        viewModelScope.launch {
+            gameRepository.getGames().catch {
+                _state.value = _state.value.copy(isLoading = false)
+            }.collect { games ->
+                _state.value = _state.value.copy(isLoading = false, gameList = games)
+            }
+        }
     }
 
     fun generateMockData(n: Int): List<GameModel> {
