@@ -3,6 +3,8 @@ package com.example.the7wonders
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
@@ -32,21 +34,25 @@ fun AppNavigation() {
     NavHost(
         navController = navController,
         startDestination = Screens.MainTabs.route,
-        enterTransition = {
-            slideInVertically(
-                initialOffsetY = { it },
-            )
-        },
-        exitTransition = {
-            slideOutVertically(
-                targetOffsetY = { it },
-            )
-        }
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None }
     ) {
         composable(Screens.MainTabs.route) {
             MainTabsScreen(navController = navController)
         }
-        composable(Screens.AddGame.route) {
+        composable(
+            Screens.AddGame.route,
+            enterTransition = {
+                slideInVertically(
+                    initialOffsetY = { it },
+                )
+            },
+            exitTransition = {
+                slideOutVertically(
+                    targetOffsetY = { it },
+                )
+            },
+        ) {
             AddGameScreen(navController = navController)
         }
     }

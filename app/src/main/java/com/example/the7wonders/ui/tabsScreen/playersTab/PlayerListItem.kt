@@ -24,21 +24,21 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.R
-import com.example.the7wonders.domain.model.PlayerItem
+import com.example.the7wonders.domain.model.PlayerModel
 import com.example.the7wonders.ui.base.BaseCard
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
-fun PlayerListItem(player: PlayerItem, onClick: (Long) -> Unit, onHold: (Long) -> Unit) {
+fun PlayerListItem(player: PlayerModel, onClick: (Long?) -> Unit, onHold: (PlayerModel?) -> Unit) {
     BaseCard(
         modifier = Modifier.padding(Dimens.paddingMedium),
         onClick = {
             onClick(player.id)
         },
         onHold = {
-            onHold(player.id)
+            onHold(player)
         }
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -57,13 +57,13 @@ fun PlayerListItem(player: PlayerItem, onClick: (Long) -> Unit, onHold: (Long) -
                 ) {
                     IconInfoRow(
                         painter = painterResource(R.drawable.rounded_crown_24),
-                        text = player.wins.toString(),
+                        text = if (player.wins == null) "0" else player.wins.toString(),
                         iconColor = BaseColors.winIconColor
                     )
                     Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
                     IconInfoRow(
                         painter = painterResource(R.drawable.rounded_numbers_24),
-                        text = player.games.toString()
+                        text = if (player.games == null) "0" else player.games.toString(),
                     )
                 }
             }
@@ -77,7 +77,10 @@ fun PlayerListItem(player: PlayerItem, onClick: (Long) -> Unit, onHold: (Long) -
                     style = Typography.labelLarge,
                     color = BaseColors.textSecondary
                 )
-                Text(player.topScore.toString(), style = Typography.labelLarge)
+                Text(
+                    if (player.topScore == null) "-" else player.topScore.toString(),
+                    style = Typography.labelLarge
+                )
             }
             Spacer(modifier = Modifier.size(Dimens.paddingSmall))
             Row(
@@ -91,7 +94,8 @@ fun PlayerListItem(player: PlayerItem, onClick: (Long) -> Unit, onHold: (Long) -
                 )
                 Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
                 Text(
-                    DecimalFormat("#.#").format(player.avgPlacement).toString(),
+                    if (player.avgPlacement == null) "-" else DecimalFormat("#.#").format(player.avgPlacement)
+                        .toString(),
                     style = Typography.labelLarge,
                 )
             }
@@ -136,7 +140,7 @@ fun IconInfoRow(
 @Composable
 @Preview
 fun PlayerListItemPreview() {
-    val player = PlayerItem(
+    val player = PlayerModel(
         id = 1,
         name = "Wojtek",
         wins = 10,

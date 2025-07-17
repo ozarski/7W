@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,37 +19,53 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
 import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
 import com.example.the7wonders.ui.base.BaseBackground
+import com.example.the7wonders.ui.base.LoadingScreen
 import com.example.the7wonders.ui.base.PrimaryButton
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
+import com.example.the7wonders.ui.theme.Typography
 
 @Composable
 fun AddPlayersScreen(viewModel: AddGameViewModel = hiltViewModel()) {
+    val state = viewModel.state.value
     BaseBackground {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = Dimens.addPlayerScreenPaddingBottom)
-        ) {
-            Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
-            Icon(
-                Icons.Outlined.Person,
-                null,
-                modifier = Modifier.size(Dimens.addPlayersIconSize),
-                tint = BaseColors.onSecondary
-            )
-            Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
-            AddPlayerList()
-            Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
-            PrimaryButton(
-                label = stringResource(R.string.continue_button_label),
-                buttonColor = BaseColors.onSecondary,
-                textColor = BaseColors.primary,
-                modifier = Modifier.width(Dimens.addPlayerListWidth)
+        if (state.isLoading) {
+            LoadingScreen(modifier = Modifier.fillMaxSize())
+        } else if (state.availablePlayers.isEmpty()) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
-                viewModel.confirmPlayers()
+                Text(stringResource(R.string.no_players_found), style = Typography.labelLarge)
+            }
+        } else {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = Dimens.addPlayerScreenPaddingBottom)
+            ) {
+                Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
+                Icon(
+                    Icons.Outlined.Person,
+                    null,
+                    modifier = Modifier.size(Dimens.addPlayersIconSize),
+                    tint = BaseColors.onSecondary
+                )
+                Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
+                AddPlayerList()
+                Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
+                PrimaryButton(
+                    label = stringResource(R.string.continue_button_label),
+                    buttonColor = BaseColors.onSecondary,
+                    textColor = BaseColors.primary,
+                    modifier = Modifier.width(Dimens.addPlayerListWidth)
+                ) {
+                    viewModel.confirmPlayers()
+                }
             }
         }
     }

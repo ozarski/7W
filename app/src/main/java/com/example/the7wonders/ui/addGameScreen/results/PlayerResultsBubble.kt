@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.the7wonders.R
-import com.example.the7wonders.domain.model.PlayerResultItem
+import com.example.the7wonders.domain.model.PlayerResultModel
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Typography
@@ -30,7 +30,7 @@ import com.example.the7wonders.ui.theme.Typography
 @Composable
 fun PlayerResultsBubble(
     modifier: Modifier = Modifier,
-    results: PlayerResultItem,
+    results: PlayerResultModel,
     iconID: Int,
     color: Color
 ) {
@@ -133,7 +133,7 @@ fun EmptyBubble(
 @Composable
 @Preview
 fun PlayerResultsBubblePreview() {
-    val results = PlayerResultItem(
+    val results = PlayerResultModel(
         playerID = 1,
         playerName = "Player One",
         totalScore = 60,

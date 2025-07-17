@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.the7wonders.R
-import com.example.the7wonders.domain.model.PlayerResultItem
+import com.example.the7wonders.domain.model.PlayerResultModel
 import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.PrimaryButton
@@ -103,7 +103,7 @@ fun GameResultsScreen(
 }
 
 @Composable
-fun PodiumRow(top3: List<PlayerResultItem>) {
+fun PodiumRow(top3: List<PlayerResultModel>) {
     Row(horizontalArrangement = Arrangement.SpaceEvenly) {
         if (top3.size > 2) {
             PlayerResultsBubble(
