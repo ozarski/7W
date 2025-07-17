@@ -33,11 +33,10 @@ fun GameListItem(
     modifier: Modifier = Modifier,
     game: GameModel,
     onClick: (Long?) -> Unit,
-    onHold: (Long?) -> Unit
+    onHold: (GameModel?) -> Unit
 ) {
 
     val leaderboard = game.playerScores.sortedByDescending { it.second }
-        .filterIndexed { index, pair -> index < 5 }
 
     val format = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ROOT)
     val dateFormatted =
@@ -48,7 +47,7 @@ fun GameListItem(
             onClick(game.id)
         },
         onHold = {
-            onHold(game.id)
+            onHold(game)
         },
         modifier = modifier
     ) {

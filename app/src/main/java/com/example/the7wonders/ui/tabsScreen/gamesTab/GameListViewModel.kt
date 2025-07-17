@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.the7wonders.domain.model.GameModel
 import com.example.the7wonders.domain.repository.GameRepository
+import com.example.the7wonders.domain.repository.PlayerResultRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -13,7 +14,10 @@ import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
-class GameListViewModel @Inject constructor(private val gameRepository: GameRepository) :
+class GameListViewModel @Inject constructor(
+    private val gameRepository: GameRepository,
+    private val playerResultRepository: PlayerResultRepository
+) :
     ViewModel() {
 
     private val _state = mutableStateOf(GameListState(emptyList()))
@@ -63,14 +67,21 @@ class GameListViewModel @Inject constructor(private val gameRepository: GameRepo
         return games
     }
 
-    fun toggleDeletePopup(id: Long?) {
+    fun toggleDeletePopup(gameModel: GameModel?) {
         _state.value = _state.value.copy(
             deletePopupVisible = !_state.value.deletePopupVisible,
-            popupGameID = id
+            popupGameModel = gameModel
         )
     }
 
     fun deleteGame() {
-        //TODO("delete game")
+        val gameModel = _state.value.popupGameModel ?: return
+        viewModelScope.launch {
+            gameRepository.deleteGame(gameModel)
+            if (gameModel.id != null) {
+                playerResultRepository.deletePlayerResultsForGame(gameModel.id)
+            }
+            toggleDeletePopup(null)
+        }
     }
 }

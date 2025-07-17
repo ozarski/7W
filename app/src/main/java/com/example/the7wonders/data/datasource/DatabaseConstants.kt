@@ -18,7 +18,7 @@ object DatabaseConstants {
     const val PLAYER_NAME_COLUMN_NAME = "name"
     const val DATE_COLUMN_NAME = "date"
     const val TOTAL_SCORE_COLUMN_NAME = "totalScore"
-    const val PLACEMENT_COLUMN_NAME = "totalScore"
+    const val PLACEMENT_COLUMN_NAME = "placement"
 
     const val DELETED_FLAG_TRUE = 1
     const val DELETED_FLAG_FALSE = 0

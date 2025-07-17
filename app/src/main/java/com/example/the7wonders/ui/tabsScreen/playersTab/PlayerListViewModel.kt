@@ -26,13 +26,13 @@ class PlayerListViewModel @Inject constructor(private val playerRepository: Play
     fun loadPlayers() {
         _state.value = _state.value.copy(isLoading = true)
         viewModelScope.launch {
-            playerRepository.getPlayers().catch {
+            playerRepository.getPlayersWithStats().catch {
                 _state.value = _state.value.copy(isLoading = false)
             }.collect { players ->
                 _state.value =
                     _state.value.copy(
                         isLoading = false,
-                        playerList = players.sortedBy { it.name }.sortedByDescending { it.wins })
+                        playerList = players.sortedBy { it.name })
             }
         }
     }

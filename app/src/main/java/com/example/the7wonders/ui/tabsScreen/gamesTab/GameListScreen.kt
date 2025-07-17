@@ -55,8 +55,8 @@ fun GameListScreen(
                         onClick = {
                             //TODO("Navigate to game details screen")
                         },
-                        onHold = { id ->
-                            viewModel.toggleDeletePopup(id)
+                        onHold = { gameModel ->
+                            viewModel.toggleDeletePopup(gameModel)
                         }
                     )
                 }

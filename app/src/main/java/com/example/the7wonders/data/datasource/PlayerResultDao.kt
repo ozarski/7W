@@ -27,6 +27,14 @@ interface PlayerResultDao {
     suspend fun addPlayerResults(playerResults: PlayerResultEntity)
 
     @Delete
-    fun deletePlayerResults(playerResultEntity: PlayerResultEntity)
+    suspend fun deletePlayerResults(playerResultEntity: PlayerResultEntity)
 
+    @Query(
+        "DELETE FROM ${
+            DatabaseConstants.PLAYER_RESULTS_TABLE_NAME
+        } WHERE ${
+            DatabaseConstants.GAME_ID_COLUMN_NAME
+        } = :gameID"
+    )
+    suspend fun deletePlayerResultsForGame(gameID: Long)
 }

@@ -7,4 +7,6 @@ interface PlayerResultRepository {
     suspend fun addPlayerResult(playerResultModel: PlayerResultModel, gameID: Long)
 
     suspend fun deletePlayerResult(playerResultModel: PlayerResultModel, gameID: Long)
+
+    suspend fun deletePlayerResultsForGame(gameID: Long)
 }

@@ -16,4 +16,8 @@ class PlayerResultRepositoryImpl @Inject constructor(private val playerResultDao
         playerResultDao.deletePlayerResults(playerResultModel.toPlayerResultEntity(gameID))
     }
 
+    override suspend fun deletePlayerResultsForGame(gameID: Long) {
+        playerResultDao.deletePlayerResultsForGame(gameID)
+    }
+
 }
