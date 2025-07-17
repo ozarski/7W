@@ -24,14 +24,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.R
-import com.example.the7wonders.domain.model.PlayerItem
+import com.example.the7wonders.domain.model.PlayerModel
 import com.example.the7wonders.ui.base.BaseCard
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
-fun PlayerListItem(player: PlayerItem, onClick: (Long) -> Unit, onHold: (Long) -> Unit) {
+fun PlayerListItem(player: PlayerModel, onClick: (Long) -> Unit, onHold: (Long) -> Unit) {
     BaseCard(
         modifier = Modifier.padding(Dimens.paddingMedium),
         onClick = {
@@ -136,7 +136,7 @@ fun IconInfoRow(
 @Composable
 @Preview
 fun PlayerListItemPreview() {
-    val player = PlayerItem(
+    val player = PlayerModel(
         id = 1,
         name = "Wojtek",
         wins = 10,

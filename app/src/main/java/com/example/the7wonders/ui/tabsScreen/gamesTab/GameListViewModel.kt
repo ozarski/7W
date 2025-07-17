@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.the7wonders.domain.model.GameItem
+import com.example.the7wonders.domain.model.GameModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ class GameListViewModel @Inject constructor() : ViewModel() {
         //_state.value = _state.value.copy(gameList = emptyList(), isLoading = false)
     }
 
-    fun generateMockData(n: Int): List<GameItem> {
+    fun generateMockData(n: Int): List<GameModel> {
         val names = listOf(
             "Wojtek",
             "Szymon",
@@ -40,14 +40,14 @@ class GameListViewModel @Inject constructor() : ViewModel() {
             "Kamila",
             "Kasia",
         )
-        val games = mutableListOf<GameItem>()
+        val games = mutableListOf<GameModel>()
         for (i in 0..n) {
             val scores = (30..70).shuffled().take(6)
             val playerScores = names.mapIndexed { index, name ->
                 Pair(name, scores[index])
             }
             games.add(
-                GameItem(
+                GameModel(
                     id = i + 1L,
                     playerScores = playerScores,
                     date = Calendar.getInstance().timeInMillis

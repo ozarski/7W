@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.the7wonders.R
-import com.example.the7wonders.domain.model.GameItem
+import com.example.the7wonders.domain.model.GameModel
 import com.example.the7wonders.ui.base.BaseCard
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
@@ -31,9 +31,9 @@ import java.util.Locale
 @Composable
 fun GameListItem(
     modifier: Modifier = Modifier,
-    game: GameItem,
-    onClick: (Long) -> Unit,
-    onHold: (Long) -> Unit
+    game: GameModel,
+    onClick: (Long?) -> Unit,
+    onHold: (Long?) -> Unit
 ) {
 
     val leaderboard = game.playerScores.sortedByDescending { it.second }
@@ -141,13 +141,13 @@ fun GameListItemPreview() {
         Pair("Player five", 56),
         Pair("Player six", 67),
     )
-    val gameItem = GameItem(
+    val gameModel = GameModel(
         id = 1,
         date = Calendar.getInstance().timeInMillis,
         playerScores = playerScores
     )
 
     Column(modifier = Modifier.padding(Dimens.paddingMedium)) {
-        GameListItem(game = gameItem, onClick = {}, onHold = {})
+        GameListItem(game = gameModel, onClick = {}, onHold = {})
     }
 }

@@ -1,8 +1,8 @@
 package com.example.the7wonders.ui.addGameScreen
 
-import com.example.the7wonders.domain.model.AddPlayerItem
-import com.example.the7wonders.domain.model.PlayerResultItem
-import com.example.the7wonders.domain.model.PlayersPointTypeItem
+import com.example.the7wonders.domain.model.AddPlayerToGameModel
+import com.example.the7wonders.domain.model.PlayerPointTypeModel
+import com.example.the7wonders.domain.model.PlayerResultModel
 
 
 enum class GamePhase {
@@ -12,12 +12,12 @@ enum class GamePhase {
 }
 
 data class AddGameState(
-    val availablePlayers: List<AddPlayerItem>,
-    val selectedPlayers: List<AddPlayerItem> = emptyList(),
-    val pointQueue: List<PlayersPointTypeItem> = emptyList(),
-    val confirmedPoints: List<PlayersPointTypeItem> = emptyList(),
-    val currentInputPoint: PlayersPointTypeItem? = null,
-    val results: List<PlayerResultItem> = emptyList(),
+    val availablePlayers: List<AddPlayerToGameModel>,
+    val selectedPlayers: List<AddPlayerToGameModel> = emptyList(),
+    val pointQueue: List<PlayerPointTypeModel> = emptyList(),
+    val confirmedPoints: List<PlayerPointTypeModel> = emptyList(),
+    val currentInputPoint: PlayerPointTypeModel? = null,
+    val results: List<PlayerResultModel> = emptyList(),
     val isLoading: Boolean = false,
     val gamePhase: GamePhase = GamePhase.PlayerSelection
 )

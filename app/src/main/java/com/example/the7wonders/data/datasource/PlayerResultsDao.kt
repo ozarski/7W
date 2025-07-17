@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.the7wonders.data.model.PlayerResultsEntity
+import com.example.the7wonders.data.model.PlayerResultEntity
 
 @Dao
 interface PlayerResultsDao {
@@ -20,9 +20,9 @@ interface PlayerResultsDao {
     suspend fun getPlayerResultsForGame(gameID: Long, playerID: Long)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addPlayerResults(playerResults: PlayerResultsEntity)
+    suspend fun addPlayerResults(playerResults: PlayerResultEntity)
 
     @Delete
-    fun deletePlayerResults(playerResultsEntity: PlayerResultsEntity)
+    fun deletePlayerResults(playerResultEntity: PlayerResultEntity)
 
 }

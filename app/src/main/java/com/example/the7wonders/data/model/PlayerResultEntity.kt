@@ -7,7 +7,7 @@ import com.example.the7wonders.data.datasource.DatabaseConstants
     primaryKeys = ["playerID", "gameID"],
     tableName = DatabaseConstants.PLAYER_RESULTS_TABLE_NAME
 )
-data class PlayerResultsEntity(
+data class PlayerResultEntity(
     val playerID: Long,
     val gameID: Long,
     val wonderPoints: Int,

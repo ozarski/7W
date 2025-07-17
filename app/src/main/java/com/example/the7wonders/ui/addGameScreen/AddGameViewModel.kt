@@ -3,9 +3,9 @@ package com.example.the7wonders.ui.addGameScreen
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.the7wonders.domain.model.AddPlayerItem
-import com.example.the7wonders.domain.model.PlayerResultItem
-import com.example.the7wonders.domain.model.PlayersPointTypeItem
+import com.example.the7wonders.domain.model.AddPlayerToGameModel
+import com.example.the7wonders.domain.model.PlayerPointTypeModel
+import com.example.the7wonders.domain.model.PlayerResultModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 
@@ -79,7 +79,7 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
     fun initializePoints() {
         val points = PointType.entries.flatMap { pointType ->
             _state.value.selectedPlayers.map { player ->
-                PlayersPointTypeItem(
+                PlayerPointTypeModel(
                     playerID = player.id,
                     playerName = player.name,
                     pointType = pointType,
@@ -106,6 +106,7 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
                     )
                 )
             } catch (e: Exception) {
+                println(e.message)
                 _state.value = _state.value.copy(
                     currentInputPoint = _state.value.currentInputPoint?.copy(
                         value = 0
@@ -117,10 +118,10 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
 
     fun getCurrentPointValueString(): String {
         val currentPoint = _state.value.currentInputPoint
-        if (currentPoint == null || currentPoint.value == 0) {
-            return ""
+        return if (currentPoint == null || currentPoint.value == 0) {
+            ""
         } else {
-            return currentPoint.value.toString()
+            currentPoint.value.toString()
         }
     }
 
@@ -170,7 +171,7 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
                     .filter { score -> score.playerID == player.id }
                     .map { score -> Pair(score.pointType, score.value) }
                 val playerTotalScore = playerScores.sumOf { it.second }
-                PlayerResultItem(player.id, player.name, playerTotalScore, 0, playerScores)
+                PlayerResultModel(player.id, player.name, playerTotalScore, 0, playerScores)
             }.sortedByDescending {
                 it.totalScore
             }.mapIndexed { index, result ->
@@ -181,10 +182,10 @@ class AddGameViewModel @Inject constructor() : ViewModel() {
     }
 
     fun insertMockData(n: Int) {
-        val players = mutableListOf<AddPlayerItem>()
+        val players = mutableListOf<AddPlayerToGameModel>()
         for (i in 0..n) {
             players.add(
-                AddPlayerItem(
+                AddPlayerToGameModel(
                     id = i + 1L,
                     name = "Player $i",
                     isPlaying = false,

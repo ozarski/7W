@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.the7wonders.domain.model.PlayerItem
+import com.example.the7wonders.domain.model.PlayerModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,14 +26,14 @@ class PlayerListViewModel @Inject constructor() : ViewModel() {
     suspend fun loadPlayers() {
         _state.value = _state.value.copy(isLoading = true)
         delay(500)
-        val alotofdata = mutableListOf<PlayerItem>()
+        val alotofdata = mutableListOf<PlayerModel>()
         for (i in 0..20) {
             alotofdata.addAll(generateMockData())
         }
         _state.value = _state.value.copy(playerList = alotofdata, isLoading = false)
     }
 
-    fun generateMockData(): List<PlayerItem> {
+    fun generateMockData(): List<PlayerModel> {
         val names = listOf(
             "Wojtek",
             "Szymon",
@@ -42,10 +42,10 @@ class PlayerListViewModel @Inject constructor() : ViewModel() {
             "Kamila",
             "Kasia",
         )
-        val players = mutableListOf<PlayerItem>()
+        val players = mutableListOf<PlayerModel>()
         names.forEachIndexed { index, name ->
             players.add(
-                PlayerItem(
+                PlayerModel(
                     id = index + 1L,
                     name = name,
                     wins = (0..20).random(),
