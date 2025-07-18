@@ -36,15 +36,19 @@ fun ConfirmationPopup(
                 style = Typography.titleMedium.copy(fontWeight = FontWeight.ExtraBold),
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.size(Dimens.spacerSizeExtraLarge))
-            Text(
-                text = message,
-                style = Typography.labelLarge,
-                textAlign = TextAlign.Center
-            )
+            if (message.isNotEmpty()) {
+                Spacer(modifier = Modifier.size(Dimens.spacerSizeExtraLarge))
+                Text(
+                    text = message,
+                    style = Typography.labelLarge,
+                    textAlign = TextAlign.Center
+                )
+            }
             Spacer(modifier = Modifier.size(Dimens.spacerSizeExtraLarge))
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.paddingMedium),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = Dimens.paddingMedium),
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 PrimaryButton(

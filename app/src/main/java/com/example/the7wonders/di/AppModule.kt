@@ -2,6 +2,7 @@ package com.example.the7wonders.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.the7wonders.data.DatabaseExporter
 import com.example.the7wonders.data.datasource.DatabaseConstants
 import com.example.the7wonders.data.datasource.GameDao
 import com.example.the7wonders.data.datasource.GameDatabase
@@ -44,5 +45,11 @@ object AppModule {
     @Singleton
     fun providePlayerResultsDao(gameDatabase: GameDatabase): PlayerResultDao {
         return gameDatabase.playerResultDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabaseExporter(): DatabaseExporter {
+        return DatabaseExporter(DatabaseConstants.DATABASE_NAME)
     }
 }
