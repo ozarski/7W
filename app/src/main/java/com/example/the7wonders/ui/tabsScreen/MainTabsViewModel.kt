@@ -22,7 +22,9 @@ class MainTabsViewModel @Inject constructor(
     val state: State<MainTabsState> = _state
 
     fun selectTab(tab: MainTabs) {
+        println(_state.value.selectedTab)
         _state.value = _state.value.copy(selectedTab = tab)
+        println(_state.value.selectedTab)
     }
 
     fun showAddPlayerPopup() {
