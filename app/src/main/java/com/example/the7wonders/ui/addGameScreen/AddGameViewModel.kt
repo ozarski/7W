@@ -106,7 +106,7 @@ class AddGameViewModel @Inject constructor(
                     playerID = player.id,
                     playerName = player.name,
                     pointType = pointType,
-                    value = 0
+                    value = ""
                 )
             }
         }.toMutableList()
@@ -118,21 +118,21 @@ class AddGameViewModel @Inject constructor(
         if (value.isEmpty()) {
             _state.value = _state.value.copy(
                 currentInputPoint = _state.value.currentInputPoint?.copy(
-                    value = 0
+                    value = ""
                 )
             )
         } else {
             try {
                 _state.value = _state.value.copy(
                     currentInputPoint = _state.value.currentInputPoint?.copy(
-                        value = value.toInt()
+                        value = value
                     )
                 )
             } catch (e: Exception) {
                 println(e.message)
                 _state.value = _state.value.copy(
                     currentInputPoint = _state.value.currentInputPoint?.copy(
-                        value = 0
+                        value = ""
                     )
                 )
             }
@@ -141,11 +141,7 @@ class AddGameViewModel @Inject constructor(
 
     fun getCurrentPointValueString(): String {
         val currentPoint = _state.value.currentInputPoint
-        return if (currentPoint == null || currentPoint.value == 0) {
-            ""
-        } else {
-            currentPoint.value.toString()
-        }
+        return currentPoint?.value ?: ""
     }
 
     fun insertPointValue() {
@@ -181,28 +177,17 @@ class AddGameViewModel @Inject constructor(
     }
 
     fun finishGame() {
-        calculateResults()
-        _state.value = _state.value.copy(
-            gamePhase = GamePhase.Results
-        )
         viewModelScope.launch {
+            calculateResults()
+            _state.value = _state.value.copy(
+                gamePhase = GamePhase.Results
+            )
             saveGame()
         }
     }
 
     fun calculateResults() {
-        val scoreList = _state.value.selectedPlayers
-            .map { player ->
-                val playerScores = _state.value.confirmedPoints
-                    .filter { score -> score.playerID == player.id }
-                    .map { score -> Pair(score.pointType, score.value) }
-                val playerTotalScore = playerScores.sumOf { it.second }
-                PlayerResultModel(player.id, player.name, playerTotalScore, 0, playerScores)
-            }.sortedByDescending {
-                it.totalScore
-            }.mapIndexed { index, result ->
-                result.copy(placement = index + 1)
-            }
+        val scoreList = getFinalScoresList()
 
         _state.value = _state.value.copy(results = scoreList)
     }
@@ -217,25 +202,32 @@ class AddGameViewModel @Inject constructor(
                     playerScores = emptyList()
                 )
             )
-            val scoreList = _state.value.selectedPlayers
-                .map { player ->
-                    val playerScores = _state.value.confirmedPoints
-                        .filter { score -> score.playerID == player.id }
-                        .map { score -> Pair(score.pointType, score.value) }
-                    val playerTotalScore = playerScores.sumOf { it.second }
-                    PlayerResultModel(player.id, player.name, playerTotalScore, 0, playerScores)
-                }.sortedByDescending {
-                    it.totalScore
-                }.mapIndexed { index, result ->
-                    result.copy(placement = index + 1)
-                }
-
-            scoreList.forEach {
+            val finalScores = _state.value.results
+            if (finalScores.isEmpty()) {
+                throw Exception("Error: final scores should be calculated at this point")
+            }
+            finalScores.forEach {
                 playerResultRepository.addPlayerResult(it, gameID)
             }
         }
     }
+
+    fun getFinalScoresList(): List<PlayerResultModel> {
+        return _state.value.selectedPlayers
+            .map { player ->
+                val playerScores = _state.value.confirmedPoints
+                    .filter { score -> score.playerID == player.id }
+                    .map { score -> Pair(score.pointType, score.value.toIntOrNull() ?: 0) }
+                val playerTotalScore = playerScores.sumOf { it.second }
+                PlayerResultModel(player.id, player.name, playerTotalScore, 0, playerScores)
+            }.sortedByDescending {
+                it.totalScore
+            }.mapIndexed { index, result ->
+                result.copy(placement = index + 1)
+            }
+    }
 }
+
 
 fun <T> MutableList<T>.push(item: T) {
     add(0, item)
