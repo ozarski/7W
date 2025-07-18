@@ -77,7 +77,6 @@ fun MainTabsScreen(
                 }
             }
             TabsBar(
-                selected = state.selectedTab,
                 modifier = Modifier.align(alignment = Alignment.BottomCenter),
                 onPlayerAdd = {
                     viewModel.showAddPlayerPopup()

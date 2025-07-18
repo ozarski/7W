@@ -40,12 +40,12 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun TabsBar(
     modifier: Modifier = Modifier,
-    selected: MainTabs,
     viewModel: MainTabsViewModel = hiltViewModel(),
     onGameAdd: () -> Unit,
     onPlayerAdd: () -> Unit,
     onTabSelected: (tab: MainTabs) -> Unit
 ) {
+    val state = viewModel.state.value
     Box(modifier = modifier) {
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -60,12 +60,11 @@ fun TabsBar(
                 )
                 .align(alignment = Alignment.BottomCenter)
         ) {
-            TabItem(selected, MainTabs.Games, onTabSelected)
+            TabItem(state.selectedTab, MainTabs.Games, onTabSelected)
             Spacer(modifier = Modifier.width(Dimens.tabBarSpacing))
-            TabItem(selected, MainTabs.Players, onTabSelected)
+            TabItem(state.selectedTab, MainTabs.Players, onTabSelected)
         }
         AddButton(
-            selected,
             modifier = Modifier.align(alignment = Alignment.Center),
             onPlayerAdd,
             onGameAdd,
@@ -79,11 +78,11 @@ fun TabsBar(
 
 @Composable
 fun AddButton(
-    selected: MainTabs,
     modifier: Modifier,
     onPlayerAdd: () -> Unit,
     onGameAdd: () -> Unit,
-    onHold: () -> Unit
+    onHold: () -> Unit,
+    viewModel: MainTabsViewModel = hiltViewModel()
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -104,7 +103,7 @@ fun AddButton(
 
                 is PressInteraction.Release -> {
                     if (isLongClick.not()) {
-                        if (selected == MainTabs.Games) {
+                        if (viewModel.state.value.selectedTab == MainTabs.Games) {
                             onGameAdd()
                         } else {
                             onPlayerAdd()
@@ -173,13 +172,12 @@ fun TabItem(selected: MainTabs, screen: MainTabs, onTabSelected: (MainTabs) -> U
 @Composable
 @Preview
 fun TabsBarPreview() {
-    val screen = MainTabs.Games
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier.fillMaxSize()
     ) {
-        TabsBar(selected = screen, onGameAdd = {}, onPlayerAdd = {}) { tab ->
+        TabsBar(onGameAdd = {}, onPlayerAdd = {}) { tab ->
             println("selected tab ${tab.name} ")
         }
     }
