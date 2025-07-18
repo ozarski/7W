@@ -6,5 +6,5 @@ data class PlayerPointTypeModel(
     val playerID: Long,
     val playerName: String,
     val pointType: PointType,
-    val value: Int
+    val value: String
 )
