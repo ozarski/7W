@@ -1,6 +1,6 @@
 package com.example.the7wonders.ui.tabsScreen
 
-import android.app.Activity
+import android.net.Uri
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -43,17 +43,12 @@ class MainTabsViewModel @Inject constructor(
         _state.value = _state.value.copy(exportDatabasePopupVisible = false)
     }
 
-    fun exportDatabase(activity: Activity) {
-        databaseExporter.registerActivity(activity)
-        databaseExporter.exportDatabase()
-        hideExportDatabasePopup()
+    fun exportDatabase(uri: Uri) {
+        viewModelScope.launch {
+            databaseExporter.exportDatabaseToUri(uri)
+            hideExportDatabasePopup()
+        }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        databaseExporter.unregisterActivity()
-    }
-
 
     fun addPlayer(name: String) {
         viewModelScope.launch {
