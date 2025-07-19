@@ -1,8 +1,7 @@
 package com.example.the7wonders.ui.tabsScreen
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.the7wonders.ui.Screens
@@ -22,6 +20,9 @@ import com.example.the7wonders.ui.tabsScreen.gamesTab.GameListScreen
 import com.example.the7wonders.ui.tabsScreen.playersTab.PlayerListScreen
 import com.example.the7wonders.ui.tabsScreen.playersTab.addPlayer.AddPlayerPopup
 import com.example.the7wonders.ui.theme.Dimens
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 @Composable
 fun MainTabsScreen(
@@ -37,7 +38,13 @@ fun MainTabsScreen(
             onAdd = { viewModel.addPlayer(it) }
         )
     }
-    val activity = LocalContext.current.findActivity()
+    val databaseExportLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("application/octet-stream")
+    ) { uri ->
+        uri?.let {
+            viewModel.exportDatabase(it)
+        }
+    }
 
     if (state.exportDatabasePopupVisible) {
         ConfirmationPopup(
@@ -49,7 +56,10 @@ fun MainTabsScreen(
                 viewModel.hideExportDatabasePopup()
             },
             onPositiveClick = {
-                viewModel.exportDatabase(activity)
+                val dateFormat = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss")
+                val date = Calendar.getInstance().toInstant()
+                    .atZone(ZoneId.systemDefault()).format(dateFormat)
+                databaseExportLauncher.launch("gameDB_${date}.db")
             }
         )
     }
@@ -89,13 +99,4 @@ fun MainTabsScreen(
             }
         }
     }
-}
-
-fun Context.findActivity(): Activity {
-    var context = this
-    while (context is ContextWrapper) {
-        if (context is Activity) return context
-        context = context.baseContext
-    }
-    throw IllegalStateException("No Activity found")
 }

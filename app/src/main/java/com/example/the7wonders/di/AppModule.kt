@@ -49,7 +49,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabaseExporter(): DatabaseExporter {
-        return DatabaseExporter(DatabaseConstants.DATABASE_NAME)
+    fun provideDatabaseExporter(
+        @ApplicationContext context: Context,
+        gameDatabase: GameDatabase
+    ): DatabaseExporter {
+        return DatabaseExporter(context, gameDatabase)
     }
 }
