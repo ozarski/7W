@@ -21,7 +21,7 @@ object BaseColors {
 
     val winIconColor = Color(0xFFDBD56E)
     val secondPlaceColor = Color(0xFFC0C0C0)
-    val thirdPlaceColor = Color(0xFF926B00)
+    val thirdPlaceColor = Color(0xFFB88701)
 }
 
 object Transparency {

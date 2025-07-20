@@ -25,6 +25,7 @@ import com.example.the7wonders.R
 import com.example.the7wonders.domain.model.PlayerResultModel
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
+import com.example.the7wonders.ui.theme.Transparency
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
@@ -36,8 +37,10 @@ fun PlayerResultsBubble(
 ) {
     Box(
         modifier = modifier
-            .shadow(elevation = Dimens.elevationSmall, shape = CircleShape)
-            .background(shape = CircleShape, color = BaseColors.primary)
+            .background(
+                shape = CircleShape,
+                color = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_50)
+            )
             .border(width = Dimens.strokeWidthLarge, color = color, shape = CircleShape)
             .layout { measurable, constraints ->
                 val placeable = measurable.measure(constraints)

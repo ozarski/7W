@@ -1,7 +1,6 @@
 package com.example.the7wonders.ui.addGameScreen.results
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,10 +10,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -24,6 +26,7 @@ import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
 import com.example.the7wonders.ui.base.PrimaryButton
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
+import com.example.the7wonders.ui.theme.Transparency
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
@@ -33,6 +36,12 @@ fun GameResultsScreen(
 ) {
     val state = viewModel.state.value
     val top3 = state.results.subList(0, if (state.results.size < 3) state.results.size else 3)
+    val borderBrush = Brush.verticalGradient(
+        listOf(
+            BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_30),
+            BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_10),
+        )
+    )
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,20 +56,15 @@ fun GameResultsScreen(
             PodiumRow(top3)
             if (state.results.size > 3) {
                 val leaderboard = state.results.subList(3, state.results.size)
-                Column(
+                Card(
                     modifier = Modifier
                         .padding(horizontal = Dimens.paddingExtraLarge)
-                        .padding(top = Dimens.paddingExtraLarge)
-                        .background(
-                            shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
-                            color = BaseColors.primary
-                        )
-                        .border(
-                            width = Dimens.strokeWidthMedium,
-                            color = BaseColors.onSecondary,
-                            shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
-                        ),
-                    verticalArrangement = Arrangement.Top
+                        .padding(top = Dimens.paddingExtraLarge),
+                    border = BorderStroke(Dimens.strokeWidthMedium, borderBrush),
+                    colors = CardDefaults.cardColors(
+                        containerColor = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_30)
+                    ),
+                    shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge)
                 ) {
                     Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
                     leaderboard.forEach { result ->
@@ -77,9 +81,17 @@ fun GameResultsScreen(
                                     color = BaseColors.textSecondary
                                 )
                                 Spacer(modifier = Modifier.size(Dimens.paddingSmall))
-                                Text(result.playerName, style = Typography.labelLarge)
+                                Text(
+                                    result.playerName,
+                                    style = Typography.labelLarge,
+                                    color = BaseColors.primary
+                                )
                             }
-                            Text("${result.totalScore} pts", style = Typography.labelLarge)
+                            Text(
+                                "${result.totalScore} pts",
+                                style = Typography.labelLarge,
+                                color = BaseColors.primary
+                            )
                         }
                         Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
                     }
@@ -88,8 +100,8 @@ fun GameResultsScreen(
         }
         PrimaryButton(
             label = "Done",
-            buttonColor = BaseColors.onSecondary,
-            textColor = BaseColors.secondary,
+            buttonColor = BaseColors.secondary,
+            textColor = BaseColors.secondaryDark,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(Dimens.paddingExtraLarge)
@@ -105,7 +117,7 @@ fun PodiumRow(top3: List<PlayerResultModel>) {
         if (top3.size > 2) {
             PlayerResultsBubble(
                 results = top3.last(),
-                color = BaseColors.thirdPlaceColor,
+                color = BaseColors.thirdPlaceColor.copy(alpha = Transparency.TRANSPARENCY_70),
                 iconID = R.drawable.rounded_workspace_premium_24,
                 modifier = Modifier.padding(top = 50.dp)
             )
@@ -118,12 +130,12 @@ fun PodiumRow(top3: List<PlayerResultModel>) {
         }
         PlayerResultsBubble(
             results = top3.first(),
-            color = BaseColors.winIconColor,
+            color = BaseColors.winIconColor.copy(alpha = Transparency.TRANSPARENCY_90),
             iconID = R.drawable.rounded_crown_24
         )
         PlayerResultsBubble(
             results = top3[1],
-            color = BaseColors.secondPlaceColor,
+            color = BaseColors.secondPlaceColor.copy(alpha = Transparency.TRANSPARENCY_70),
             iconID = R.drawable.rounded_workspace_premium_24,
             modifier = Modifier.padding(top = 50.dp)
         )

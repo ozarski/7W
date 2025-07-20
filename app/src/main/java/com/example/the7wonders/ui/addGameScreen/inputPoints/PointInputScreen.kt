@@ -84,7 +84,8 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                             ),
                             style = Typography.labelLarge.copy(fontFamily = FontFamily.Monospace),
                             textAlign = TextAlign.Center,
-                            maxLines = 1
+                            maxLines = 1,
+                            color = BaseColors.secondary
                         )
                     }
                 }
@@ -119,7 +120,8 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                     ) {
                         PrimaryButton(
                             label = stringResource(R.string.previous_button_label),
-                            textColor = BaseColors.textSecondary,
+                            textColor = BaseColors.secondaryDark,
+                            buttonColor = BaseColors.secondary,
                             modifier = Modifier
                                 .weight(1f)
                                 .padding(end = Dimens.paddingMedium)
@@ -129,8 +131,8 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                     }
                     PrimaryButton(
                         label = stringResource(R.string.next_button_label),
-                        buttonColor = BaseColors.onSecondary,
-                        textColor = BaseColors.primary,
+                        buttonColor = BaseColors.secondaryDark,
+                        textColor = BaseColors.textSecondary,
                         modifier = Modifier
                             .weight(1f)
                     ) {
