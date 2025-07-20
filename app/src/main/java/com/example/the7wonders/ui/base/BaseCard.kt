@@ -42,7 +42,7 @@ fun BaseCard(
     val interactionSource = remember { MutableInteractionSource() }
 
     CompositionLocalProvider(
-        LocalRippleConfiguration provides RippleConfiguration(color = BaseColors.onSecondary)
+        LocalRippleConfiguration provides RippleConfiguration(color = BaseColors.secondaryDark)
     ) {
         Card(
             modifier = modifier

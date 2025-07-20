@@ -32,6 +32,7 @@ object Dimens {
     val cornerRadiusExtraLarge = 24.dp
     val cornerRadiusMax = 9999.dp
 
+    val elevationExtraSmall = 2.dp
     val elevationSmall = 4.dp
     val elevationMedium = 8.dp
     val elevationLarge = 12.dp

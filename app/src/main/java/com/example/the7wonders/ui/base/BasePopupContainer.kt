@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
+import com.example.the7wonders.ui.theme.Transparency
 
 @Composable
 fun BasePopupContainer(onDismiss: () -> Unit, popupBody: @Composable () -> Unit) {
@@ -25,11 +26,12 @@ fun BasePopupContainer(onDismiss: () -> Unit, popupBody: @Composable () -> Unit)
         Column(
             modifier = Modifier
                 .border(
-                    width = Dimens.strokeWidthMedium, color = BaseColors.secondary,
+                    width = Dimens.strokeWidthMedium,
+                    color = BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_10),
                     shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge)
                 )
                 .background(
-                    color = BaseColors.primary,
+                    color = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_90),
                     shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge)
                 )
                 .padding(Dimens.paddingMedium)

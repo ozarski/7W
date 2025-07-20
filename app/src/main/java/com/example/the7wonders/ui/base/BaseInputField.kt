@@ -58,11 +58,11 @@ fun BaseInputField(
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = action),
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = BaseColors.primary.copy(alpha = Transparency.TRANSPARENCY_50),
-            focusedContainerColor = BaseColors.primary.copy(alpha = Transparency.TRANSPARENCY_50),
-            unfocusedBorderColor = BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_90),
-            focusedBorderColor = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_90),
-            cursorColor = BaseColors.secondaryDark
+            unfocusedContainerColor = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_50),
+            focusedContainerColor = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_50),
+            unfocusedBorderColor = BaseColors.primary.copy(alpha = Transparency.TRANSPARENCY_30),
+            focusedBorderColor = BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_70),
+            cursorColor = BaseColors.primary
         ),
         placeholder = {
             Text(
@@ -71,7 +71,7 @@ fun BaseInputField(
             )
         },
         shape = RoundedCornerShape(Dimens.cornerRadiusMax),
-        textStyle = Typography.labelMedium,
+        textStyle = Typography.labelMedium.copy(color = BaseColors.primary),
         prefix = if (icon != null) {
             {
                 Icon(
