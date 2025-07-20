@@ -34,14 +34,16 @@ fun ConfirmationPopup(
             Text(
                 text = title,
                 style = Typography.titleMedium.copy(fontWeight = FontWeight.ExtraBold),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = BaseColors.primary
             )
             if (message.isNotEmpty()) {
                 Spacer(modifier = Modifier.size(Dimens.spacerSizeExtraLarge))
                 Text(
                     text = message,
                     style = Typography.labelLarge,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = BaseColors.primary
                 )
             }
             Spacer(modifier = Modifier.size(Dimens.spacerSizeExtraLarge))

@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,6 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.ui.base.BaseFloatingActionButton
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
+import com.example.the7wonders.ui.theme.Transparency
 import com.example.the7wonders.ui.theme.Typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -56,7 +58,7 @@ fun TabsBar(
                 .background(
                     shape = RoundedCornerShape(
                         Dimens.cornerRadiusMax
-                    ), color = BaseColors.onSecondary
+                    ), color = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_90)
                 )
                 .align(alignment = Alignment.BottomCenter)
         ) {
@@ -123,7 +125,7 @@ fun AddButton(
         modifier = modifier
             .padding(bottom = Dimens.paddingExtraLarge),
         color = BaseColors.secondary,
-        iconColor = BaseColors.onSecondary,
+        iconColor = BaseColors.secondaryDark,
         icon = Icons.Filled.Add,
         interactionSource = interactionSource
     )
@@ -133,7 +135,7 @@ fun AddButton(
 fun TabItem(selected: MainTabs, screen: MainTabs, onTabSelected: (MainTabs) -> Unit) {
     val isSelected = screen == selected
     val animatedColor = animateColorAsState(
-        targetValue = if (isSelected) BaseColors.primary else BaseColors.onSecondary,
+        targetValue = if (isSelected) BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_90) else Color.Transparent,
         animationSpec = tween(Dimens.ANIMATION_DURATION_MEDIUM)
     )
     Box(
@@ -162,7 +164,7 @@ fun TabItem(selected: MainTabs, screen: MainTabs, onTabSelected: (MainTabs) -> U
                 .padding(
                     vertical = Dimens.paddingMedium,
                 ),
-            color = if (isSelected) BaseColors.onSecondary else BaseColors.primary,
+            color = if (isSelected) BaseColors.secondaryDark else BaseColors.primary,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
             textAlign = TextAlign.Center
         )

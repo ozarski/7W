@@ -75,7 +75,7 @@ fun PlayerListItem(player: PlayerModel, onClick: (Long?) -> Unit, onHold: (Playe
                 Text(
                     stringResource(R.string.top_score),
                     style = Typography.labelLarge,
-                    color = BaseColors.textSecondary
+                    color = BaseColors.secondary
                 )
                 Text(
                     if (player.topScore == null) "-" else player.topScore.toString(),
@@ -90,7 +90,7 @@ fun PlayerListItem(player: PlayerModel, onClick: (Long?) -> Unit, onHold: (Playe
                 Text(
                     stringResource(R.string.avg_place),
                     style = Typography.labelLarge,
-                    color = BaseColors.textSecondary
+                    color = BaseColors.secondary
                 )
                 Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
                 Text(

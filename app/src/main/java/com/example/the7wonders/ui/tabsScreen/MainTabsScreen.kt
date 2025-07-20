@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.the7wonders.ui.Screens
+import com.example.the7wonders.ui.base.BackgroundOrientation
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.ConfirmationPopup
 import com.example.the7wonders.ui.tabsScreen.gamesTab.GameListScreen
@@ -64,12 +65,15 @@ fun MainTabsScreen(
         )
     }
 
-    BaseBackground(modifier = Modifier.fillMaxSize()) {
-        Box {
-            Column(
+    Box {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            BaseBackground(
                 modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                orientation = BackgroundOrientation.Horizontal
             ) {
                 Crossfade(
                     targetState = state.selectedTab,
@@ -86,17 +90,17 @@ fun MainTabsScreen(
                     }
                 }
             }
-            TabsBar(
-                modifier = Modifier.align(alignment = Alignment.BottomCenter),
-                onPlayerAdd = {
-                    viewModel.showAddPlayerPopup()
-                },
-                onGameAdd = {
-                    navController.navigate(Screens.AddGame.route)
-                }
-            ) { tab ->
-                viewModel.selectTab(tab)
+        }
+        TabsBar(
+            modifier = Modifier.align(alignment = Alignment.BottomCenter),
+            onPlayerAdd = {
+                viewModel.showAddPlayerPopup()
+            },
+            onGameAdd = {
+                navController.navigate(Screens.AddGame.route)
             }
+        ) { tab ->
+            viewModel.selectTab(tab)
         }
     }
 }

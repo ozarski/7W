@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
 import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
-import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.BaseInputField
 import com.example.the7wonders.ui.base.PrimaryButton
 import com.example.the7wonders.ui.theme.BaseColors
@@ -44,100 +43,100 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
     val state = viewModel.state.value
     val currentPoint = state.currentInputPoint
     val context = LocalContext.current
-    BaseBackground {
-        if (currentPoint != null) {
+    if (currentPoint != null) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .widthIn(max = 350.dp),
+                verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .widthIn(max = 350.dp),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Spacer(modifier = Modifier.size(250.dp))
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Spacer(modifier = Modifier.size(250.dp))
+                    Crossfade(targetState = currentPoint.pointType) { type ->
+                        Icon(
+                            painterResource(type.icon),
+                            "point type icon",
+                            tint = type.color,
+                            modifier = Modifier.size(Dimens.addPlayersIconSize)
+                        )
+                    }
+                }
+
+                Crossfade(targetState = currentPoint.playerName) { name ->
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Crossfade(targetState = currentPoint.pointType) { type ->
-                            Icon(
-                                painterResource(type.icon),
-                                "point type icon",
-                                tint = type.color,
-                                modifier = Modifier.size(Dimens.addPlayersIconSize)
-                            )
-                        }
+                        Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                        Text(
+                            stringResource(
+                                R.string.point_type_for_player,
+                                currentPoint.pointType.pointName,
+                                name,
+                            ),
+                            style = Typography.labelLarge.copy(fontFamily = FontFamily.Monospace),
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            color = BaseColors.secondary
+                        )
                     }
-
-                    Crossfade(targetState = currentPoint.playerName) { name ->
-                        Row(
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            Text(
-                                stringResource(
-                                    R.string.point_type_for_player,
-                                    currentPoint.pointType.pointName,
-                                    name,
-                                ),
-                                style = Typography.labelLarge.copy(fontFamily = FontFamily.Monospace),
-                                textAlign = TextAlign.Center,
-                                maxLines = 1
-                            )
-                        }
+                }
+                Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                BaseInputField(
+                    value = viewModel.getCurrentPointValueString(),
+                    hint = stringResource(R.string.points_input_hint),
+                    onValueChange = {
+                        viewModel.updateCurrentPointValue(it.text)
+                    },
+                    keyboardType = KeyboardType.Number,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Dimens.paddingSmall),
+                    keyboardAction = {
+                        viewModel.insertPointValue()
                     }
-                    Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                    BaseInputField(
-                        value = viewModel.getCurrentPointValueString(),
-                        hint = stringResource(R.string.points_input_hint),
-                        onValueChange = {
-                            viewModel.updateCurrentPointValue(it.text)
-                        },
-                        keyboardType = KeyboardType.Number,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = Dimens.paddingSmall),
-                        keyboardAction = {
-                            viewModel.insertPointValue()
-                        }
-                    )
-                    Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .animateContentSize()
-                            .padding(horizontal = Dimens.paddingSmall)
+                )
+                Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animateContentSize()
+                        .padding(horizontal = Dimens.paddingSmall)
+                ) {
+                    val prevButtonVisible = !state.confirmedPoints.isEmpty()
+                    AnimatedVisibility(
+                        visible = prevButtonVisible,
+                        enter = fadeIn() + expandHorizontally(),
+                        exit = fadeOut() + shrinkHorizontally(),
                     ) {
-                        val prevButtonVisible = !state.confirmedPoints.isEmpty()
-                        AnimatedVisibility(
-                            visible = prevButtonVisible,
-                            enter = fadeIn() + expandHorizontally(),
-                            exit = fadeOut() + shrinkHorizontally(),
-                        ) {
-                            PrimaryButton(
-                                label = stringResource(R.string.previous_button_label),
-                                textColor = BaseColors.textSecondary,
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(end = Dimens.paddingMedium)
-                            ) {
-                                viewModel.rollBackPointValue()
-                            }
-                        }
                         PrimaryButton(
-                            label = stringResource(R.string.next_button_label),
-                            buttonColor = BaseColors.onSecondary,
-                            textColor = BaseColors.primary,
+                            label = stringResource(R.string.previous_button_label),
+                            textColor = BaseColors.secondaryDark,
+                            buttonColor = BaseColors.secondary,
                             modifier = Modifier
                                 .weight(1f)
+                                .padding(end = Dimens.paddingMedium)
                         ) {
-                            viewModel.insertPointValue()
+                            viewModel.rollBackPointValue()
                         }
+                    }
+                    PrimaryButton(
+                        label = stringResource(R.string.next_button_label),
+                        buttonColor = BaseColors.secondaryDark,
+                        textColor = BaseColors.textSecondary,
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        viewModel.insertPointValue()
                     }
                 }
             }

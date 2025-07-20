@@ -44,7 +44,8 @@ fun AddPlayerPopup(
             Icon(
                 Icons.Outlined.Person,
                 "add player popup icon",
-                modifier = Modifier.size(Dimens.addPlayerPopupIconSize)
+                modifier = Modifier.size(Dimens.addPlayerPopupIconSize),
+                tint = BaseColors.secondary
             )
             Spacer(modifier = Modifier.size(Dimens.paddingLarge))
             BaseInputField(

@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
+import com.example.the7wonders.ui.theme.Transparency
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
@@ -57,11 +58,11 @@ fun BaseInputField(
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = action),
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = BaseColors.primary,
-            focusedContainerColor = BaseColors.primary,
-            unfocusedBorderColor = BaseColors.secondary,
-            focusedBorderColor = BaseColors.backgroundSecondary,
-            cursorColor = BaseColors.onSecondary
+            unfocusedContainerColor = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_50),
+            focusedContainerColor = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_50),
+            unfocusedBorderColor = BaseColors.primary.copy(alpha = Transparency.TRANSPARENCY_30),
+            focusedBorderColor = BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_70),
+            cursorColor = BaseColors.primary
         ),
         placeholder = {
             Text(
@@ -70,7 +71,7 @@ fun BaseInputField(
             )
         },
         shape = RoundedCornerShape(Dimens.cornerRadiusMax),
-        textStyle = Typography.labelMedium,
+        textStyle = Typography.labelMedium.copy(color = BaseColors.primary),
         prefix = if (icon != null) {
             {
                 Icon(

@@ -3,10 +3,12 @@ package com.example.the7wonders
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,6 +24,7 @@ class MainActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            enableEdgeToEdge()
             AppNavigation()
         }
     }
@@ -31,29 +34,31 @@ class MainActivity :
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(
-        navController = navController,
-        startDestination = Screens.MainTabs.route,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None }
-    ) {
-        composable(Screens.MainTabs.route) {
-            MainTabsScreen(navController = navController)
-        }
-        composable(
-            Screens.AddGame.route,
-            enterTransition = {
-                slideInVertically(
-                    initialOffsetY = { it },
-                )
-            },
-            exitTransition = {
-                slideOutVertically(
-                    targetOffsetY = { it },
-                )
-            },
+    Column {
+        NavHost(
+            navController = navController,
+            startDestination = Screens.MainTabs.route,
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None }
         ) {
-            AddGameScreen(navController = navController)
+            composable(Screens.MainTabs.route) {
+                MainTabsScreen(navController = navController)
+            }
+            composable(
+                Screens.AddGame.route,
+                enterTransition = {
+                    slideInVertically(
+                        initialOffsetY = { it },
+                    )
+                },
+                exitTransition = {
+                    slideOutVertically(
+                        targetOffsetY = { it },
+                    )
+                },
+            ) {
+                AddGameScreen(navController = navController)
+            }
         }
     }
 }

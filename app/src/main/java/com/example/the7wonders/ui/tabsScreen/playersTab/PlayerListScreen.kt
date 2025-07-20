@@ -62,6 +62,9 @@ fun PlayerListScreen(
                 item {
                     Spacer(modifier = Modifier.size(Dimens.lazyColumnBottomSpacing))
                 }
+                item {
+                    Spacer(modifier = Modifier.size(Dimens.lazyColumnBottomSpacing))
+                }
             }
         }
     }
