@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,6 +45,12 @@ fun BaseCard(
     CompositionLocalProvider(
         LocalRippleConfiguration provides RippleConfiguration(color = BaseColors.secondaryDark)
     ) {
+        val borderBrush = Brush.horizontalGradient(
+            listOf(
+                BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_10),
+                BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_10),
+            )
+        )
         Card(
             modifier = modifier
                 .combinedClickable(
@@ -63,7 +70,8 @@ fun BaseCard(
             colors = CardDefaults.cardColors(containerColor = BaseColors.primary.copy(alpha = Transparency.TRANSPARENCY_30)),
             border = BorderStroke(
                 Dimens.strokeWidthMedium,
-                BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_10)
+                //BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_10)
+                borderBrush
             ),
         ) {
             Box(modifier = Modifier.padding(Dimens.paddingLarge)) {

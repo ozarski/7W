@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
 import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
-import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.LoadingScreen
 import com.example.the7wonders.ui.base.PrimaryButton
 import com.example.the7wonders.ui.theme.BaseColors
@@ -28,44 +27,42 @@ import com.example.the7wonders.ui.theme.Typography
 @Composable
 fun AddPlayersScreen(viewModel: AddGameViewModel = hiltViewModel()) {
     val state = viewModel.state.value
-    BaseBackground {
-        if (state.isLoading) {
-            LoadingScreen(modifier = Modifier.fillMaxSize())
-        } else if (state.availablePlayers.isEmpty()) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxSize()
+    if (state.isLoading) {
+        LoadingScreen(modifier = Modifier.fillMaxSize())
+    } else if (state.availablePlayers.isEmpty()) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            Text(stringResource(R.string.no_players_found), style = Typography.labelLarge)
+        }
+    } else {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = Dimens.addPlayerScreenPaddingBottom)
+        ) {
+            Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
+            Icon(
+                Icons.Outlined.Person,
+                null,
+                modifier = Modifier.size(Dimens.addPlayersIconSize),
+                tint = BaseColors.secondaryDark
+            )
+            Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
+            AddPlayerList()
+            Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
+            PrimaryButton(
+                label = stringResource(R.string.continue_button_label),
+                buttonColor = BaseColors.secondaryDark,
+                textColor = BaseColors.textSecondary,
+                modifier = Modifier.width(Dimens.addPlayerListWidth)
             ) {
-                Text(stringResource(R.string.no_players_found), style = Typography.labelLarge)
-            }
-        } else {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = Dimens.addPlayerScreenPaddingBottom)
-            ) {
-                Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
-                Icon(
-                    Icons.Outlined.Person,
-                    null,
-                    modifier = Modifier.size(Dimens.addPlayersIconSize),
-                    tint = BaseColors.secondaryDark
-                )
-                Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
-                AddPlayerList()
-                Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
-                PrimaryButton(
-                    label = stringResource(R.string.continue_button_label),
-                    buttonColor = BaseColors.onSecondary,
-                    textColor = BaseColors.primary,
-                    modifier = Modifier.width(Dimens.addPlayerListWidth)
-                ) {
-                    viewModel.confirmPlayers()
-                }
+                viewModel.confirmPlayers()
             }
         }
     }

@@ -71,26 +71,20 @@ fun MainTabsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Crossfade(
-                targetState = state.selectedTab,
-                animationSpec = tween(Dimens.ANIMATION_DURATION_SHORT)
-            ) { tab ->
-                when (tab) {
-                    MainTabs.Games -> {
-                        BaseBackground(
-                            modifier = Modifier.fillMaxSize(),
-                            orientation = BackgroundOrientation.Horizontal
-                        ) {
+            BaseBackground(
+                modifier = Modifier.fillMaxSize(),
+                orientation = BackgroundOrientation.Horizontal
+            ) {
+                Crossfade(
+                    targetState = state.selectedTab,
+                    animationSpec = tween(Dimens.ANIMATION_DURATION_SHORT)
+                ) { tab ->
+                    when (tab) {
+                        MainTabs.Games -> {
                             GameListScreen()
                         }
-                    }
 
-                    MainTabs.Players -> {
-                        BaseBackground(
-                            modifier = Modifier.fillMaxSize(),
-                            flip = true,
-                            orientation = BackgroundOrientation.Horizontal
-                        ) {
+                        MainTabs.Players -> {
                             PlayerListScreen()
                         }
                     }

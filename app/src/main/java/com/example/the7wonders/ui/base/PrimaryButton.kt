@@ -5,8 +5,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalRippleConfiguration
+import androidx.compose.material3.RippleConfiguration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -17,6 +21,7 @@ import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Transparency
 import com.example.the7wonders.ui.theme.Typography
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrimaryButton(
     modifier: Modifier = Modifier,
@@ -31,17 +36,21 @@ fun PrimaryButton(
             BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_10),
         )
     )
-    ElevatedButton(
-        modifier = modifier,
-        onClick = onClick,
-        elevation = ButtonDefaults.buttonElevation(defaultElevation = Dimens.elevationExtraSmall),
-        colors = ButtonDefaults.elevatedButtonColors(
-            containerColor = buttonColor.copy(alpha = Transparency.TRANSPARENCY_70),
-            contentColor = textColor,
-        ),
-        border = BorderStroke(Dimens.strokeWidthMedium, borderBrush)
+    CompositionLocalProvider(
+        LocalRippleConfiguration provides RippleConfiguration(color = BaseColors.secondaryDark)
     ) {
-        Text(label, style = Typography.labelMedium)
+        ElevatedButton(
+            modifier = modifier,
+            onClick = onClick,
+            elevation = ButtonDefaults.buttonElevation(defaultElevation = Dimens.elevationExtraSmall),
+            colors = ButtonDefaults.elevatedButtonColors(
+                containerColor = buttonColor.copy(alpha = Transparency.TRANSPARENCY_70),
+                contentColor = textColor,
+            ),
+            border = BorderStroke(Dimens.strokeWidthMedium, borderBrush)
+        ) {
+            Text(label, style = Typography.labelMedium)
+        }
     }
 }
 

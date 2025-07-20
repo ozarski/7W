@@ -21,7 +21,6 @@ import androidx.navigation.NavHostController
 import com.example.the7wonders.R
 import com.example.the7wonders.domain.model.PlayerResultModel
 import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
-import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.PrimaryButton
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
@@ -34,70 +33,68 @@ fun GameResultsScreen(
 ) {
     val state = viewModel.state.value
     val top3 = state.results.subList(0, if (state.results.size < 3) state.results.size else 3)
-    BaseBackground {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.Top
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
-            ) {
-                Spacer(modifier = Modifier.size(Dimens.gameResultsTopSpacing))
-                PodiumRow(top3)
-                if (state.results.size > 3) {
-                    val leaderboard = state.results.subList(3, state.results.size)
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = Dimens.paddingExtraLarge)
-                            .padding(top = Dimens.paddingExtraLarge)
-                            .background(
-                                shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
-                                color = BaseColors.primary
-                            )
-                            .border(
-                                width = Dimens.strokeWidthMedium,
-                                color = BaseColors.onSecondary,
-                                shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
-                            ),
-                        verticalArrangement = Arrangement.Top
-                    ) {
-                        Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
-                        leaderboard.forEach { result ->
-                            Row(
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = Dimens.paddingLarge)
-                            ) {
-                                Row {
-                                    Text(
-                                        "${result.placement}.",
-                                        style = Typography.labelLarge,
-                                        color = BaseColors.textSecondary
-                                    )
-                                    Spacer(modifier = Modifier.size(Dimens.paddingSmall))
-                                    Text(result.playerName, style = Typography.labelLarge)
-                                }
-                                Text("${result.totalScore} pts", style = Typography.labelLarge)
+            Spacer(modifier = Modifier.size(Dimens.gameResultsTopSpacing))
+            PodiumRow(top3)
+            if (state.results.size > 3) {
+                val leaderboard = state.results.subList(3, state.results.size)
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = Dimens.paddingExtraLarge)
+                        .padding(top = Dimens.paddingExtraLarge)
+                        .background(
+                            shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
+                            color = BaseColors.primary
+                        )
+                        .border(
+                            width = Dimens.strokeWidthMedium,
+                            color = BaseColors.onSecondary,
+                            shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
+                        ),
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
+                    leaderboard.forEach { result ->
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = Dimens.paddingLarge)
+                        ) {
+                            Row {
+                                Text(
+                                    "${result.placement}.",
+                                    style = Typography.labelLarge,
+                                    color = BaseColors.textSecondary
+                                )
+                                Spacer(modifier = Modifier.size(Dimens.paddingSmall))
+                                Text(result.playerName, style = Typography.labelLarge)
                             }
-                            Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
+                            Text("${result.totalScore} pts", style = Typography.labelLarge)
                         }
+                        Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
                     }
                 }
             }
-            PrimaryButton(
-                label = "Done",
-                buttonColor = BaseColors.onSecondary,
-                textColor = BaseColors.secondary,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(Dimens.paddingExtraLarge)
-            ) {
-                navController.popBackStack()
-            }
+        }
+        PrimaryButton(
+            label = "Done",
+            buttonColor = BaseColors.onSecondary,
+            textColor = BaseColors.secondary,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Dimens.paddingExtraLarge)
+        ) {
+            navController.popBackStack()
         }
     }
 }
