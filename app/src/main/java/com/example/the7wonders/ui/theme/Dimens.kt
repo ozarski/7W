@@ -3,6 +3,7 @@ package com.example.the7wonders.ui.theme
 import androidx.compose.ui.unit.dp
 
 object Dimens {
+
     val gameResultsTopSpacing = 100.dp
     val resultBubbleWidth = 90.dp
     val resultBubbleIconSize = 64.dp

@@ -53,7 +53,7 @@ fun AddPlayersScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                     Icons.Outlined.Person,
                     null,
                     modifier = Modifier.size(Dimens.addPlayersIconSize),
-                    tint = BaseColors.onSecondary
+                    tint = BaseColors.secondaryDark
                 )
                 Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
                 AddPlayerList()

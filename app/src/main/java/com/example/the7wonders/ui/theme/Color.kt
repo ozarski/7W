@@ -9,11 +9,12 @@ object BaseColors {
     val onSecondary = Color(0xFF818B59)
     val backgroundPrimary = Color(0xFFD6D3D1)
     val backgroundSecondary = Color(0xFF8D995E)
+    val secondaryDark = Color(0xFF3B3D36)
 
     val backgroundGradientSecondary = Color(0xFF858D68)
 
     val textPrimary = Color.Black
-    val textSecondary = Color(0xFF7C7C7C)
+    val textSecondary = Color(0xFFCECECE)
 
     val error = Color(0xFF984447)
     val success = Color(0xFF436852)
@@ -21,6 +22,14 @@ object BaseColors {
     val winIconColor = Color(0xFFDBD56E)
     val secondPlaceColor = Color(0xFFC0C0C0)
     val thirdPlaceColor = Color(0xFF926B00)
+}
+
+object Transparency {
+    const val TRANSPARENCY_10 = 0.1f
+    const val TRANSPARENCY_30 = 0.3f
+    const val TRANSPARENCY_50 = 0.5f
+    const val TRANSPARENCY_70 = 0.7f
+    const val TRANSPARENCY_90 = 0.9f
 }
 
 object PointTypeColors {

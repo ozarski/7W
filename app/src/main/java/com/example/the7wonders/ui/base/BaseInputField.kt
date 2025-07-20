@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
+import com.example.the7wonders.ui.theme.Transparency
 import com.example.the7wonders.ui.theme.Typography
 
 @Composable
@@ -57,11 +58,11 @@ fun BaseInputField(
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = action),
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = BaseColors.primary,
-            focusedContainerColor = BaseColors.primary,
-            unfocusedBorderColor = BaseColors.secondary,
-            focusedBorderColor = BaseColors.backgroundSecondary,
-            cursorColor = BaseColors.onSecondary
+            unfocusedContainerColor = BaseColors.primary.copy(alpha = Transparency.TRANSPARENCY_50),
+            focusedContainerColor = BaseColors.primary.copy(alpha = Transparency.TRANSPARENCY_50),
+            unfocusedBorderColor = BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_90),
+            focusedBorderColor = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_90),
+            cursorColor = BaseColors.secondaryDark
         ),
         placeholder = {
             Text(

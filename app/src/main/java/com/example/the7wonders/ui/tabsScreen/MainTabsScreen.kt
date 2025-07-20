@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.the7wonders.ui.Screens
+import com.example.the7wonders.ui.base.BackgroundOrientation
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.ConfirmationPopup
 import com.example.the7wonders.ui.tabsScreen.gamesTab.GameListScreen
@@ -64,39 +65,48 @@ fun MainTabsScreen(
         )
     }
 
-    BaseBackground(modifier = Modifier.fillMaxSize()) {
-        Box {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Crossfade(
-                    targetState = state.selectedTab,
-                    animationSpec = tween(Dimens.ANIMATION_DURATION_SHORT)
-                ) { tab ->
-                    when (tab) {
-                        MainTabs.Games -> {
+    Box {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Crossfade(
+                targetState = state.selectedTab,
+                animationSpec = tween(Dimens.ANIMATION_DURATION_SHORT)
+            ) { tab ->
+                when (tab) {
+                    MainTabs.Games -> {
+                        BaseBackground(
+                            modifier = Modifier.fillMaxSize(),
+                            orientation = BackgroundOrientation.Horizontal
+                        ) {
                             GameListScreen()
                         }
+                    }
 
-                        MainTabs.Players -> {
+                    MainTabs.Players -> {
+                        BaseBackground(
+                            modifier = Modifier.fillMaxSize(),
+                            flip = true,
+                            orientation = BackgroundOrientation.Horizontal
+                        ) {
                             PlayerListScreen()
                         }
                     }
                 }
             }
-            TabsBar(
-                modifier = Modifier.align(alignment = Alignment.BottomCenter),
-                onPlayerAdd = {
-                    viewModel.showAddPlayerPopup()
-                },
-                onGameAdd = {
-                    navController.navigate(Screens.AddGame.route)
-                }
-            ) { tab ->
-                viewModel.selectTab(tab)
+        }
+        TabsBar(
+            modifier = Modifier.align(alignment = Alignment.BottomCenter),
+            onPlayerAdd = {
+                viewModel.showAddPlayerPopup()
+            },
+            onGameAdd = {
+                navController.navigate(Screens.AddGame.route)
             }
+        ) { tab ->
+            viewModel.selectTab(tab)
         }
     }
 }

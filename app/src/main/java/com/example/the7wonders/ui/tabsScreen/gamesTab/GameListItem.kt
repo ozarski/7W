@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.the7wonders.R
@@ -72,8 +73,8 @@ fun PlayerList(leaderboard: List<Pair<String, Int>>) {
             Row {
                 Text(
                     "${index + 2}.",
-                    style = Typography.labelLarge,
-                    color = BaseColors.textSecondary
+                    style = Typography.labelLarge.copy(fontFamily = FontFamily.Monospace),
+                    color = BaseColors.secondary
                 )
                 Spacer(modifier = Modifier.size(Dimens.paddingSmall))
                 Text(playerScore.first, style = Typography.labelLarge)
@@ -117,13 +118,13 @@ fun TopBar(leaderboard: List<Pair<String, Int>>, dateFormatted: String) {
                 Icons.Outlined.DateRange,
                 "game date icon",
                 modifier = Modifier.size(Dimens.iconSizeSmall),
-                tint = BaseColors.textSecondary
+                tint = BaseColors.secondary
             )
             Spacer(modifier = Modifier.size(Dimens.paddingMedium))
             Text(
                 dateFormatted,
                 style = Typography.titleMedium.copy(fontWeight = FontWeight.Normal),
-                color = BaseColors.textSecondary
+                color = BaseColors.secondary
             )
         }
     }

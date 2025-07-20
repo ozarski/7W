@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
+import com.example.the7wonders.ui.theme.Transparency
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,10 +59,12 @@ fun BaseCard(
                     interactionSource = interactionSource,
                     indication = remember { ripple() }
                 ),
-            elevation = CardDefaults.cardElevation(defaultElevation = Dimens.elevationSmall),
             shape = RoundedCornerShape(Dimens.cornerRadiusExtraLarge),
-            colors = CardDefaults.cardColors(containerColor = BaseColors.primary),
-            border = BorderStroke(Dimens.strokeWidthMedium, BaseColors.secondary),
+            colors = CardDefaults.cardColors(containerColor = BaseColors.primary.copy(alpha = Transparency.TRANSPARENCY_30)),
+            border = BorderStroke(
+                Dimens.strokeWidthMedium,
+                BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_10)
+            ),
         ) {
             Box(modifier = Modifier.padding(Dimens.paddingLarge)) {
                 content()
