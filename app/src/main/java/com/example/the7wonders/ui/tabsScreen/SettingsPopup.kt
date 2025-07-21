@@ -93,7 +93,7 @@ fun SettingsPopup(viewModel: MainTabsViewModel = hiltViewModel()) {
                                 bounded = false
                             ),
                             onClick = {
-                                //import database
+                                viewModel.showImportDatabasePopup()
                             }
                         ),
                     tint = BaseColors.textSecondary

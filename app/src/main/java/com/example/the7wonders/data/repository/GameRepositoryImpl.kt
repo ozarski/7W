@@ -1,6 +1,6 @@
 package com.example.the7wonders.data.repository
 
-import com.example.the7wonders.data.datasource.GameDao
+import com.example.the7wonders.data.DatabaseManager
 import com.example.the7wonders.domain.model.GameModel
 import com.example.the7wonders.domain.model.toGameEntity
 import com.example.the7wonders.domain.repository.GameRepository
@@ -8,9 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GameRepositoryImpl @Inject constructor(private val gameDao: GameDao) : GameRepository {
+class GameRepositoryImpl @Inject constructor(private val databaseManager: DatabaseManager) :
+    GameRepository {
     override suspend fun getGames(): Flow<List<GameModel>> {
-        return gameDao.getGamesWithResults().map { dtos ->
+        return databaseManager.getDatabase().gameDao.getGamesWithResults().map { dtos ->
             dtos.groupBy { it.gameID }
                 .map { (gameId, rows) ->
                     GameModel(
@@ -25,10 +26,10 @@ class GameRepositoryImpl @Inject constructor(private val gameDao: GameDao) : Gam
     }
 
     override suspend fun addGame(game: GameModel): Long {
-        return gameDao.addGame(game.toGameEntity())
+        return databaseManager.getDatabase().gameDao.addGame(game.toGameEntity())
     }
 
     override suspend fun deleteGame(game: GameModel) {
-        return gameDao.deleteGame(game.toGameEntity())
+        return databaseManager.getDatabase().gameDao.deleteGame(game.toGameEntity())
     }
 }

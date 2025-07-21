@@ -4,5 +4,7 @@ data class MainTabsState(
     val selectedTab: MainTabs,
     val addPlayerPopupVisible: Boolean = false,
     val exportDatabasePopupVisible: Boolean = false,
-    val settingsPopupVisible: Boolean = false
+    val importDatabasePopupVisible: Boolean = false,
+    val settingsPopupVisible: Boolean = false,
+    val databaseReloadNeeded: Boolean = false
 )

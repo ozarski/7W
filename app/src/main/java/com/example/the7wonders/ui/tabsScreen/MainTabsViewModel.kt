@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.the7wonders.data.DatabaseExporter
+import com.example.the7wonders.data.DatabaseManager
 import com.example.the7wonders.domain.model.PlayerModel
 import com.example.the7wonders.domain.repository.PlayerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,16 +15,14 @@ import javax.inject.Inject
 @HiltViewModel
 class MainTabsViewModel @Inject constructor(
     private val playerRepository: PlayerRepository,
-    private val databaseExporter: DatabaseExporter
+    private val databaseManager: DatabaseManager
 ) :
     ViewModel() {
     private val _state = mutableStateOf(MainTabsState(selectedTab = MainTabs.Games))
     val state: State<MainTabsState> = _state
 
     fun selectTab(tab: MainTabs) {
-        println(_state.value.selectedTab)
         _state.value = _state.value.copy(selectedTab = tab)
-        println(_state.value.selectedTab)
     }
 
     fun showAddPlayerPopup() {
@@ -43,6 +41,14 @@ class MainTabsViewModel @Inject constructor(
         _state.value = _state.value.copy(exportDatabasePopupVisible = false)
     }
 
+    fun showImportDatabasePopup() {
+        _state.value = _state.value.copy(importDatabasePopupVisible = true)
+    }
+
+    fun hideImportDatabasePopup() {
+        _state.value = _state.value.copy(importDatabasePopupVisible = false)
+    }
+
     fun showSettingsPopup() {
         _state.value = _state.value.copy(settingsPopupVisible = true)
     }
@@ -53,8 +59,18 @@ class MainTabsViewModel @Inject constructor(
 
     fun exportDatabase(uri: Uri) {
         viewModelScope.launch {
-            databaseExporter.exportDatabaseToUri(uri)
+            databaseManager.exportDatabaseToUri(uri)
             hideExportDatabasePopup()
+        }
+    }
+
+    fun importDatabase(uri: Uri) {
+        viewModelScope.launch {
+            val result = databaseManager.importDatabaseFromUri(uri)
+            if (result.isSuccess) {
+                _state.value = _state.value.copy(databaseReloadNeeded = true)
+            }
+            hideImportDatabasePopup()
         }
     }
 
@@ -63,6 +79,10 @@ class MainTabsViewModel @Inject constructor(
             playerRepository.addPlayer(PlayerModel(name = name))
             hideAddPlayerPopup()
         }
+    }
+
+    fun databaseReloaded() {
+        _state.value = _state.value.copy(databaseReloadNeeded = false)
     }
 }
 

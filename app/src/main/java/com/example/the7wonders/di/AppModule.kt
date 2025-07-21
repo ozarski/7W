@@ -2,7 +2,7 @@ package com.example.the7wonders.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.the7wonders.data.DatabaseExporter
+import com.example.the7wonders.data.DatabaseManager
 import com.example.the7wonders.data.datasource.DatabaseConstants
 import com.example.the7wonders.data.datasource.GameDao
 import com.example.the7wonders.data.datasource.GameDatabase
@@ -52,7 +52,7 @@ object AppModule {
     fun provideDatabaseExporter(
         @ApplicationContext context: Context,
         gameDatabase: GameDatabase
-    ): DatabaseExporter {
-        return DatabaseExporter(context, gameDatabase)
+    ): DatabaseManager {
+        return DatabaseManager(context, gameDatabase)
     }
 }

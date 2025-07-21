@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
 import com.example.the7wonders.ui.base.ConfirmationPopup
 import com.example.the7wonders.ui.base.LoadingScreen
+import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Typography
 
@@ -37,14 +38,18 @@ fun PlayerListScreen(
     }
 
     if (state.isLoading) {
-        LoadingScreen()
+        LoadingScreen(modifier = Modifier.fillMaxSize())
     } else if (state.playerList.isEmpty()) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(stringResource(R.string.no_players_found), style = Typography.labelMedium)
+            Text(
+                stringResource(R.string.no_players_found),
+                style = Typography.labelMedium,
+                color = BaseColors.textSecondary
+            )
         }
     } else {
         Column(modifier = Modifier.fillMaxSize()) {
