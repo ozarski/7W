@@ -39,6 +39,9 @@ fun MainTabsScreen(
             onAdd = { viewModel.addPlayer(it) }
         )
     }
+    if (state.settingsPopupVisible) {
+        SettingsPopup()
+    }
     val databaseExportLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/octet-stream")
     ) { uri ->

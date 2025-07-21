@@ -43,6 +43,14 @@ class MainTabsViewModel @Inject constructor(
         _state.value = _state.value.copy(exportDatabasePopupVisible = false)
     }
 
+    fun showSettingsPopup() {
+        _state.value = _state.value.copy(settingsPopupVisible = true)
+    }
+
+    fun hideSettingsPopup() {
+        _state.value = _state.value.copy(settingsPopupVisible = false)
+    }
+
     fun exportDatabase(uri: Uri) {
         viewModelScope.launch {
             databaseExporter.exportDatabaseToUri(uri)
