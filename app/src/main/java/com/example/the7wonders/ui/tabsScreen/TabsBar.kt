@@ -30,12 +30,12 @@ import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.ui.base.BaseFloatingActionButton
 import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Transparency
-import com.example.the7wonders.ui.theme.Typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
@@ -71,7 +71,7 @@ fun TabsBar(
             onPlayerAdd,
             onGameAdd,
             onHold = {
-                viewModel.showExportDatabasePopup()
+                viewModel.showSettingsPopup()
             }
         )
     }
@@ -158,14 +158,15 @@ fun TabItem(selected: MainTabs, screen: MainTabs, onTabSelected: (MainTabs) -> U
     ) {
         Text(
             screen.name,
-            style = Typography.titleLarge,
+            fontSize = 22.sp,
+            lineHeight = 28.sp,
             modifier = Modifier
                 .widthIn(Dimens.tabItemMinWidth)
                 .padding(
                     vertical = Dimens.paddingMedium,
                 ),
             color = if (isSelected) BaseColors.secondaryDark else BaseColors.primary,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Light,
             textAlign = TextAlign.Center
         )
     }

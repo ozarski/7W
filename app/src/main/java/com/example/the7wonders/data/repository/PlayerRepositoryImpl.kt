@@ -1,6 +1,6 @@
 package com.example.the7wonders.data.repository
 
-import com.example.the7wonders.data.datasource.PlayerDao
+import com.example.the7wonders.data.DatabaseManager
 import com.example.the7wonders.data.model.toDomainModel
 import com.example.the7wonders.domain.model.AddPlayerToGameModel
 import com.example.the7wonders.domain.model.PlayerModel
@@ -10,31 +10,31 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class PlayerRepositoryImpl @Inject constructor(private val playerDao: PlayerDao) :
+class PlayerRepositoryImpl @Inject constructor(private val databaseManager: DatabaseManager) :
     PlayerRepository {
     override suspend fun getPlayersWithStats(): Flow<List<PlayerModel>> {
-        return playerDao.getPlayersWithStats().map {
+        return databaseManager.getDatabase().playerDao.getPlayersWithStats().map {
             it.map { dto -> dto.toDomainModel() }
         }
     }
 
     override suspend fun getAllPlayers(): Flow<List<AddPlayerToGameModel>> {
-        return playerDao.getAllPlayers().map {
+        return databaseManager.getDatabase().playerDao.getAllPlayers().map {
             it.map { dto -> dto.toDomainModel() }.sortedBy { player -> player.name }
         }
     }
 
     override suspend fun addPlayer(player: PlayerModel): Long {
-        return playerDao.addPlayer(player.toPlayerEntity())
+        return databaseManager.getDatabase().playerDao.addPlayer(player.toPlayerEntity())
     }
 
     override suspend fun deletePlayer(player: PlayerModel) {
         //TODO("Add actual error handling")
         if (player.id == null) return
-        playerDao.deletePlayer(player.id)
+        databaseManager.getDatabase().playerDao.deletePlayer(player.id)
     }
 
     override suspend fun updatePlayer(player: PlayerModel) {
-        playerDao.updatePlayer(player.toPlayerEntity())
+        databaseManager.getDatabase().playerDao.updatePlayer(player.toPlayerEntity())
     }
 }
