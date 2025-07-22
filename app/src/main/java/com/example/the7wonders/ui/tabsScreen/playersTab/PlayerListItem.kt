@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.R
@@ -133,7 +134,7 @@ fun IconInfoRow(
             )
         }
         Spacer(modifier = Modifier.size(Dimens.paddingSmall))
-        Text(text, style = textStyle)
+        Text(text, style = textStyle, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
 

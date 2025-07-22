@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.the7wonders.ui.theme.BaseColors
@@ -66,6 +67,8 @@ fun BaseCheckbox(
                     vertical = Dimens.paddingMedium
                 ),
                 color = if (checked) contentColorChecked else contentColorUnchecked,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

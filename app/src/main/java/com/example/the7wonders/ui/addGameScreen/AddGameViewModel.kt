@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.the7wonders.domain.model.GameModel
 import com.example.the7wonders.domain.model.PlayerPointTypeModel
 import com.example.the7wonders.domain.model.PlayerResultModel
+import com.example.the7wonders.domain.model.PointType
 import com.example.the7wonders.domain.repository.GameRepository
 import com.example.the7wonders.domain.repository.PlayerRepository
 import com.example.the7wonders.domain.repository.PlayerResultRepository

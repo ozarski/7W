@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.the7wonders.data.model.GameEntity
+import com.example.the7wonders.data.model.GameWithPlayerDetailsDto
 import com.example.the7wonders.data.model.GameWithResultsDto
 import kotlinx.coroutines.flow.Flow
 
@@ -42,6 +43,17 @@ interface GameDao {
     )
     fun getGamesWithResults(): Flow<List<GameWithResultsDto>>
 
+    @Query(
+        "SELECT ${DatabaseConstants.PLAYER_RESULTS_TABLE_NAME}.*, " +
+                "${DatabaseConstants.PLAYER_TABLE_NAME}.${DatabaseConstants.PLAYER_NAME_COLUMN_NAME}, " +
+                "${DatabaseConstants.GAME_TABLE_NAME}.${DatabaseConstants.DATE_COLUMN_NAME} FROM " +
+                "${DatabaseConstants.PLAYER_RESULTS_TABLE_NAME} INNER JOIN ${DatabaseConstants.GAME_TABLE_NAME} ON " +
+                "${DatabaseConstants.GAME_ID_COLUMN_NAME} = ${DatabaseConstants.GAME_TABLE_NAME}.${DatabaseConstants.DEFAULT_ID_COLUMN_NAME} " +
+                "INNER JOIN ${DatabaseConstants.PLAYER_TABLE_NAME} ON " +
+                "${DatabaseConstants.PLAYER_ID_COLUMN_NAME} = ${DatabaseConstants.PLAYER_TABLE_NAME}.${DatabaseConstants.DEFAULT_ID_COLUMN_NAME} " +
+                "WHERE ${DatabaseConstants.GAME_ID_COLUMN_NAME} = :id"
+    )
+    suspend fun getGameDetails(id: Long): List<GameWithPlayerDetailsDto>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addGame(gameEntity: GameEntity): Long

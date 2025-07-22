@@ -15,4 +15,6 @@
     <string name="delete_player_confirmation_message">Player profile will be deleted permanently</string>
     <string name="no_games_found">No games found!</string>
     <string name="no_players_found">No players found!</string>
+    <string name="pts_label">pts</string>
+    <string name="points_format">%1$d pts</string>
 </resources>
