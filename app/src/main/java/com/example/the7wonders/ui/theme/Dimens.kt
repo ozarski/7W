@@ -1,9 +1,14 @@
 package com.example.the7wonders.ui.theme
 
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 object Dimens {
 
+    const val EXPANDED_ARROW_ROTATION_DEGREES = 180f
+    const val COLLAPSED_ARROW_ROTATION_DEGREES = 0f
+    val playerResultDetailsPlacementFontSize = 50.sp
+    val playerPointTypeGridSize = 75.dp
     val gameResultsTopSpacing = 100.dp
     val resultBubbleWidth = 90.dp
     val resultBubbleIconSize = 64.dp
@@ -12,6 +17,10 @@ object Dimens {
     val addPlayerListWidth = 250.dp
     val addPlayersIconSize = 96.dp
     val tabItemMinWidth = 125.dp
+
+    const val ANIMATION_DURATION_EXTRA_LONG = 500
+
+    const val ANIMATION_DURATION_LONG = 350
     const val ANIMATION_DURATION_MEDIUM = 250
     const val ANIMATION_DURATION_SHORT = 150
     val paddingZero = 0.dp

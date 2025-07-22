@@ -1,7 +1,6 @@
 package com.example.the7wonders.domain.model
 
 import com.example.the7wonders.data.model.PlayerResultEntity
-import com.example.the7wonders.ui.addGameScreen.PointType
 
 data class PlayerResultModel(
     val playerID: Long,
