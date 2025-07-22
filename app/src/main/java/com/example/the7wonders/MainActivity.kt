@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.the7wonders.ui.Screens
 import com.example.the7wonders.ui.addGameScreen.AddGameScreen
+import com.example.the7wonders.ui.gameDetailsScreen.GameDetailsScreen
 import com.example.the7wonders.ui.tabsScreen.MainTabsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,6 +59,21 @@ fun AppNavigation() {
                 },
             ) {
                 AddGameScreen(navController = navController)
+            }
+            composable(
+                Screens.GameDetails.route + "/{${Screens.GAME_DETAILS_ID_PARAM}}",
+                enterTransition = {
+                    slideInVertically(
+                        initialOffsetY = { it },
+                    )
+                },
+                exitTransition = {
+                    slideOutVertically(
+                        targetOffsetY = { it },
+                    )
+                },
+            ) {
+                GameDetailsScreen(navController)
             }
         }
     }

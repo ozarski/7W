@@ -1,5 +1,6 @@
 package com.example.the7wonders.data.model
 
+import com.example.the7wonders.domain.model.GameDetailsModel
 import com.example.the7wonders.domain.model.PlayerResultModel
 import com.example.the7wonders.domain.model.PointType
 

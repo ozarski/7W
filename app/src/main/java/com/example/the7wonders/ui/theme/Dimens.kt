@@ -5,6 +5,9 @@ import androidx.compose.ui.unit.sp
 
 object Dimens {
 
+    val gameListItemPlayerNameMaxWidth = 275.dp
+    val defaultTextViewMaxWidth = 150.dp
+    val scoreGridItemWidth = 80.dp
     const val EXPANDED_ARROW_ROTATION_DEGREES = 180f
     const val COLLAPSED_ARROW_ROTATION_DEGREES = 0f
     val playerResultDetailsPlacementFontSize = 50.sp

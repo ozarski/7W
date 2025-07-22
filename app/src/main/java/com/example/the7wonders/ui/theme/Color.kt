@@ -25,6 +25,7 @@ object BaseColors {
 }
 
 object Transparency {
+    const val TRANSPARENCY_0 = 0f
     const val TRANSPARENCY_10 = 0.1f
     const val TRANSPARENCY_30 = 0.3f
     const val TRANSPARENCY_50 = 0.5f

@@ -1,6 +1,6 @@
 package com.example.the7wonders.domain.repository
 
-import com.example.the7wonders.data.model.GameDetailsModel
+import com.example.the7wonders.domain.model.GameDetailsModel
 import com.example.the7wonders.domain.model.GameModel
 import kotlinx.coroutines.flow.Flow
 

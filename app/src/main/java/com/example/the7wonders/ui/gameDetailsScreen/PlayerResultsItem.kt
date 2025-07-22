@@ -21,8 +21,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -32,9 +32,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.the7wonders.R
 import com.example.the7wonders.domain.model.PlayerResultModel
@@ -42,6 +44,7 @@ import com.example.the7wonders.domain.model.PointType
 import com.example.the7wonders.ui.base.BackgroundOrientation
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.BaseCard
+import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Transparency
 import com.example.the7wonders.ui.theme.Typography
@@ -73,11 +76,18 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                 ) {
                     Text(
                         playerResult.placement.toString(),
-                        fontSize = Dimens.playerResultDetailsPlacementFontSize
+                        fontSize = Dimens.playerResultDetailsPlacementFontSize,
+                        color = BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_90)
                     )
                     Spacer(modifier = Modifier.size(Dimens.paddingLarge))
                     Column {
-                        Text(playerResult.playerName, style = Typography.labelLarge)
+                        Text(
+                            playerResult.playerName,
+                            style = Typography.labelLarge,
+                            modifier = Modifier.widthIn(max = Dimens.gameListItemPlayerNameMaxWidth),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                         Text(
                             stringResource(R.string.points_format, playerResult.totalScore),
                             style = Typography.labelMedium
@@ -89,7 +99,8 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                     "expand details icon",
                     modifier = Modifier
                         .size(Dimens.iconSizeMedium)
-                        .rotate(rotationAngle)
+                        .rotate(rotationAngle),
+                    tint = BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_70)
                 )
             }
             AnimatedVisibility(
@@ -106,11 +117,39 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                 ),
             ) {
                 if (expanded.value) {
-                    LazyVerticalGrid(GridCells.Adaptive(Dimens.playerPointTypeGridSize)) {
-                        items(playerResult.scores.size) { index ->
-                            val score = playerResult.scores[index]
-                            ScoreGridItem(score)
+                    Column {
+                        Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            ScoreGridItem(playerResult.scores[PointType.Wonder.ordinal])
+                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                            ScoreGridItem(playerResult.scores[PointType.Military.ordinal])
+                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                            ScoreGridItem(playerResult.scores[PointType.Gold.ordinal])
+                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                            ScoreGridItem(playerResult.scores[PointType.Blue.ordinal])
                         }
+                        Spacer(modifier = Modifier.size(Dimens.paddingMedium))
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            ScoreGridItem(playerResult.scores[PointType.Yellow.ordinal])
+                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                            ScoreGridItem(playerResult.scores[PointType.Green.ordinal])
+                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                            ScoreGridItem(playerResult.scores[PointType.Purple.ordinal])
+                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+                            ScoreGridItem(
+                                playerResult.scores[PointType.Purple.ordinal],
+                                modifier = Modifier.alpha(Transparency.TRANSPARENCY_0)
+                            )
+                        }
+                        Spacer(modifier = Modifier.size(Dimens.paddingMedium))
                     }
                 }
             }
@@ -119,11 +158,12 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
 }
 
 @Composable
-fun ScoreGridItem(score: Pair<PointType, Int>) {
+fun ScoreGridItem(score: Pair<PointType, Int>, modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .padding(vertical = Dimens.paddingSmall)
-            .height(IntrinsicSize.Min),
+            .height(IntrinsicSize.Min)
+            .width(Dimens.scoreGridItemWidth),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(

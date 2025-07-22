@@ -36,7 +36,7 @@ import com.example.the7wonders.ui.theme.Transparency
 @Composable
 fun BaseCard(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    onClick: () -> Unit = {},
     onHold: () -> Unit = {},
     content: @Composable () -> Unit
 ) {

@@ -116,7 +116,7 @@ fun MainTabsScreen(
                 ) { tab ->
                     when (tab) {
                         MainTabs.Games -> {
-                            GameListScreen()
+                            GameListScreen(navController)
                         }
 
                         MainTabs.Players -> {

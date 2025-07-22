@@ -1,8 +1,8 @@
 package com.example.the7wonders.data.repository
 
 import com.example.the7wonders.data.DatabaseManager
-import com.example.the7wonders.data.model.GameDetailsModel
 import com.example.the7wonders.data.model.GameWithPlayerDetailsDto
+import com.example.the7wonders.domain.model.GameDetailsModel
 import com.example.the7wonders.domain.model.GameModel
 import com.example.the7wonders.domain.model.toGameEntity
 import com.example.the7wonders.domain.repository.GameRepository

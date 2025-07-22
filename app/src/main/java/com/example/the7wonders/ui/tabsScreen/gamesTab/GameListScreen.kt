@@ -13,7 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.the7wonders.R
+import com.example.the7wonders.ui.Screens
 import com.example.the7wonders.ui.base.ConfirmationPopup
 import com.example.the7wonders.ui.base.LoadingScreen
 import com.example.the7wonders.ui.theme.BaseColors
@@ -22,6 +24,7 @@ import com.example.the7wonders.ui.theme.Typography
 
 @Composable
 fun GameListScreen(
+    navController: NavController,
     viewModel: GameListViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
@@ -58,7 +61,9 @@ fun GameListScreen(
                         game = state.gameList[index],
                         modifier = Modifier.padding(Dimens.paddingMedium),
                         onClick = {
-                            //TODO("Navigate to game details screen")
+                            navController.navigate(
+                                Screens.GameDetails.route + "/${state.gameList[index].id}"
+                            )
                         },
                         onHold = { gameModel ->
                             viewModel.toggleDeletePopup(gameModel)
