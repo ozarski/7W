@@ -1,6 +1,8 @@
 package com.example.the7wonders.data.repository
 
 import com.example.the7wonders.data.DatabaseManager
+import com.example.the7wonders.data.model.GameDetailsModel
+import com.example.the7wonders.data.model.GameWithPlayerDetailsDto
 import com.example.the7wonders.domain.model.GameModel
 import com.example.the7wonders.domain.model.toGameEntity
 import com.example.the7wonders.domain.repository.GameRepository
@@ -23,6 +25,11 @@ class GameRepositoryImpl @Inject constructor(private val databaseManager: Databa
                     )
                 }
         }
+    }
+
+    override suspend fun getGameDetails(id: Long): GameDetailsModel {
+        val scores = databaseManager.getDatabase().gameDao.getGameDetails(id)
+        return GameWithPlayerDetailsDto.toGameDetailsModel(scores)
     }
 
     override suspend fun addGame(game: GameModel): Long {
