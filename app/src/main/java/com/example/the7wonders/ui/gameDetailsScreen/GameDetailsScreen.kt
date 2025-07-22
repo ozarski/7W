@@ -79,7 +79,7 @@ fun GameDetailsScreen(
                             )
                             GameInfo(
                                 state.gameDetails.date ?: Calendar.getInstance().timeInMillis,
-                                state.gameDetails.playerScores.groupBy { it.playerID }.entries.first().value.size
+                                state.gameDetails.playerScores.size
                             )
                         }
                         Spacer(modifier = Modifier.size(Dimens.paddingLarge))
