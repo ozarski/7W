@@ -1,11 +1,11 @@
 package com.example.the7wonders.data.model
 
 import com.example.the7wonders.domain.model.ArmadaPointTypes
-import com.example.the7wonders.domain.model.GameDetailsModel
-import com.example.the7wonders.domain.model.PlayerResultModel
 import com.example.the7wonders.domain.model.BasePointTypes
 import com.example.the7wonders.domain.model.CityPointTypes
+import com.example.the7wonders.domain.model.GameDetailsModel
 import com.example.the7wonders.domain.model.LeaderPointTypes
+import com.example.the7wonders.domain.model.PlayerResultModel
 
 data class GameWithPlayerDetailsDto(
     val playerID: Long,

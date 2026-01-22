@@ -116,8 +116,8 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                 exit = fadeOut(keyframes {
                     this.durationMillis = Dimens.ANIMATION_DURATION_LONG
                 }) + shrinkVertically(
-                    keyframes { this.durationMillis = Dimens.ANIMATION_DURATION_SHORT }
-                ),
+                    spring(Spring.DampingRatioLowBouncy)
+                )
             ) {
                 if (expanded.value) {
                     Column {
@@ -132,7 +132,7 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                             )
                         }
                         Spacer(modifier = Modifier.size(Dimens.paddingMedium))
-                        if( scores.size > 8) {
+                        if (scores.size > 8) {
                             ResultsRow(
                                 scores.subList(8, scores.size)
                             )
