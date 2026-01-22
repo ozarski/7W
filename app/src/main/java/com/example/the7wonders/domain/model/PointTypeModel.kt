@@ -8,6 +8,32 @@ interface PointTypeInterface {
     val pointName: String
     val color: Color
     val icon: Int
+
+    companion object {
+        fun getPlayerResultsIndex(pointType: PointTypeInterface): Int{
+            when(pointType){
+                is BasePointTypes -> {
+                    val index = BasePointTypes.entries.indexOf(pointType)
+                    return index
+                }
+                is ArmadaPointTypes -> {
+                    val index = ArmadaPointTypes.entries.indexOf(pointType)
+                    return index + BasePointTypes.entries.size
+                }
+                is CityPointTypes -> {
+                    val index = CityPointTypes.entries.indexOf(pointType)
+                    return index + BasePointTypes.entries.size + ArmadaPointTypes.entries.size
+                }
+                is LeaderPointTypes -> {
+                    val index = LeaderPointTypes.entries.indexOf(pointType)
+                    return index + BasePointTypes.entries.size + ArmadaPointTypes.entries.size + CityPointTypes.entries.size
+                }
+                else -> {
+                    return -1
+                }
+            }
+        }
+    }
 }
 
 enum class BasePointTypes(override val pointName: String, override val color: Color, override val icon: Int): PointTypeInterface {

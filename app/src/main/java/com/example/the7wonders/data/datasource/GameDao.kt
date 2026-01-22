@@ -39,7 +39,8 @@ interface GameDao {
                 "FROM ${DatabaseConstants.PLAYER_RESULTS_TABLE_NAME} INNER JOIN ${DatabaseConstants.GAME_TABLE_NAME} " +
                 "ON ${DatabaseConstants.GAME_ID_COLUMN_NAME} = ${DatabaseConstants.GAME_TABLE_NAME}.${DatabaseConstants.DEFAULT_ID_COLUMN_NAME} " +
                 "INNER JOIN ${DatabaseConstants.PLAYER_TABLE_NAME} " +
-                "ON ${DatabaseConstants.PLAYER_ID_COLUMN_NAME} = ${DatabaseConstants.PLAYER_TABLE_NAME}.${DatabaseConstants.DEFAULT_ID_COLUMN_NAME}"
+                "ON ${DatabaseConstants.PLAYER_ID_COLUMN_NAME} = ${DatabaseConstants.PLAYER_TABLE_NAME}.${DatabaseConstants.DEFAULT_ID_COLUMN_NAME}" +
+                " ORDER BY ${DatabaseConstants.DATE_COLUMN_NAME} DESC"
     )
     fun getGamesWithResults(): Flow<List<GameWithResultsDto>>
 

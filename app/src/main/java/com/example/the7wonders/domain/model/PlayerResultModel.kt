@@ -7,7 +7,7 @@ data class PlayerResultModel(
     val playerName: String,
     val totalScore: Int,
     val placement: Int,
-    val scores: List<Pair<PointTypeInterface, Int>>
+    val scores: List<Pair<PointTypeInterface, Int?>>
 )
 
 fun PlayerResultModel.toPlayerResultEntity(gameID: Long): PlayerResultEntity {
