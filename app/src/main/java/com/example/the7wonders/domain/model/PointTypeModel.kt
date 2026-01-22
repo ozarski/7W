@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.the7wonders.R
 import com.example.the7wonders.ui.theme.PointTypeColors
 
+
 interface PointTypeInterface {
     val pointName: String
     val color: Color
@@ -48,7 +49,8 @@ enum class BasePointTypes(override val pointName: String, override val color: Co
 
 enum class ArmadaPointTypes(override val pointName: String, override val color: Color, override val icon: Int): PointTypeInterface {
     NavalConflicts("Naval conflicts", PointTypeColors.navalConflicts, R.drawable.naval_conflict_icon),
-    IslandCards("Island cards", PointTypeColors.island, R.drawable.island)
+    IslandCards("Island cards", PointTypeColors.island, R.drawable.island),
+    NavalVictory("Naval victory", PointTypeColors.navalVictory, R.drawable.boat)
 }
 
 enum class CityPointTypes(override val pointName: String, override val color: Color, override val icon: Int): PointTypeInterface {

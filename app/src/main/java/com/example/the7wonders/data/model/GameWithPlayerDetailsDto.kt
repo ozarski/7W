@@ -21,6 +21,7 @@ data class GameWithPlayerDetailsDto(
     val leaderPoints: Int?,
     val navalConflictsPoints: Int?,
     val islandCardsPoints: Int?,
+    val navalVictoryPoints: Int?,
     val totalScore: Int,
     val placement: Int,
     val date: Long,
@@ -56,7 +57,8 @@ fun GameWithPlayerDetailsDto.toPlayerResultModel() = PlayerResultModel(
         Pair(CityPointTypes.CityCards, cityCardsPoints),
         Pair(LeaderPointTypes.LeaderCards, leaderPoints),
         Pair(ArmadaPointTypes.NavalConflicts, navalConflictsPoints),
-        Pair(ArmadaPointTypes.IslandCards, islandCardsPoints)
+        Pair(ArmadaPointTypes.IslandCards, islandCardsPoints),
+        Pair(ArmadaPointTypes.NavalVictory, navalVictoryPoints)
     )
 )
 
