@@ -32,6 +32,8 @@ object Dimens {
     val paddingLarge = 16.dp
     val paddingExtraLarge = 24.dp
 
+    val dlcScreenBottomPadding = 150.dp
+
     val spacerSizeExtraSmall = 4.dp
     val spacerSizeSmall = 8.dp
     val spacerSizeMedium = 16.dp

@@ -60,7 +60,8 @@ fun AddPlayersScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                 label = stringResource(R.string.continue_button_label),
                 buttonColor = BaseColors.secondaryDark,
                 textColor = BaseColors.textSecondary,
-                modifier = Modifier.width(Dimens.addPlayerListWidth)
+                modifier = Modifier.width(Dimens.addPlayerListWidth),
+                enabled = viewModel.countSelectedPlayers() > 1
             ) {
                 viewModel.confirmPlayers()
             }

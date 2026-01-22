@@ -14,8 +14,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +59,13 @@ fun PickDLCsScreen(viewModel: AddGameViewModel = hiltViewModel()) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Icon(
+                painterResource(R.drawable.puzzle),
+                null,
+                modifier = Modifier.size(Dimens.addPlayersIconSize),
+                tint = BaseColors.secondaryDark
+            )
+            Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
 
             Card(
                 modifier = Modifier
@@ -105,6 +115,7 @@ fun PickDLCsScreen(viewModel: AddGameViewModel = hiltViewModel()) {
             ) {
                 viewModel.confirmDLCSelection()
             }
+            Spacer(modifier = Modifier.size(Dimens.dlcScreenBottomPadding))
         }
     }
 }

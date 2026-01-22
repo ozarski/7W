@@ -102,6 +102,10 @@ class AddGameViewModel @Inject constructor(
         }
     }
 
+    fun countSelectedPlayers(): Int {
+        return _state.value.availablePlayers.count { it.isPlaying }
+    }
+
     fun confirmDLCSelection() {
         _state.value = _state.value.copy(
             gamePhase = GamePhase.PointInput
