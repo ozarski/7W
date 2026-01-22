@@ -34,6 +34,22 @@ object DatabaseConstants {
             db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN islandCardsPoints INTEGER")
         }
     }
+
+    val MIGRATION_2_3 = object : Migration(1, 2) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN navalVictoryPoints INTEGER")
+        }
+    }
+
+    val MIGRATION_1_3 = object : Migration(1, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN cityCardsPoints INTEGER")
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN leaderPoints INTEGER")
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN navalConflictsPoints INTEGER")
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN islandCardsPoints INTEGER")
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN navalVictoryPoints INTEGER")
+        }
+    }
 }
 
 object DatabaseQueries {

@@ -35,8 +35,11 @@ class DatabaseManager @Inject constructor(
                 context,
                 GameDatabase::class.java,
                 DatabaseConstants.DATABASE_NAME
-            ).addMigrations(DatabaseConstants.MIGRATION_1_2)
-                .build()
+            ).addMigrations(
+                DatabaseConstants.MIGRATION_1_2,
+                DatabaseConstants.MIGRATION_2_3,
+                DatabaseConstants.MIGRATION_1_3
+            ).build()
         }
     }
 

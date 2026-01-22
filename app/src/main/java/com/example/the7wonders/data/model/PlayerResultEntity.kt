@@ -21,6 +21,7 @@ data class PlayerResultEntity(
     val leaderPoints: Int?,
     val navalConflictsPoints: Int?,
     val islandCardsPoints: Int?,
+    val navalVictoryPoints: Int?,
     val totalScore: Int,
     val placement: Int
 )

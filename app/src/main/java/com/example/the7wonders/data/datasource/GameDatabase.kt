@@ -12,7 +12,7 @@ import com.example.the7wonders.data.model.PlayerResultEntity
         GameEntity::class,
         PlayerResultEntity::class
     ],
-    version = 2,
+    version = 3,
 )
 abstract class GameDatabase : RoomDatabase() {
 
