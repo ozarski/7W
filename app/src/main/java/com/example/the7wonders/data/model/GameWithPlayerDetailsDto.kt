@@ -2,7 +2,8 @@ package com.example.the7wonders.data.model
 
 import com.example.the7wonders.domain.model.GameDetailsModel
 import com.example.the7wonders.domain.model.PlayerResultModel
-import com.example.the7wonders.domain.model.PointType
+import com.example.the7wonders.domain.model.BasePointTypes
+import com.example.the7wonders.domain.model.CityPointTypes
 
 data class GameWithPlayerDetailsDto(
     val playerID: Long,
@@ -14,6 +15,10 @@ data class GameWithPlayerDetailsDto(
     val yellowCardPoints: Int,
     val greenCardPoints: Int,
     val purpleCardPoints: Int,
+    val cityCardsPoints: Int?,
+    val leaderPoints: Int?,
+    val navalConflictsPoints: Int?,
+    val islandCardsPoints: Int?,
     val totalScore: Int,
     val placement: Int,
     val date: Long,
@@ -39,13 +44,13 @@ fun GameWithPlayerDetailsDto.toPlayerResultModel() = PlayerResultModel(
     totalScore = totalScore,
     placement = placement,
     scores = listOf(
-        Pair(PointType.Wonder, wonderPoints),
-        Pair(PointType.Military, militaryPoints),
-        Pair(PointType.Gold, gold),
-        Pair(PointType.Blue, blueCardPoints),
-        Pair(PointType.Yellow, yellowCardPoints),
-        Pair(PointType.Green, greenCardPoints),
-        Pair(PointType.Purple, purpleCardPoints)
+        Pair(BasePointTypes.Wonder, wonderPoints),
+        Pair(BasePointTypes.Military, militaryPoints),
+        Pair(BasePointTypes.Gold, gold),
+        Pair(BasePointTypes.Blue, blueCardPoints),
+        Pair(BasePointTypes.Yellow, yellowCardPoints),
+        Pair(BasePointTypes.Green, greenCardPoints),
+        Pair(BasePointTypes.Purple, purpleCardPoints)
     )
 )
 

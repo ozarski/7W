@@ -1,6 +1,7 @@
 package com.example.the7wonders.ui.base
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Done
@@ -27,6 +28,6 @@ fun DefaultCheckboxIcon(
         modifier = Modifier.padding(
             horizontal = Dimens.paddingMedium,
             vertical = Dimens.paddingMedium
-        )
+        ).size(Dimens.iconSizeSmall)
     )
 }

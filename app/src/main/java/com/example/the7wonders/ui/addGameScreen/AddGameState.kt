@@ -7,6 +7,7 @@ import com.example.the7wonders.domain.model.PlayerResultModel
 
 enum class GamePhase {
     PlayerSelection,
+    DLCSelection,
     PointInput,
     Results
 }
@@ -18,6 +19,9 @@ data class AddGameState(
     val confirmedPoints: List<PlayerPointTypeModel> = emptyList(),
     val currentInputPoint: PlayerPointTypeModel? = null,
     val results: List<PlayerResultModel> = emptyList(),
+    val citiesDLC: Boolean = true,
+    val armadaDLC: Boolean = true,
+    val leadersDLC: Boolean = true,
     val isLoading: Boolean = false,
     val gamePhase: GamePhase = GamePhase.PlayerSelection
 )

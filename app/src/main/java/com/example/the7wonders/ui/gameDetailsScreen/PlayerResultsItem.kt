@@ -40,7 +40,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.the7wonders.R
 import com.example.the7wonders.domain.model.PlayerResultModel
-import com.example.the7wonders.domain.model.PointType
+import com.example.the7wonders.domain.model.BasePointTypes
+import com.example.the7wonders.domain.model.PointTypeInterface
 import com.example.the7wonders.ui.base.BackgroundOrientation
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.BaseCard
@@ -124,13 +125,13 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            ScoreGridItem(playerResult.scores[PointType.Wonder.ordinal])
+                            ScoreGridItem(playerResult.scores[BasePointTypes.Wonder.ordinal])
                             Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Military.ordinal])
+                            ScoreGridItem(playerResult.scores[BasePointTypes.Military.ordinal])
                             Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Gold.ordinal])
+                            ScoreGridItem(playerResult.scores[BasePointTypes.Gold.ordinal])
                             Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Blue.ordinal])
+                            ScoreGridItem(playerResult.scores[BasePointTypes.Blue.ordinal])
                         }
                         Spacer(modifier = Modifier.size(Dimens.paddingMedium))
                         Row(
@@ -138,14 +139,14 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            ScoreGridItem(playerResult.scores[PointType.Yellow.ordinal])
+                            ScoreGridItem(playerResult.scores[BasePointTypes.Yellow.ordinal])
                             Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Green.ordinal])
+                            ScoreGridItem(playerResult.scores[BasePointTypes.Green.ordinal])
                             Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Purple.ordinal])
+                            ScoreGridItem(playerResult.scores[BasePointTypes.Purple.ordinal])
                             Spacer(modifier = Modifier.size(Dimens.paddingLarge))
                             ScoreGridItem(
-                                playerResult.scores[PointType.Purple.ordinal],
+                                playerResult.scores[BasePointTypes.Purple.ordinal],
                                 modifier = Modifier.alpha(Transparency.TRANSPARENCY_0)
                             )
                         }
@@ -158,7 +159,7 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
 }
 
 @Composable
-fun ScoreGridItem(score: Pair<PointType, Int>, modifier: Modifier = Modifier) {
+fun ScoreGridItem(score: Pair<PointTypeInterface, Int>, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .padding(vertical = Dimens.paddingSmall)
@@ -207,13 +208,13 @@ fun PlayerResultsItemPreview() {
         totalScore = 70,
         placement = 1,
         scores = listOf(
-            Pair(PointType.Wonder, 10),
-            Pair(PointType.Military, 10),
-            Pair(PointType.Gold, 10),
-            Pair(PointType.Blue, 10),
-            Pair(PointType.Yellow, 10),
-            Pair(PointType.Green, 10),
-            Pair(PointType.Purple, 10),
+            Pair(BasePointTypes.Wonder, 10),
+            Pair(BasePointTypes.Military, 10),
+            Pair(BasePointTypes.Gold, 10),
+            Pair(BasePointTypes.Blue, 10),
+            Pair(BasePointTypes.Yellow, 10),
+            Pair(BasePointTypes.Green, 10),
+            Pair(BasePointTypes.Purple, 10),
         )
     )
 
