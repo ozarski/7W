@@ -44,6 +44,6 @@ object PointTypeColors {
 
     val navalConflicts = Color(0xFF00425A)
     val island = Color(0xFFFDC252)
-    val leader = Color(0xFF880E4F)
-    val city = Color(0xFF7DC7FF)
+    val leader = Color(0xE2F06292)
+    val city = Color(0xFFE8EAF6)
 }

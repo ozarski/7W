@@ -120,6 +120,24 @@ class AddGameViewModel @Inject constructor(
                 )
             }
         }.toMutableList()
+        if(_state.value.leadersDLC){
+            val leadersPoints = listOf(
+                PlayerPointTypeModel(
+                    playerID = -1,
+                    playerName = "Leader Cards",
+                    pointType = LeaderPointTypes.LeaderCards,
+                    value = ""
+                )
+            ).flatMap { pointType ->
+                _state.value.selectedPlayers.map { player ->
+                    pointType.copy(
+                        playerID = player.id,
+                        playerName = player.name
+                    )
+                }
+            }
+            points.addAll(leadersPoints)
+        }
         if(_state.value.citiesDLC){
             val citiesPoints = CityPointTypes.entries.flatMap { pointType ->
                 _state.value.selectedPlayers.map { player ->
@@ -145,24 +163,6 @@ class AddGameViewModel @Inject constructor(
                 }
             }
             points.addAll(armadaPoints)
-        }
-        if(_state.value.leadersDLC){
-            val leadersPoints = listOf(
-                PlayerPointTypeModel(
-                    playerID = -1,
-                    playerName = "Leader Cards",
-                    pointType = LeaderPointTypes.LeaderCards,
-                    value = ""
-                )
-            ).flatMap { pointType ->
-                _state.value.selectedPlayers.map { player ->
-                    pointType.copy(
-                        playerID = player.id,
-                        playerName = player.name
-                    )
-                }
-            }
-            points.addAll(leadersPoints)
         }
         val currentInputPoint = points.popOrNull()
         _state.value = _state.value.copy(pointQueue = points, currentInputPoint = currentInputPoint)
