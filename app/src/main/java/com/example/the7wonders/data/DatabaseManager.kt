@@ -18,6 +18,7 @@ class DatabaseManager @Inject constructor(
 ) {
     private val lock = Any()
 
+
     fun getDatabase(): GameDatabase {
         synchronized(lock) {
             return database
@@ -34,7 +35,8 @@ class DatabaseManager @Inject constructor(
                 context,
                 GameDatabase::class.java,
                 DatabaseConstants.DATABASE_NAME
-            ).build()
+            ).addMigrations(DatabaseConstants.MIGRATION_1_2)
+                .build()
         }
     }
 

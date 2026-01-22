@@ -39,8 +39,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.the7wonders.R
+import com.example.the7wonders.domain.model.BasePointTypes
 import com.example.the7wonders.domain.model.PlayerResultModel
-import com.example.the7wonders.domain.model.PointType
+import com.example.the7wonders.domain.model.PointTypeInterface
 import com.example.the7wonders.ui.base.BackgroundOrientation
 import com.example.the7wonders.ui.base.BaseBackground
 import com.example.the7wonders.ui.base.BaseCard
@@ -48,6 +49,7 @@ import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Transparency
 import com.example.the7wonders.ui.theme.Typography
+import kotlin.math.min
 
 @Composable
 fun PlayerResultsItem(playerResult: PlayerResultModel) {
@@ -56,6 +58,7 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
         targetValue = if (expanded.value) Dimens.EXPANDED_ARROW_ROTATION_DEGREES else Dimens.COLLAPSED_ARROW_ROTATION_DEGREES,
         animationSpec = spring(Spring.DampingRatioMediumBouncy)
     )
+    val scores = getViableScores(playerResult.scores)
     BaseCard(
         onClick = {
             expanded.value = !expanded.value
@@ -113,40 +116,25 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                 exit = fadeOut(keyframes {
                     this.durationMillis = Dimens.ANIMATION_DURATION_LONG
                 }) + shrinkVertically(
-                    keyframes { this.durationMillis = Dimens.ANIMATION_DURATION_SHORT }
-                ),
+                    spring(Spring.DampingRatioLowBouncy)
+                )
             ) {
                 if (expanded.value) {
                     Column {
                         Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            ScoreGridItem(playerResult.scores[PointType.Wonder.ordinal])
-                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Military.ordinal])
-                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Gold.ordinal])
-                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Blue.ordinal])
+                        ResultsRow(
+                            scores.subList(0, minOf(4, scores.size))
+                        )
+                        Spacer(modifier = Modifier.size(Dimens.paddingMedium))
+                        if (scores.size > 4) {
+                            ResultsRow(
+                                scores.subList(4, min(8, scores.size))
+                            )
                         }
                         Spacer(modifier = Modifier.size(Dimens.paddingMedium))
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            ScoreGridItem(playerResult.scores[PointType.Yellow.ordinal])
-                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Green.ordinal])
-                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(playerResult.scores[PointType.Purple.ordinal])
-                            Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                            ScoreGridItem(
-                                playerResult.scores[PointType.Purple.ordinal],
-                                modifier = Modifier.alpha(Transparency.TRANSPARENCY_0)
+                        if (scores.size > 8) {
+                            ResultsRow(
+                                scores.subList(8, scores.size)
                             )
                         }
                         Spacer(modifier = Modifier.size(Dimens.paddingMedium))
@@ -157,8 +145,45 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
     }
 }
 
+fun getViableScores(scores: List<Pair<PointTypeInterface, Int?>>): List<Pair<PointTypeInterface, Int?>> {
+    val viableScores = mutableListOf<Pair<PointTypeInterface, Int?>>()
+    for (score in scores) {
+        if (score.second != null) {
+            viableScores.add(score)
+        }
+    }
+    return viableScores
+}
+
 @Composable
-fun ScoreGridItem(score: Pair<PointType, Int>, modifier: Modifier = Modifier) {
+fun ResultsRow(items: List<Pair<PointTypeInterface, Int?>>) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        for (i in 0 until 4) {
+            val itemOrNull = items.getOrNull(i)
+            if (itemOrNull != null) {
+                ScoreGridItem(
+                    itemOrNull
+                )
+            } else {
+                ScoreGridItem(
+                    Pair(BasePointTypes.Wonder, null),
+                    modifier = Modifier.alpha(Transparency.TRANSPARENCY_0)
+                )
+            }
+            if (i != 3) {
+                Spacer(modifier = Modifier.size(Dimens.paddingLarge))
+            }
+        }
+    }
+}
+
+@Composable
+fun ScoreGridItem(score: Pair<PointTypeInterface, Int?>, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .padding(vertical = Dimens.paddingSmall)
@@ -190,7 +215,7 @@ fun ScoreGridItem(score: Pair<PointType, Int>, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                score.second.toString(),
+                if (score.second != null) score.second.toString() else "0",
                 style = Typography.labelLarge
             )
             Text(stringResource(R.string.pts_label), style = Typography.bodyMedium)
@@ -207,13 +232,13 @@ fun PlayerResultsItemPreview() {
         totalScore = 70,
         placement = 1,
         scores = listOf(
-            Pair(PointType.Wonder, 10),
-            Pair(PointType.Military, 10),
-            Pair(PointType.Gold, 10),
-            Pair(PointType.Blue, 10),
-            Pair(PointType.Yellow, 10),
-            Pair(PointType.Green, 10),
-            Pair(PointType.Purple, 10),
+            Pair(BasePointTypes.Wonder, 10),
+            Pair(BasePointTypes.Military, 10),
+            Pair(BasePointTypes.Gold, 10),
+            Pair(BasePointTypes.Blue, 10),
+            Pair(BasePointTypes.Yellow, 10),
+            Pair(BasePointTypes.Green, 10),
+            Pair(BasePointTypes.Purple, 10),
         )
     )
 

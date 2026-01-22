@@ -26,7 +26,8 @@ object AppModule {
             context,
             GameDatabase::class.java,
             DatabaseConstants.DATABASE_NAME
-        ).build()
+        ).addMigrations(DatabaseConstants.MIGRATION_1_2)
+            .build()
     }
 
     @Provides

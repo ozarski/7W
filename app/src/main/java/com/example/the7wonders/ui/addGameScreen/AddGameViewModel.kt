@@ -4,10 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.the7wonders.domain.model.ArmadaPointTypes
+import com.example.the7wonders.domain.model.BasePointTypes
+import com.example.the7wonders.domain.model.CityPointTypes
 import com.example.the7wonders.domain.model.GameModel
+import com.example.the7wonders.domain.model.LeaderPointTypes
 import com.example.the7wonders.domain.model.PlayerPointTypeModel
 import com.example.the7wonders.domain.model.PlayerResultModel
-import com.example.the7wonders.domain.model.PointType
 import com.example.the7wonders.domain.repository.GameRepository
 import com.example.the7wonders.domain.repository.PlayerRepository
 import com.example.the7wonders.domain.repository.PlayerResultRepository
@@ -94,14 +97,20 @@ class AddGameViewModel @Inject constructor(
         if (selectedPlayers.size > 1) {
             _state.value = _state.value.copy(
                 selectedPlayers = selectedPlayers,
-                gamePhase = GamePhase.PointInput
+                gamePhase = GamePhase.DLCSelection
             )
         }
+    }
+
+    fun confirmDLCSelection() {
+        _state.value = _state.value.copy(
+            gamePhase = GamePhase.PointInput
+        )
         initializePoints()
     }
 
     fun initializePoints() {
-        val points = PointType.entries.flatMap { pointType ->
+        val points = BasePointTypes.entries.flatMap { pointType ->
             _state.value.selectedPlayers.map { player ->
                 PlayerPointTypeModel(
                     playerID = player.id,
@@ -111,6 +120,50 @@ class AddGameViewModel @Inject constructor(
                 )
             }
         }.toMutableList()
+        if(_state.value.leadersDLC){
+            val leadersPoints = listOf(
+                PlayerPointTypeModel(
+                    playerID = -1,
+                    playerName = "Leader Cards",
+                    pointType = LeaderPointTypes.LeaderCards,
+                    value = ""
+                )
+            ).flatMap { pointType ->
+                _state.value.selectedPlayers.map { player ->
+                    pointType.copy(
+                        playerID = player.id,
+                        playerName = player.name
+                    )
+                }
+            }
+            points.addAll(leadersPoints)
+        }
+        if(_state.value.citiesDLC){
+            val citiesPoints = CityPointTypes.entries.flatMap { pointType ->
+                _state.value.selectedPlayers.map { player ->
+                    PlayerPointTypeModel(
+                        playerID = player.id,
+                        playerName = player.name,
+                        pointType = pointType,
+                        value = ""
+                    )
+                }
+            }
+            points.addAll(citiesPoints)
+        }
+        if(_state.value.armadaDLC){
+            val armadaPoints = ArmadaPointTypes.entries.flatMap { pointType ->
+                _state.value.selectedPlayers.map { player ->
+                    PlayerPointTypeModel(
+                        playerID = player.id,
+                        playerName = player.name,
+                        pointType = pointType,
+                        value = ""
+                    )
+                }
+            }
+            points.addAll(armadaPoints)
+        }
         val currentInputPoint = points.popOrNull()
         _state.value = _state.value.copy(pointQueue = points, currentInputPoint = currentInputPoint)
     }
@@ -226,6 +279,21 @@ class AddGameViewModel @Inject constructor(
             }.mapIndexed { index, result ->
                 result.copy(placement = index + 1)
             }
+    }
+
+    fun toggleCitiesDLC() {
+        val newValue = !_state.value.citiesDLC
+        _state.value = _state.value.copy(citiesDLC = newValue)
+    }
+
+    fun toggleArmadaDLC() {
+        val newValue = !_state.value.armadaDLC
+        _state.value = _state.value.copy(armadaDLC = newValue)
+    }
+
+    fun toggleLeadersDLC() {
+        val newValue = !_state.value.leadersDLC
+        _state.value = _state.value.copy(leadersDLC = newValue)
     }
 }
 
