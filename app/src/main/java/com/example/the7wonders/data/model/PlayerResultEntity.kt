@@ -18,7 +18,7 @@ data class PlayerResultEntity(
     val greenCardPoints: Int,
     val purpleCardPoints: Int,
     val cityCardsPoints: Int?,
-    val leaderPoinst: Int?,
+    val leaderPoints: Int?,
     val navalConflictsPoints: Int?,
     val islandCardsPoints: Int?,
     val totalScore: Int,

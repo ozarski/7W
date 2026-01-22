@@ -3,6 +3,8 @@ package com.example.the7wonders.data
 import android.content.Context
 import android.net.Uri
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.the7wonders.data.datasource.DatabaseConstants
 import com.example.the7wonders.data.datasource.GameDatabase
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +19,7 @@ class DatabaseManager @Inject constructor(
     private var database: GameDatabase
 ) {
     private val lock = Any()
+
 
     fun getDatabase(): GameDatabase {
         synchronized(lock) {
@@ -34,7 +37,8 @@ class DatabaseManager @Inject constructor(
                 context,
                 GameDatabase::class.java,
                 DatabaseConstants.DATABASE_NAME
-            ).build()
+            ).addMigrations(DatabaseConstants.MIGRATION_1_2)
+                .build()
         }
     }
 

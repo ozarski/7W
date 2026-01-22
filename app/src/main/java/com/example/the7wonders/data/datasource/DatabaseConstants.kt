@@ -1,5 +1,8 @@
 package com.example.the7wonders.data.datasource
 
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+
 object DatabaseConstants {
     const val DATABASE_NAME = "gamesDB"
     const val GAME_TABLE_NAME = "Games"
@@ -22,6 +25,15 @@ object DatabaseConstants {
 
     const val DELETED_FLAG_TRUE = 1
     const val DELETED_FLAG_FALSE = 0
+
+    val MIGRATION_1_2 = object : Migration(1, 2) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN cityCardsPoints INTEGER")
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN leaderPoints INTEGER")
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN navalConflictsPoints INTEGER")
+            db.execSQL("ALTER TABLE $PLAYER_RESULTS_TABLE_NAME ADD COLUMN islandCardsPoints INTEGER")
+        }
+    }
 }
 
 object DatabaseQueries {

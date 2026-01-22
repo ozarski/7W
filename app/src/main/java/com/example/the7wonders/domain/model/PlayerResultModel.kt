@@ -22,7 +22,7 @@ fun PlayerResultModel.toPlayerResultEntity(gameID: Long): PlayerResultEntity {
         greenCardPoints = scores.firstOrNull { it.first == BasePointTypes.Green }?.second ?: 0,
         purpleCardPoints = scores.firstOrNull { it.first == BasePointTypes.Purple }?.second ?: 0,
         cityCardsPoints = scores.firstOrNull { it.first == CityPointTypes.CityCards }?.second,
-        leaderPoinst = scores.firstOrNull { it.first == LeaderPointTypes.LeaderCards }?.second,
+        leaderPoints = scores.firstOrNull { it.first == LeaderPointTypes.LeaderCards }?.second,
         navalConflictsPoints = scores.firstOrNull { it.first == ArmadaPointTypes.NavalConflicts }?.second,
         islandCardsPoints = scores.firstOrNull { it.first == ArmadaPointTypes.IslandCards }?.second,
         totalScore = totalScore,

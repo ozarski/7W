@@ -19,9 +19,9 @@ data class AddGameState(
     val confirmedPoints: List<PlayerPointTypeModel> = emptyList(),
     val currentInputPoint: PlayerPointTypeModel? = null,
     val results: List<PlayerResultModel> = emptyList(),
-    val citiesDLC: Boolean = true,
-    val armadaDLC: Boolean = true,
-    val leadersDLC: Boolean = true,
+    val citiesDLC: Boolean = false,
+    val armadaDLC: Boolean = false,
+    val leadersDLC: Boolean = false,
     val isLoading: Boolean = false,
     val gamePhase: GamePhase = GamePhase.PlayerSelection
 )

@@ -1,5 +1,6 @@
 package com.example.the7wonders.data.datasource
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.the7wonders.data.model.GameEntity
@@ -12,7 +13,7 @@ import com.example.the7wonders.data.model.PlayerResultEntity
         GameEntity::class,
         PlayerResultEntity::class
     ],
-    version = 1
+    version = 2,
 )
 abstract class GameDatabase : RoomDatabase() {
 
