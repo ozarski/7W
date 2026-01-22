@@ -28,6 +28,7 @@ fun PrimaryButton(
     label: String,
     buttonColor: Color = BaseColors.onPrimary,
     textColor: Color = BaseColors.primary,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     val borderBrush = Brush.radialGradient(
@@ -47,7 +48,8 @@ fun PrimaryButton(
                 containerColor = buttonColor.copy(alpha = Transparency.TRANSPARENCY_70),
                 contentColor = textColor,
             ),
-            border = BorderStroke(Dimens.strokeWidthMedium, borderBrush)
+            border = BorderStroke(Dimens.strokeWidthMedium, borderBrush),
+            enabled = enabled
         ) {
             Text(label, style = Typography.labelMedium)
         }
