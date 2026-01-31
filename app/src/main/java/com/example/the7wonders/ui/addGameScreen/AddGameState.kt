@@ -23,5 +23,6 @@ data class AddGameState(
     val armadaDLC: Boolean = false,
     val leadersDLC: Boolean = false,
     val isLoading: Boolean = false,
+    val showGreepCardsCalculatorPopup: Boolean = false,
     val gamePhase: GamePhase = GamePhase.PlayerSelection
 )

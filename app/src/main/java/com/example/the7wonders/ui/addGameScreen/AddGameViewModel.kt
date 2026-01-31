@@ -299,6 +299,11 @@ class AddGameViewModel @Inject constructor(
         val newValue = !_state.value.leadersDLC
         _state.value = _state.value.copy(leadersDLC = newValue)
     }
+
+    fun toggleGreenCardsCalculatorPopup() {
+        val newValue = !_state.value.showGreepCardsCalculatorPopup
+        _state.value = _state.value.copy(showGreepCardsCalculatorPopup = newValue)
+    }
 }
 
 

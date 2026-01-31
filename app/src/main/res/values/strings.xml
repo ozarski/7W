@@ -17,4 +17,6 @@
     <string name="no_players_found">No players found!</string>
     <string name="pts_label">pts</string>
     <string name="points_format">%1$d pts</string>
+    <string name="apply_label">Apply</string>
+    <string name="green_point_type_icon">green point type icon</string>
 </resources>

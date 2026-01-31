@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
+import com.example.the7wonders.domain.model.BasePointTypes
 import com.example.the7wonders.ui.addGameScreen.AddGameViewModel
 import com.example.the7wonders.ui.base.BaseInputField
 import com.example.the7wonders.ui.base.PrimaryButton
@@ -44,6 +47,28 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
     val currentPoint = state.currentInputPoint
     val context = LocalContext.current
     if (currentPoint != null) {
+        if (currentPoint.pointType == BasePointTypes.Green) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = Dimens.paddingExtraLarge, end = Dimens.paddingMedium),
+                contentAlignment = Alignment.TopEnd
+            ) {
+                IconButton(
+                    onClick = {
+                        viewModel.toggleGreenCardsCalculatorPopup()
+                    },
+                    modifier = Modifier.size(Dimens.iconSizeExtraLarge),
+                ) {
+                    Icon(
+                        painterResource(R.drawable.calculator),
+                        contentDescription = "Edit green cards points popup",
+                        tint = BaseColors.secondary,
+                        modifier = Modifier.size(Dimens.iconSizeLarge)
+                    )
+                }
+            }
+        }
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -69,6 +94,8 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                         )
                     }
                 }
+
+                Spacer(modifier = Modifier.size(Dimens.paddingSmall))
 
                 Crossfade(targetState = currentPoint.playerName) { name ->
                     Row(
@@ -141,5 +168,17 @@ fun PointInputScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                 }
             }
         }
+    }
+
+    if (state.showGreepCardsCalculatorPopup) {
+        GreenCardsCalculatorPopup(
+            onApply = { points ->
+                viewModel.updateCurrentPointValue(points.toString())
+                viewModel.toggleGreenCardsCalculatorPopup()
+            },
+            onDismiss = {
+                viewModel.toggleGreenCardsCalculatorPopup()
+            }
+        )
     }
 }

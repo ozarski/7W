@@ -79,7 +79,7 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                 ) {
                     Text(
                         playerResult.placement.toString(),
-                        fontSize = Dimens.playerResultDetailsPlacementFontSize,
+                        fontSize = Dimens.extraLargeFontSize,
                         color = BaseColors.secondary.copy(alpha = Transparency.TRANSPARENCY_90)
                     )
                     Spacer(modifier = Modifier.size(Dimens.paddingLarge))
