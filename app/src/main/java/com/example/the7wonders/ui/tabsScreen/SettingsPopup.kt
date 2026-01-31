@@ -64,7 +64,7 @@ fun SettingsPopup(viewModel: MainTabsViewModel = hiltViewModel()) {
                     "export icon",
                     modifier = Modifier
                         .size(
-                            Dimens.iconSizeExtraLarge
+                            Dimens.iconSizeLarge
                         )
                         .clickable(
                             interactionSource = exportInteractionSource,
@@ -84,7 +84,7 @@ fun SettingsPopup(viewModel: MainTabsViewModel = hiltViewModel()) {
                     "import icon",
                     modifier = Modifier
                         .size(
-                            Dimens.iconSizeExtraLarge
+                            Dimens.iconSizeLarge
                         )
                         .clickable(
                             interactionSource = importInteractionSource,

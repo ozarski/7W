@@ -5,12 +5,14 @@ import androidx.compose.ui.unit.sp
 
 object Dimens {
 
+    val greenPointsTextBoxSize = 60.dp
+    val greenPointsInputSize = 80.dp
     val gameListItemPlayerNameMaxWidth = 275.dp
     val defaultTextViewMaxWidth = 150.dp
     val scoreGridItemWidth = 80.dp
     const val EXPANDED_ARROW_ROTATION_DEGREES = 180f
     const val COLLAPSED_ARROW_ROTATION_DEGREES = 0f
-    val playerResultDetailsPlacementFontSize = 50.sp
+    val extraLargeFontSize = 50.sp
     val playerPointTypeGridSize = 75.dp
     val gameResultsTopSpacing = 100.dp
     val resultBubbleWidth = 90.dp
@@ -55,7 +57,7 @@ object Dimens {
     val iconSizeSmall = 26.dp
     val iconSizeMedium = 32.dp
     val iconSizeLarge = 48.dp
-    val iconSizeExtraLarge = 48.dp
+    val iconSizeExtraLarge = 64.dp
 
     val textFieldIconSize = 20.dp
 
@@ -76,4 +78,7 @@ object Dimens {
 
     // Add player popup
     val addPlayerPopupIconSize = 96.dp
+
+    val greenPointsButtonHeight = 60.dp
+    val greenPointsFontSize = 40.sp
 }
