@@ -22,6 +22,7 @@ data class GameWithPlayerDetailsDto(
     val navalConflictsPoints: Int?,
     val islandCardsPoints: Int?,
     val navalVictoryPoints: Int?,
+    val buildingPoints: Int?,
     val totalScore: Int,
     val placement: Int,
     val date: Long,

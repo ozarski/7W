@@ -26,6 +26,7 @@ fun PlayerResultModel.toPlayerResultEntity(gameID: Long): PlayerResultEntity {
         navalConflictsPoints = scores.firstOrNull { it.first == ArmadaPointTypes.NavalConflicts }?.second,
         islandCardsPoints = scores.firstOrNull { it.first == ArmadaPointTypes.IslandCards }?.second,
         navalVictoryPoints = scores.firstOrNull { it.first == ArmadaPointTypes.NavalVictory }?.second,
+        buildingPoints = scores.firstOrNull { it.first == BuildingPointTypes.Building }?.second,
         totalScore = totalScore,
         placement = placement
     )

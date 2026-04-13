@@ -38,7 +38,10 @@ class DatabaseManager @Inject constructor(
             ).addMigrations(
                 DatabaseConstants.MIGRATION_1_2,
                 DatabaseConstants.MIGRATION_2_3,
-                DatabaseConstants.MIGRATION_1_3
+                DatabaseConstants.MIGRATION_1_3,
+                DatabaseConstants.MIGRATION_1_4,
+                DatabaseConstants.MIGRATION_2_4,
+                DatabaseConstants.MIGRATION_3_4
             ).build()
         }
     }
@@ -114,6 +117,13 @@ class DatabaseManager @Inject constructor(
 
         } catch (e: Exception) {
             println(e.message)
+            // Attempt to restore from backup if import fails
+            val currentDbFile = context.getDatabasePath(databaseName)
+            val backupFile = File(currentDbFile.parent, "${databaseName}.backup")
+            if (backupFile.exists()) {
+                backupFile.copyTo(currentDbFile, overwrite = true)
+                backupFile.delete()
+            }
             Result.failure(e)
         }
     }
