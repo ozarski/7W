@@ -98,6 +98,12 @@ fun PickDLCsScreen(viewModel: AddGameViewModel = hiltViewModel()) {
                     checkedIcon = painterResource(R.drawable.boat),
                     onToggle = { viewModel.toggleArmadaDLC() }
                 )
+                DLCToggleButton(
+                    dlcName = "Buildings",
+                    isSelected = state.buildingsDLC,
+                    checkedIcon = painterResource(R.drawable.building_dlc),
+                    onToggle = { viewModel.toggleBuildingsDLC() }
+                )
                 Spacer(
                     modifier = Modifier.size(Dimens.paddingLarge)
                 )
