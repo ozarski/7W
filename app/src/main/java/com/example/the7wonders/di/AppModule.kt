@@ -29,7 +29,10 @@ object AppModule {
         ).addMigrations(
             DatabaseConstants.MIGRATION_1_2,
             DatabaseConstants.MIGRATION_2_3,
-            DatabaseConstants.MIGRATION_1_3
+            DatabaseConstants.MIGRATION_1_3,
+            DatabaseConstants.MIGRATION_1_4,
+            DatabaseConstants.MIGRATION_2_4,
+            DatabaseConstants.MIGRATION_3_4
         )
             .build()
     }

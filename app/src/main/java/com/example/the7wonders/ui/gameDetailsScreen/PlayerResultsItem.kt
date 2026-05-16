@@ -49,6 +49,7 @@ import com.example.the7wonders.ui.theme.BaseColors
 import com.example.the7wonders.ui.theme.Dimens
 import com.example.the7wonders.ui.theme.Transparency
 import com.example.the7wonders.ui.theme.Typography
+import kotlin.math.ceil
 import kotlin.math.min
 
 @Composable
@@ -121,23 +122,19 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
             ) {
                 if (expanded.value) {
                     Column {
-                        Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-                        ResultsRow(
-                            scores.subList(0, minOf(4, scores.size))
-                        )
-                        Spacer(modifier = Modifier.size(Dimens.paddingMedium))
-                        if (scores.size > 4) {
+
+                        val rowNum = ceil(scores.size / 4.0).toInt()
+
+                        for (i in 0 until rowNum) {
+                            val startIndex = i * 4
+                            val endIndex = min(startIndex + 4, scores.size)
                             ResultsRow(
-                                scores.subList(4, min(8, scores.size))
+                                scores.subList(startIndex, endIndex)
                             )
+                            if (i != rowNum - 1) {
+                                Spacer(modifier = Modifier.size(Dimens.paddingMedium))
+                            }
                         }
-                        Spacer(modifier = Modifier.size(Dimens.paddingMedium))
-                        if (scores.size > 8) {
-                            ResultsRow(
-                                scores.subList(8, scores.size)
-                            )
-                        }
-                        Spacer(modifier = Modifier.size(Dimens.paddingMedium))
                     }
                 }
             }

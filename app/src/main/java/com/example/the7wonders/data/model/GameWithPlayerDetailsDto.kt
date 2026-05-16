@@ -2,6 +2,7 @@ package com.example.the7wonders.data.model
 
 import com.example.the7wonders.domain.model.ArmadaPointTypes
 import com.example.the7wonders.domain.model.BasePointTypes
+import com.example.the7wonders.domain.model.BuildingPointTypes
 import com.example.the7wonders.domain.model.CityPointTypes
 import com.example.the7wonders.domain.model.GameDetailsModel
 import com.example.the7wonders.domain.model.LeaderPointTypes
@@ -22,6 +23,7 @@ data class GameWithPlayerDetailsDto(
     val navalConflictsPoints: Int?,
     val islandCardsPoints: Int?,
     val navalVictoryPoints: Int?,
+    val buildingPoints: Int?,
     val totalScore: Int,
     val placement: Int,
     val date: Long,
@@ -58,7 +60,8 @@ fun GameWithPlayerDetailsDto.toPlayerResultModel() = PlayerResultModel(
         Pair(LeaderPointTypes.LeaderCards, leaderPoints),
         Pair(ArmadaPointTypes.NavalConflicts, navalConflictsPoints),
         Pair(ArmadaPointTypes.IslandCards, islandCardsPoints),
-        Pair(ArmadaPointTypes.NavalVictory, navalVictoryPoints)
+        Pair(ArmadaPointTypes.NavalVictory, navalVictoryPoints),
+        Pair(BuildingPointTypes.Building, buildingPoints)
     )
 )
 

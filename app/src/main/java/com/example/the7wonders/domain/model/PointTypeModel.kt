@@ -48,9 +48,9 @@ enum class BasePointTypes(override val pointName: String, override val color: Co
 }
 
 enum class ArmadaPointTypes(override val pointName: String, override val color: Color, override val icon: Int): PointTypeInterface {
-    NavalConflicts("Naval conflicts", PointTypeColors.navalConflicts, R.drawable.naval_conflict_icon),
+    NavalConflicts("Armada conflicts", PointTypeColors.navalConflicts, R.drawable.naval_conflict_icon),
     IslandCards("Island cards", PointTypeColors.island, R.drawable.island),
-    NavalVictory("Naval victory", PointTypeColors.navalVictory, R.drawable.boat)
+    NavalVictory("Armada victory", PointTypeColors.navalVictory, R.drawable.boat)
 }
 
 enum class CityPointTypes(override val pointName: String, override val color: Color, override val icon: Int): PointTypeInterface {
@@ -59,4 +59,8 @@ enum class CityPointTypes(override val pointName: String, override val color: Co
 
 enum class LeaderPointTypes(override val pointName: String, override val color: Color, override val icon: Int): PointTypeInterface {
     LeaderCards("Leader cards", PointTypeColors.leader, R.drawable.queen)
+}
+
+enum class BuildingPointTypes(override val pointName: String, override val color: Color, override val icon: Int): PointTypeInterface {
+    Building("Building points", PointTypeColors.building, R.drawable.building)
 }

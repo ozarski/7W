@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.the7wonders.domain.model.ArmadaPointTypes
 import com.example.the7wonders.domain.model.BasePointTypes
+import com.example.the7wonders.domain.model.BuildingPointTypes
 import com.example.the7wonders.domain.model.CityPointTypes
 import com.example.the7wonders.domain.model.GameModel
 import com.example.the7wonders.domain.model.LeaderPointTypes
@@ -168,6 +169,26 @@ class AddGameViewModel @Inject constructor(
             }
             points.addAll(armadaPoints)
         }
+
+        if(_state.value.buildingsDLC){
+            val buildingPoints = listOf(
+                PlayerPointTypeModel(
+                    playerID = -1,
+                    playerName = "Building Points",
+                    pointType = BuildingPointTypes.Building,
+                    value = ""
+                )
+            ).flatMap { pointType ->
+                _state.value.selectedPlayers.map { player ->
+                    pointType.copy(
+                        playerID = player.id,
+                        playerName = player.name
+                    )
+                }
+            }
+            points.addAll(buildingPoints)
+        }
+
         val currentInputPoint = points.popOrNull()
         _state.value = _state.value.copy(pointQueue = points, currentInputPoint = currentInputPoint)
     }
@@ -299,6 +320,10 @@ class AddGameViewModel @Inject constructor(
         val newValue = !_state.value.leadersDLC
         _state.value = _state.value.copy(leadersDLC = newValue)
     }
+     fun toggleBuildingsDLC() {
+         val newValue = !_state.value.buildingsDLC
+         _state.value = _state.value.copy(buildingsDLC = newValue)
+     }
 
     fun toggleGreenCardsCalculatorPopup() {
         val newValue = !_state.value.showGreepCardsCalculatorPopup
