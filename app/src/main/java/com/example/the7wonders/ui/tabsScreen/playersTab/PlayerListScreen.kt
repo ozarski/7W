@@ -1,6 +1,7 @@
 package com.example.the7wonders.ui.tabsScreen.playersTab
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.the7wonders.R
 import com.example.the7wonders.ui.base.ConfirmationPopup
@@ -53,22 +55,24 @@ fun PlayerListScreen(
         }
     } else {
         Column(modifier = Modifier.fillMaxSize()) {
-            LazyVerticalGrid(columns = GridCells.Fixed(2), state = state.gridState) {
-                items(state.playerList.size) { index ->
-                    PlayerListItem(
-                        state.playerList[index],
-                        onClick = { id -> //TODO("Navigate to player details screen")
-                        },
-                        onHold = { playerModel ->
-                            viewModel.toggleDeletePopup(playerModel)
-                        }
-                    )
-                }
-                item {
-                    Spacer(modifier = Modifier.size(Dimens.lazyColumnBottomSpacing))
-                }
-                item {
-                    Spacer(modifier = Modifier.size(Dimens.lazyColumnBottomSpacing))
+            BoxWithConstraints(Modifier.fillMaxSize()) {
+                val columns = if (maxWidth < 360.dp) 1 else 2
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(columns),
+                    state = state.gridState
+                ) {
+                    items(state.playerList.size) { index ->
+                        PlayerListItem(
+                            state.playerList[index],
+                            onClick = { id -> //TODO("Navigate to player details screen")
+                            },
+                            onHold = { playerModel ->
+                                viewModel.toggleDeletePopup(playerModel)
+                            }
+                        )
+                    }
+                    item { Spacer(Modifier.size(Dimens.lazyColumnBottomSpacing)) }
+                    item { Spacer(Modifier.size(Dimens.lazyColumnBottomSpacing)) }
                 }
             }
         }
