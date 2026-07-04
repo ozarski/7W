@@ -56,7 +56,7 @@ fun PlayerListScreen(
     } else {
         Column(modifier = Modifier.fillMaxSize()) {
             BoxWithConstraints(Modifier.fillMaxSize()) {
-                val columns = if (maxWidth < 360.dp) 1 else 2
+                val columns = if (maxWidth < 350.dp) 1 else 2
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(columns),
                     state = state.gridState
