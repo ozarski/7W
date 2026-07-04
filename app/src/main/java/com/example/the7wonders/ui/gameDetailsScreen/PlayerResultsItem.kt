@@ -126,32 +126,37 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                 )
             ) {
                 if (expanded.value) {
-                    BoxWithConstraints {
-                        val maxWidth = this.maxWidth
-                        val itemsPerRow = min(ceil(maxWidth / Dimens.scoreGridItemWidth).toInt(), scores.size)
-                        val numberOfRows = ceil(scores.size.toDouble() / itemsPerRow).toInt()
-                        Column (
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = Dimens.paddingMedium),
-                            verticalArrangement = Arrangement.spacedBy(Dimens.paddingSmall)
-                        ) {
-                            for (rowIndex in 0 until numberOfRows) {
+                    BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+                        val availableWidth = maxWidth
+                        val itemWidth = Dimens.scoreGridItemWidth
+                        val minGap = Dimens.paddingMedium
+                        val columns = ((availableWidth + minGap) / (itemWidth + minGap))
+                            .toInt().coerceIn(2, 5)
+
+                        val viableScores = scores.filter { it.second != null }
+                        val rows = ceil(viableScores.size.toDouble() / columns).toInt()
+
+                        Column {
+                            for (r in 0 until rows) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceEvenly
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    for (columnIndex in 0 until itemsPerRow) {
-                                        val itemIndex = rowIndex * itemsPerRow + columnIndex
-                                        if (itemIndex < scores.size) {
-                                            ScoreGridItem(
-                                                score = scores[itemIndex],
-                                                modifier = Modifier.weight(1f)
-                                            )
+                                    repeat(columns) { col ->
+                                        val idx = r * columns + col
+                                        if (idx < viableScores.size) {
+                                            ScoreGridItem(viableScores[idx])
                                         } else {
-                                            Spacer(modifier = Modifier.weight(1f))
+                                            ScoreGridItem(
+                                                Pair(BasePointTypes.Wonder, null),
+                                                modifier = Modifier.alpha(0f)
+                                            )
                                         }
                                     }
+                                }
+                                if (r < rows - 1) {
+                                    Spacer(modifier = Modifier.size(Dimens.paddingMedium))
                                 }
                             }
                         }
