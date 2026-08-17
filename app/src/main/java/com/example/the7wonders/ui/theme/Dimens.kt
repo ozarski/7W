@@ -16,7 +16,8 @@ object Dimens {
     val playerPointTypeGridSize = 75.dp
     val gameResultsTopSpacing = 100.dp
     val resultBubbleWidth = 90.dp
-    val resultBubbleIconSize = 64.dp
+    val maxResultBubbleIconSize = 64.dp
+    val minResultBubbleIconSize = 48.dp
     val addPlayerScreenPaddingBottom = 150.dp
     val addPlayerListMaxHeight = 400.dp
     val addPlayerListWidth = 250.dp
