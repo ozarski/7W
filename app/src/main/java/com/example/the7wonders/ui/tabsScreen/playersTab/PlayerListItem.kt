@@ -93,7 +93,6 @@ fun PlayerListItem(player: PlayerModel, onClick: (Long?) -> Unit, onHold: (Playe
                     style = Typography.labelLarge,
                     color = BaseColors.secondary
                 )
-                Spacer(modifier = Modifier.size(Dimens.paddingExtraLarge))
                 Text(
                     if (player.avgPlacement == null) "-" else DecimalFormat("#.#").format(player.avgPlacement)
                         .toString(),

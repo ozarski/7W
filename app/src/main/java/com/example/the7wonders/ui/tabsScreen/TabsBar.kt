@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -50,10 +51,10 @@ fun TabsBar(
     val state = viewModel.state.value
     Box(modifier = modifier) {
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(horizontal = Dimens.paddingExtraLarge, vertical = Dimens.paddingMedium)
+                .padding(horizontal = Dimens.paddingLarge, vertical = Dimens.paddingMedium)
                 .shadow(Dimens.elevationMedium, shape = RoundedCornerShape(Dimens.cornerRadiusMax))
                 .background(
                     shape = RoundedCornerShape(
@@ -61,9 +62,10 @@ fun TabsBar(
                     ), color = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_90)
                 )
                 .align(alignment = Alignment.BottomCenter)
+                .fillMaxWidth()
         ) {
             TabItem(state.selectedTab, MainTabs.Games, onTabSelected)
-            Spacer(modifier = Modifier.width(Dimens.tabBarSpacing))
+            //Spacer(modifier = Modifier.width(Dimens.tabBarSpacing))
             TabItem(state.selectedTab, MainTabs.Players, onTabSelected)
         }
         AddButton(

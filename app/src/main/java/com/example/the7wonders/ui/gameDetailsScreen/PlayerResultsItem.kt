@@ -10,8 +10,11 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,6 +26,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -121,18 +126,38 @@ fun PlayerResultsItem(playerResult: PlayerResultModel) {
                 )
             ) {
                 if (expanded.value) {
-                    Column {
+                    BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+                        val availableWidth = maxWidth
+                        val itemWidth = Dimens.scoreGridItemWidth
+                        val minGap = Dimens.paddingMedium
+                        val columns = ((availableWidth + minGap) / (itemWidth + minGap))
+                            .toInt().coerceIn(2, 5)
 
-                        val rowNum = ceil(scores.size / 4.0).toInt()
+                        val viableScores = scores.filter { it.second != null }
+                        val rows = ceil(viableScores.size.toDouble() / columns).toInt()
 
-                        for (i in 0 until rowNum) {
-                            val startIndex = i * 4
-                            val endIndex = min(startIndex + 4, scores.size)
-                            ResultsRow(
-                                scores.subList(startIndex, endIndex)
-                            )
-                            if (i != rowNum - 1) {
-                                Spacer(modifier = Modifier.size(Dimens.paddingMedium))
+                        Column {
+                            for (r in 0 until rows) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    repeat(columns) { col ->
+                                        val idx = r * columns + col
+                                        if (idx < viableScores.size) {
+                                            ScoreGridItem(viableScores[idx])
+                                        } else {
+                                            ScoreGridItem(
+                                                Pair(BasePointTypes.Wonder, null),
+                                                modifier = Modifier.alpha(0f)
+                                            )
+                                        }
+                                    }
+                                }
+                                if (r < rows - 1) {
+                                    Spacer(modifier = Modifier.size(Dimens.paddingMedium))
+                                }
                             }
                         }
                     }
@@ -153,40 +178,14 @@ fun getViableScores(scores: List<Pair<PointTypeInterface, Int?>>): List<Pair<Poi
 }
 
 @Composable
-fun ResultsRow(items: List<Pair<PointTypeInterface, Int?>>) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        for (i in 0 until 4) {
-            val itemOrNull = items.getOrNull(i)
-            if (itemOrNull != null) {
-                ScoreGridItem(
-                    itemOrNull
-                )
-            } else {
-                ScoreGridItem(
-                    Pair(BasePointTypes.Wonder, null),
-                    modifier = Modifier.alpha(Transparency.TRANSPARENCY_0)
-                )
-            }
-            if (i != 3) {
-                Spacer(modifier = Modifier.size(Dimens.paddingLarge))
-            }
-        }
-    }
-}
-
-@Composable
 fun ScoreGridItem(score: Pair<PointTypeInterface, Int?>, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .padding(vertical = Dimens.paddingSmall)
             .height(IntrinsicSize.Min)
             .width(Dimens.scoreGridItemWidth),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
         Column(
             modifier = Modifier
@@ -205,11 +204,11 @@ fun ScoreGridItem(score: Pair<PointTypeInterface, Int?>, modifier: Modifier = Mo
                 modifier = Modifier.size(Dimens.iconSizeMedium)
             )
         }
-        Spacer(Modifier.size(Dimens.paddingMedium))
+        Spacer(Modifier.size(Dimens.paddingSmall))
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.End
         ) {
             Text(
                 if (score.second != null) score.second.toString() else "0",

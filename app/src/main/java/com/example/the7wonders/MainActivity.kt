@@ -10,6 +10,10 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.fontResource
+import androidx.compose.ui.unit.Density
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -26,7 +30,14 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         setContent {
             enableEdgeToEdge()
-            AppNavigation()
+            CompositionLocalProvider(
+                LocalDensity provides Density(
+                    density = LocalDensity.current.density,
+                    fontScale = LocalDensity.current.fontScale.coerceIn(0.85f, 1f)
+                )
+            ) {
+                AppNavigation()
+            }
         }
     }
 }

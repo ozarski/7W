@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -21,6 +23,7 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import com.example.the7wonders.R
 import com.example.the7wonders.domain.model.PlayerResultModel
 import com.example.the7wonders.ui.theme.BaseColors
@@ -32,39 +35,35 @@ import com.example.the7wonders.ui.theme.Typography
 fun PlayerResultsBubble(
     modifier: Modifier = Modifier,
     results: PlayerResultModel,
+    width: Dp = Dimens.resultBubbleWidth,
     iconID: Int,
     color: Color
 ) {
-    Box(
+    Column(
         modifier = modifier
             .background(
                 shape = CircleShape,
                 color = BaseColors.secondaryDark.copy(alpha = Transparency.TRANSPARENCY_50)
             )
             .border(width = Dimens.strokeWidthLarge, color = color, shape = CircleShape)
-            .layout { measurable, constraints ->
-                val placeable = measurable.measure(constraints)
-                layout(placeable.width, placeable.width) {
-                    placeable.placeRelative(0, 0)
-                }
-            }
+            .size(width),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .padding(
-                    start = Dimens.paddingExtraLarge,
-                    end = Dimens.paddingExtraLarge,
-                    top = Dimens.paddingLarge
-                )
-                .width(Dimens.resultBubbleWidth)
         ) {
             Icon(
                 painterResource(iconID),
                 "player result icon",
-                modifier = Modifier.size(Dimens.resultBubbleIconSize),
-                tint = color
+                modifier = Modifier.sizeIn(
+                    minWidth = Dimens.minResultBubbleIconSize,
+                    maxWidth = Dimens.maxResultBubbleIconSize,
+                    minHeight = Dimens.minResultBubbleIconSize,
+                    maxHeight = Dimens.maxResultBubbleIconSize,
+                ),
+                tint = color,
             )
             Text(
                 results.playerName,
@@ -86,7 +85,8 @@ fun PlayerResultsBubble(
 fun EmptyBubble(
     modifier: Modifier = Modifier,
     iconID: Int,
-    color: Color
+    color: Color,
+    width: Dp
 ) {
     Box(
         modifier = modifier
@@ -109,12 +109,12 @@ fun EmptyBubble(
                     end = Dimens.paddingExtraLarge,
                     top = Dimens.paddingLarge
                 )
-                .width(Dimens.resultBubbleWidth)
+                .width(width)
         ) {
             Icon(
                 painterResource(iconID),
                 "player result icon",
-                modifier = Modifier.size(Dimens.resultBubbleIconSize),
+                modifier = Modifier.size(Dimens.maxResultBubbleIconSize),
                 tint = color
             )
             Text(

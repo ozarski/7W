@@ -17,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -113,31 +115,40 @@ fun GameResultsScreen(
 
 @Composable
 fun PodiumRow(top3: List<PlayerResultModel>) {
-    Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+    val density = LocalDensity.current
+    val widthDp = with(density) {
+        LocalWindowInfo.current.containerSize.width.toDp()
+    }
+    val bubbleWidth = widthDp/3 - Dimens.paddingMedium
+    Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.paddingMedium)) {
         if (top3.size > 2) {
             PlayerResultsBubble(
-                results = top3.last(),
-                color = BaseColors.thirdPlaceColor.copy(alpha = Transparency.TRANSPARENCY_70),
+                results = top3[1],
+                color = BaseColors.secondPlaceColor.copy(alpha = Transparency.TRANSPARENCY_70),
                 iconID = R.drawable.rounded_workspace_premium_24,
-                modifier = Modifier.padding(top = 50.dp)
+                modifier = Modifier.padding(top = 50.dp),
+                width = bubbleWidth
             )
         } else {
             EmptyBubble(
                 color = BaseColors.thirdPlaceColor,
                 iconID = R.drawable.rounded_workspace_premium_24,
-                modifier = Modifier.padding(top = 50.dp)
+                modifier = Modifier.padding(top = 50.dp),
+                width = bubbleWidth
             )
         }
         PlayerResultsBubble(
             results = top3.first(),
             color = BaseColors.winIconColor.copy(alpha = Transparency.TRANSPARENCY_90),
-            iconID = R.drawable.rounded_crown_24
+            iconID = R.drawable.rounded_crown_24,
+            width = bubbleWidth
         )
         PlayerResultsBubble(
-            results = top3[1],
-            color = BaseColors.secondPlaceColor.copy(alpha = Transparency.TRANSPARENCY_70),
+            results = top3.last(),
+            color = BaseColors.thirdPlaceColor.copy(alpha = Transparency.TRANSPARENCY_70),
             iconID = R.drawable.rounded_workspace_premium_24,
-            modifier = Modifier.padding(top = 50.dp)
+            modifier = Modifier.padding(top = 50.dp),
+            width = bubbleWidth
         )
     }
 }
